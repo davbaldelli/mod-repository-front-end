@@ -1,17 +1,22 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <car-input/>
+    <car-table/>
+    <track-table/>
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import CarTable from "@/components/CarTable";
+import TrackTable from "@/components/TrackTable";
+import CarInput from "@/components/CarInput";
 
 export default {
   name: 'App',
   components: {
-    HelloWorld
+    CarInput,
+    TrackTable,
+    CarTable,
   }
 }
 </script>
