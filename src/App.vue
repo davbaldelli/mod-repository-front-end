@@ -1,22 +1,19 @@
 <template>
   <div id="app">
-    <car-input/>
-    <car-table/>
+    <track-input/>
     <track-table/>
   </div>
 </template>
 
 <script>
-import CarTable from "@/components/CarTable";
 import TrackTable from "@/components/TrackTable";
-import CarInput from "@/components/CarInput";
+import TrackInput from "@/components/TrackInput";
 
 export default {
   name: 'App',
   components: {
-    CarInput,
+    TrackInput,
     TrackTable,
-    CarTable,
   }
 }
 </script>

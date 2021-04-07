@@ -1,6 +1,11 @@
 <template>
   <div>
     <b-form @submit.prevent="onSubmit()">
+      <ul id="errors">
+        <li v-for="error in errors" :key="error">
+          {{ error}}
+        </li>
+      </ul>
       <b-form-group
         id="input-group-1"
         label="Car Model:"
@@ -101,14 +106,21 @@ export default {
       nations: [],
       existingBrand : true,
       existingNation : true,
+      errors: []
     }
   },
   methods: {
     onSubmit() {
-      this.axios
-      .post("http://localhost:6316/car/new",this.form)
-      .then(res => console.log(res))
-      .catch(err => console.log(err))
+      if(!this.checkExistingBrand(this.form.Brand.Name) && !this.checkExistingNation(this.form.Brand.Nation.Name)) {
+        this.errors = []
+        this.axios
+            .post("http://localhost:6316/car/new", this.form)
+            .then(res => console.log(res))
+            .catch(err => console.log(err))
+      } else {
+        this.errors.push("brand or nation already existing")
+      }
+
     },
     addNewCategory(){
       this.form.Categories.push('')
@@ -128,6 +140,24 @@ export default {
         }
       });
       this.form.Brand.Nation.Name = nation
+    },
+    checkExistingBrand(brnd){
+      var existing = false;
+      this.brands.forEach(brand => {
+        if (brand.Name === brnd){
+          existing = true;
+        }
+      });
+      return existing && !this.existingBrand;
+    },
+    checkExistingNation(nat){
+      var existing = false;
+      this.nations.forEach(nation => {
+        if (nation.Name === nat){
+          existing = true;
+        }
+      });
+      return existing && !this.existingNation;
     }
   },
   mounted() {
