@@ -1,8 +1,11 @@
 <template>
-  <div>
+  <div class="container">
     <b-form @submit.prevent="onSubmit()">
       <b-form-group
           id="input-group-0"
+          label-cols-sm="4"
+          label-cols-lg="3"
+          content-cols-lg="7"
           label="Download Link:"
           label-for="input-0"
           descripiton="Enter download link"
@@ -17,6 +20,9 @@
       </b-form-group>
     <b-form-group
         id="input-group-1"
+        label-cols-sm="4"
+        label-cols-lg="3"
+        content-cols-lg="7"
         label="Track Name:"
         label-for="input-1"
         descripiton="Enter track name"
@@ -30,6 +36,9 @@
     </b-form-group>
     <b-form-group
         id="input-group-2"
+        label-cols-sm="4"
+        label-cols-lg="3"
+        content-cols-lg="7"
         label="Track Location:"
         label-for="input-2"
         descripiton="Enter track location"
@@ -43,6 +52,9 @@
     </b-form-group>
     <b-form-group
       id="input-group-3"
+      label-cols-sm="4"
+      label-cols-lg="3"
+      content-cols-lg="7"
       label="Nation:"
       label-for="input-3"
     >
@@ -63,22 +75,30 @@
     <b-form-checkbox v-model="existingNation" name="check-button-nation" switch>Existing Nation</b-form-checkbox>
     <b-form-group
         id="form-layouts-group"
-        label="Enter categories"
+        label-cols-sm="4"
+        label-cols-lg="3"
+        content-cols-lg="7"
+        label="Enter Layouts:"
     >
       <div v-for="(layout, index) in form.Layouts" v-bind:key="layout.name">
         <b-form-input
             v-model="form.Layouts[index].Name"
             id="input-layout-name"
+            placeholder="Enter layout name"
+            required
         ></b-form-input>
         <b-form-input
             v-model="form.Layouts[index].LengthKm"
             type="number"
             id="input-layout-length"
+            placeholder="Enter layout length (meters)"
+            required
         ></b-form-input>
         <b-form-select
             id="input-layout-Type"
             v-model="form.Layouts[index].Category.Name"
             :options="layoutTypeOptions"
+            placeholder="Enter layout type"
             class="mb-3"/>
       </div>
       </b-form-group>
@@ -124,8 +144,8 @@ export default {
     onSubmit(){
       this.axios
           .post("http://localhost:6316/track/new", this.form)
-          .then(res => console.log(res))
-          .catch(err => console.log(err))
+          .then(res => alert(JSON.stringify("Pista Inserita Correttamente : "+res.status)))
+          .catch(err => alert(JSON.stringify(err)))
     },
     addNationOpt(nationName){
       this.nationOptions.push(JSON.parse('{"value" : "'+nationName+'", "text" : "'+nationName+'"}'));

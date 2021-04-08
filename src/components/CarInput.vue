@@ -1,6 +1,6 @@
 <template>
-  <div>
-    <b-form @submit.prevent="onSubmit()">
+  <div class="container">
+    <b-form @submit.prevent="onSubmit()" >
       <ul id="errors">
         <li v-for="error in errors" :key="error">
           {{ error}}
@@ -8,6 +8,9 @@
       </ul>
       <b-form-group
         id="input-group-1"
+        label-cols-sm="4"
+        label-cols-lg="3"
+        content-cols-lg="7"
         label="Car Model:"
         label-for="input-1"
         descripiton="Enter car model name"
@@ -17,10 +20,14 @@
           v-model="form.ModelName"
           placeholder="Enter car model"
           required
+          trim
         ></b-form-input>
       </b-form-group>
       <b-form-group
           id="input-group-2"
+          label-cols-sm="4"
+          label-cols-lg="3"
+          content-cols-lg="7"
           label="Download Link:"
           label-for="input-2"
           descripiton="Enter car download link"
@@ -33,15 +40,18 @@
             required
         ></b-form-input>
       </b-form-group>
-      <b-form-select v-if="existingBrand" @change="onBrandChange()" v-model="form.Brand.Name" :options="brandsOpts" class="mb-3"/>
       <b-form-group
           id="input-group-3"
+          label-cols-sm="4"
+          label-cols-lg="3"
+          content-cols-lg="7"
           label="Brand Name:"
           label-for="input-3"
           descripiton="Enter new Brand Name"
-          v-if="!existingBrand"
       >
+        <b-form-select id="input-3" v-if="existingBrand" @change="onBrandChange()" v-model="form.Brand.Name" :options="brandsOpts" class="mb-3"/>
         <b-form-input
+            v-if="!existingBrand"
             id="input-3"
             v-model="form.Brand.Name"
             placeholder="Enter new Brand Name"
@@ -51,22 +61,30 @@
       <b-form-checkbox v-model="existingBrand" name="check-button-brand" switch>Existing Brand</b-form-checkbox>
       <b-form-group
         id="input-group-4"
+        label-cols-sm="4"
+        label-cols-lg="3"
+        content-cols-lg="7"
         label="Nation Name:"
         label-for="input-4"
         descripiton="Enter new Nation"
-        v-if="!existingNation && !existingBrand"
+        v-if="!existingBrand"
       >
         <b-form-input
+            v-if="!existingNation && !existingBrand"
             id="input-3"
             v-model="form.Brand.Nation.Name"
             placeholder="Enter new Nation"
             required
         ></b-form-input>
+        <b-form-select id="input-3" v-if="existingNation && !existingBrand"  v-model="form.Brand.Nation.Name" :options="nationOptions" class="mb-3"/>
       </b-form-group>
-      <b-form-select v-if="existingNation && !existingBrand"  v-model="form.Brand.Nation.Name" :options="nationOptions" class="mb-3"/>
+
       <b-form-checkbox v-if="!existingBrand" v-model="existingNation" name="check-button-nation" switch>Existing Nation</b-form-checkbox>
       <b-form-group
           id="form-cat-group"
+          label-cols-sm="4"
+          label-cols-lg="3"
+          content-cols-lg="7"
           label="Enter categories"
       >
        <div v-for="(category, index) in form.Categories" v-bind:key="category.name">
@@ -76,7 +94,14 @@
          ></b-form-input>
        </div>
       </b-form-group>
-      <b-button @click="addNewCategory">Add Category</b-button>
+      <b-row>
+        <b-col cols="6" md="4"/>
+        <b-col cols="6" md="4">
+          <b-button @click="addNewCategory">Add Category</b-button>
+        </b-col>
+
+      </b-row>
+
       <b-button type="submit" variant="primary">Submit</b-button>
     </b-form>
   </div>
@@ -117,8 +142,8 @@ export default {
         this.errors = []
         this.axios
             .post("http://localhost:6316/car/new", this.form ,)
-            .then(res => console.log(res))
-            .catch(err => console.log(err))
+            .then(res => alert(JSON.stringify("Macchina Inserita Correttamente : "+res.status)))
+            .catch(err => alert(JSON.stringify(err)))
       } else {
         this.errors.push("brand or nation already existing")
       }

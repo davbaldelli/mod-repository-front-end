@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="container">
     <b-table striped hover :items="items" :fields="fields">
       <template #cell(Location)="data">
         {{data.item.Location}}, {{data.item.Nation}}
