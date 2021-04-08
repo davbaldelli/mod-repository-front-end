@@ -69,12 +69,12 @@
           id="form-cat-group"
           label="Enter categories"
       >
-        <div v-for="(category, index) in form.Categories" v-bind:key="category.name">
-          <b-form-input
-              v-model="form.Categories[index]"
-              id="input-cat"
-          ></b-form-input>
-        </div>
+       <div v-for="(category, index) in form.Categories" v-bind:key="category.name">
+         <b-form-input
+             v-model="form.Categories[index].Name"
+             id="input-category-name"
+         ></b-form-input>
+       </div>
       </b-form-group>
       <b-button @click="addNewCategory">Add Category</b-button>
       <b-button type="submit" variant="primary">Submit</b-button>
@@ -98,7 +98,9 @@ export default {
             Name : ""
           }
         },
-        Categories : [""]
+        Categories : [{
+          Name : ""
+        }]
       },
       brandsOpts: [],
       nationOptions: [],
@@ -114,7 +116,7 @@ export default {
       if(!this.checkExistingBrand(this.form.Brand.Name) && !this.checkExistingNation(this.form.Brand.Nation.Name)) {
         this.errors = []
         this.axios
-            .post("http://localhost:6316/car/new", this.form)
+            .post("http://localhost:6316/car/new", this.form ,)
             .then(res => console.log(res))
             .catch(err => console.log(err))
       } else {
@@ -123,7 +125,7 @@ export default {
 
     },
     addNewCategory(){
-      this.form.Categories.push('')
+      this.form.Categories.push({Name : ""})
     },
     addBrandOpts(brandName){
       this.brandsOpts.push(JSON.parse('{"value" : "'+brandName+'", "text" : "'+brandName+'"}'));

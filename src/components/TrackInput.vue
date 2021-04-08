@@ -36,7 +36,7 @@
     >
       <b-form-input
           id="input-2"
-          v-model="form.Location.LocationName"
+          v-model="form.Location"
           placeholder="Enter track location"
           required
       ></b-form-input>
@@ -49,13 +49,13 @@
       <b-form-select
           id="input-3"
           v-if="existingNation"
-          v-model="form.Location.Nation.Name"
+          v-model="form.Nation.Name"
           :options="nationOptions"
           class="mb-3"/>
       <b-form-input
           id="input-3"
           v-if="!existingNation"
-          v-model="form.Location.Nation.Name"
+          v-model="form.Nation.Name"
           placeholder="Enter nation"
           required
       />
@@ -77,7 +77,7 @@
         ></b-form-input>
         <b-form-select
             id="input-layout-Type"
-            v-model="form.Layouts[index].Type"
+            v-model="form.Layouts[index].Category.Name"
             :options="layoutTypeOptions"
             class="mb-3"/>
       </div>
@@ -97,16 +97,16 @@ export default {
       form : {
         DownloadLink: "",
         Name : "",
-        Location : {
-          LocationName : "",
-          Nation : {
-            Name : ""
-          }
+        Location : "",
+        Nation : {
+          Name : ""
         },
         Layouts : [
           {
             LengthKm : 0,
-            Type : "",
+            Category : {
+              Name : ""
+            },
             Name : ""
           },
         ]
@@ -133,7 +133,9 @@ export default {
     addLayout(){
       this.form.Layouts.push({
         LengthKm : 0,
-        Type : "",
+        Category : {
+          Name : ""
+        },
         Name : ""
       })
     }

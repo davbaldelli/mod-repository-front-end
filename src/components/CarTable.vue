@@ -20,7 +20,7 @@ export default {
   mounted () {
     this.axios.
       get('http://localhost:6316/car/all').
-      then(response => this.items = response.data).
+      then(response => {this.items = response.data; console.log(response.data)}).
       catch(error => console.log(error))
   },
 }
