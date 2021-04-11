@@ -70,7 +70,7 @@ export default {
       adminUsername : "",
       adminPassword : "",
       adminLogged : false,
-      serverPath: "http://217.61.15.225:6316/"
+      serverPath: "https://217.61.15.225:6316/"
     }
   },
   methods: {
