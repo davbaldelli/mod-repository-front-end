@@ -11,7 +11,7 @@
           </b-navbar-nav>
           <b-navbar-nav class="ml-auto">
             <b-nav-item v-if="!adminLogged" v-b-modal.modal-login>Admin</b-nav-item>
-            <b-nav-item v-if="adminLogged" @click="adminLogged = false">User</b-nav-item>
+            <b-nav-item v-if="adminLogged" @click="logOut" to="/cars">User</b-nav-item>
           </b-navbar-nav>
         </b-navbar>
       </b-col>
@@ -76,6 +76,10 @@ export default {
     goBack() {
       window.history.length > 1 ? this.$router.go(-1) : this.$router.push('/')
     },
+    logOut(){
+      localStorage.setItem('user',{})
+      this.adminLogged = false
+    },
     checkFormValidity() {
         const valid = this.$refs.form.checkValidity()
         this.nameState = valid
@@ -97,10 +101,21 @@ export default {
       if (!this.checkFormValidity()) {
         return
       }
-      // Hide the modal manually
-      if(this.adminPassword == "admin" && this.adminUsername == "admin"){
-        this.adminLogged = true;
-      }
+      
+      this.axios.post('http://localhost:6316/login',{username : this.adminUsername, password : this.adminPassword})
+      .then(response => 
+      {
+        console.log(response.data)
+        localStorage.setItem('user',JSON.stringify(response.data))
+        this.$emit('loggedIn')
+        if(this.$route.params.nextUrl != null){
+            this.$router.push(this.$route.params.nextUrl)
+        }
+        else {
+          this.adminLogged = true
+        }
+      })
+      .catch(err => alert("autenticazione fallita => "+err))
 
       this.$nextTick(() => {
         this.$bvModal.hide('modal-login')

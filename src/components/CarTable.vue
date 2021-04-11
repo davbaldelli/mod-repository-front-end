@@ -39,7 +39,7 @@ export default {
   mounted () {
     this.loadAll()
     this.axios.get('http://localhost:6316/car/type/all').then(res => this.categories = res.data)
-    this.axios.get('http://localhost:6316/brand/all').then(res => this.nations = res.data)
+    this.axios.get('http://localhost:6316/brand/all/grouped/nation').then(res => this.nations = res.data)
   },
   methods : {
     nationSelected(nation){

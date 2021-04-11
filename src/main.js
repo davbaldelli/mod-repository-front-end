@@ -20,15 +20,48 @@ Vue.use(VueAxios,axios)
 
 
 const routes = [
-  { path: '/tracks', component: TrackTable },
-  { path: '/cars', component: CarTable },
-  { path: '/track/new', component : TrackInput},
-  { path: '/car/new' , component : CarInput}
+  { path: '/tracks', component: TrackTable, meta :{
+    guest : true
+  } },
+  { path: '/cars', component: CarTable, meta :{
+    guest : true
+  } },
+  { path: '/track/new', component : TrackInput, meta :{
+    requiresAuth: true,
+    is_admin : true
+  }},
+  { path: '/car/new' , component : CarInput, meta :{
+    requiresAuth: true,
+    is_admin : true,
+  }}
 ]
 
 const router = new VueRouter({
-  routes // short for `routes: routes`
+  mode : 'history',
+  routes : routes 
 })
+
+router.beforeEach((to, from, next) => {
+  if(to.matched.some(record => record.meta.requiresAuth)) { 
+    let user = JSON.parse(localStorage.getItem('user'))
+    console.log(user)
+    if(to.matched.some(record => record.meta.is_admin)) {
+        if(user.IsAdmin == 1){
+            next()
+        }
+        else{
+            next(false)
+        }
+    }else {
+        next()
+    }
+  } else if(to.matched.some(record => record.meta.guest)) {
+     next()
+  }else {
+      next()
+  }
+})
+
 
 Vue.config.productionTip = false
 
