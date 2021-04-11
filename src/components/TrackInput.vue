@@ -138,7 +138,7 @@ export default {
       nations : [],
       nationOptions : [],
       existingNation : true,
-      serverPath: "https://217.61.15.225:6316/"
+      serverPath: "http://217.61.15.225:6316/"
     }
   },
   methods: {

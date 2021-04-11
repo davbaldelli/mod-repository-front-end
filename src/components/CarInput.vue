@@ -134,7 +134,7 @@ export default {
       existingBrand : true,
       existingNation : true,
       errors: [],
-      serverPath: "https://217.61.15.225:6316/"
+      serverPath: "http://217.61.15.225:6316/"
     }
   },
   methods: {
