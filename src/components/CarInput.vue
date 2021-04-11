@@ -115,7 +115,7 @@ export default {
     return {
       selected: null,
       form : {
-        DownloadLink : 'https://mega.nz',
+        DownloadLink : '',
         ModelName : '',
         Brand : {
           Name : "",
@@ -133,7 +133,8 @@ export default {
       nations: [],
       existingBrand : true,
       existingNation : true,
-      errors: []
+      errors: [],
+      serverPath: "http://217.61.15.225:6316/"
     }
   },
   methods: {
@@ -141,7 +142,7 @@ export default {
       if(!this.checkExistingBrand(this.form.Brand.Name) && !this.checkExistingNation(this.form.Brand.Nation.Name)) {
         this.errors = []
         this.axios
-            .post("http://localhost:6316/car/new", this.form ,)
+            .post(this.serverPath+"car/new", this.form ,)
             .then(res => alert(JSON.stringify("Macchina Inserita Correttamente : "+res.status)))
             .catch(err => alert(JSON.stringify(err)))
       } else {
@@ -188,9 +189,9 @@ export default {
     }
   },
   mounted() {
-    this.axios.get("http://localhost:6316/brand/all")
+    this.axios.get(this.serverPath+"brand/all")
     .then(res => {this.brands = res.data ; res.data.forEach(val =>this.addBrandOpts(val.Name))});
-    this.axios.get("http://localhost:6316/nation/brand/all")
+    this.axios.get(this.serverPath+"nation/brand/all")
     .then(res => {this.nations = res.data; res.data.forEach(res => this.addNationOpt(res.Name))})
   }
 

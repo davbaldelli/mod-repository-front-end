@@ -18,7 +18,6 @@ Vue.use(BootstrapVue)
 Vue.use(IconsPlugin)
 Vue.use(VueAxios,axios)
 
-
 const routes = [
   { path: '/tracks', component: TrackTable, meta :{
     guest : true

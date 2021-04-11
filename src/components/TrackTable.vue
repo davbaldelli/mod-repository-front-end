@@ -35,29 +35,30 @@ data() {
     items: null,
     nations: [],
     categories: [],
+    serverPath: "http://217.61.15.225:6316/"
   }
 },
 mounted () {
   this.loadAllTracks()
-  this.axios.get('http://localhost:6316/nation/track/all').then(res => this.nations = res.data)
-  this.axios.get('http://localhost:6316/layout/type/all').then(res => this.categories = res.data)
+  this.axios.get(this.serverPath+'nation/track/all').then(res => this.nations = res.data)
+  this.axios.get(this.serverPath+'layout/type/all').then(res => this.categories = res.data)
 },
   methods: {
     nationSelected(nation){
       this.axios.
-      get('http://localhost:6316/track/nation/'+nation).
+      get(this.serverPath+'track/nation/'+nation).
       then(response => {this.items = response.data; console.log(response.data)}).
       catch(error => console.log(error))
     },
     categorySelected(category){
       this.axios.
-      get('http://localhost:6316/track/layout/type/'+category).
+      get(this.serverPath+'track/layout/type/'+category).
       then(response => {this.items = response.data; console.log(response.data)}).
       catch(error => console.log(error))
     },
     loadAllTracks(){
       this.axios.
-      get('http://localhost:6316/track/all').
+      get(this.serverPath+'track/all').
       then(response => {this.items = response.data; console.log(response.data)}).
       catch(error => console.log(error))
     }

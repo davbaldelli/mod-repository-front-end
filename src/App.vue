@@ -70,6 +70,7 @@ export default {
       adminUsername : "",
       adminPassword : "",
       adminLogged : false,
+      serverPath: "http://217.61.15.225:6316/"
     }
   },
   methods: {
@@ -102,7 +103,7 @@ export default {
         return
       }
       
-      this.axios.post('http://localhost:6316/login',{username : this.adminUsername, password : this.adminPassword})
+      this.axios.post(this.serverPath+'login',{username : this.adminUsername, password : this.adminPassword})
       .then(response => 
       {
         console.log(response.data)

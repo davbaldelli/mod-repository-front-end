@@ -138,12 +138,13 @@ export default {
       nations : [],
       nationOptions : [],
       existingNation : true,
+      serverPath: "http://217.61.15.225:6316/"
     }
   },
   methods: {
     onSubmit(){
       this.axios
-          .post("http://localhost:6316/track/new", this.form)
+          .post(this.serverPath+"track/new", this.form)
           .then(res => alert(JSON.stringify("Pista Inserita Correttamente : "+res.status)))
           .catch(err => alert(JSON.stringify(err)))
     },
@@ -161,7 +162,7 @@ export default {
     }
   },
   mounted() {
-    this.axios.get("http://localhost:6316/nation/track/all").then(res => {
+    this.axios.get(this.serverPath+"nation/track/all").then(res => {
       this.nations = res.data;
       res.data.forEach(nation => this.addNationOpt(nation.Name))
     })

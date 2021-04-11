@@ -34,35 +34,36 @@ export default {
       items: [],
       categories: [],
       nations: [],
+      serverPath: "http://217.61.15.225:6316/"
     }
   },
   mounted () {
     this.loadAll()
-    this.axios.get('http://localhost:6316/car/type/all').then(res => this.categories = res.data)
-    this.axios.get('http://localhost:6316/brand/all/grouped/nation').then(res => this.nations = res.data)
+    this.axios.get(this.serverPath+'car/type/all').then(res => this.categories = res.data)
+    this.axios.get(this.serverPath+'brand/all/grouped/nation').then(res => this.nations = res.data)
   },
   methods : {
     nationSelected(nation){
       this.axios
-        .get('http://localhost:6316/car/nation/'+nation)
+        .get(this.serverPath+'car/nation/'+nation)
         .then(response => {this.items = response.data})
         .catch(error => console.log(error));
     },
     brandSelected(brand){
       this.axios
-        .get('http://localhost:6316/car/brand/'+brand)
+        .get(this.serverPath+'car/brand/'+brand)
         .then(response => {this.items = response.data})
         .catch(error => console.log(error));
     },
     categorySelected(category){
       this.axios
-        .get('http://localhost:6316/car/category/'+category)
+        .get(this.serverPath+'car/category/'+category)
         .then(response => {this.items = response.data})
         .catch(error => console.log(error));
     },
     loadAll(){
       this.axios
-        .get('http://localhost:6316/car/all')
+        .get(this.serverPath+'car/all')
         .then(response => {this.items = response.data})
         .catch(error => console.log(error));
     }
