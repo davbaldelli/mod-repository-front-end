@@ -24,6 +24,45 @@
         ></b-form-input>
       </b-form-group>
       <b-form-group
+        id="input-group-year"
+        label-cols-sm="4"
+        label-cols-lg="3"
+        content-cols-lg="7"
+        label="Car Year:"
+        label-for="input-year"
+        descripiton="Enter car model name"
+      >
+        <b-form-input
+          id="input-year"
+          v-model="form.Year"
+          placeholder="Enter car production year"
+          type="number"
+          trim
+        ></b-form-input>
+      </b-form-group>
+      <b-form-group
+        id="input-group-drivetrain"
+        label-cols-sm="4"
+        label-cols-lg="3"
+        content-cols-lg="7"
+        label="Drivetrain: "
+        label-for="input-drivetrain"
+        description="Select drivetrain type"
+      >
+        <b-form-select id="input-drivetrain" v-model="form.Drivetrain" :options="drivetrainOptions" required></b-form-select>
+      </b-form-group>
+      <b-form-group
+        id="input-group-geartype"
+        label-cols-sm="4"
+        label-cols-lg="3"
+        content-cols-lg="7"
+        label="Gear Type: "
+        label-for="input-geartype"
+        description="Select gear type"
+      >
+        <b-form-select id="input-geartype" v-model="form.GearType" :options="gearTypeOptions" required></b-form-select>
+      </b-form-group>
+      <b-form-group
           id="input-group-2"
           label-cols-sm="4"
           label-cols-lg="3"
@@ -47,7 +86,7 @@
           content-cols-lg="7"
           label="Brand Name:"
           label-for="input-3"
-          descripiton="Enter new Brand Name"
+          descripiton="Enter Brand Name"
       >
         <b-form-select id="input-3" v-if="existingBrand" @change="onBrandChange()" v-model="form.Brand.Name" :options="brandsOpts" class="mb-3"/>
         <b-form-input
@@ -123,10 +162,22 @@ export default {
             Name : ""
           }
         },
+        Year : null,
+        Drivetrain : "",
+        GearType : "",
         Categories : [{
           Name : ""
         }]
       },
+      gearTypeOptions : [
+        {value : "SEQUENTIAL", text : "Sequential"},
+        {value : "MANUAL", text : "Manual"},
+      ],
+      drivetrainOptions : [
+        {value : "AWD", text : "AWD"},
+        {value : "RWD", text : "RWD"},
+        {value : "FWD", text : "FWD"},
+      ],
       brandsOpts: [],
       nationOptions: [],
       brands : [],
