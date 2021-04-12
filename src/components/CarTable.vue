@@ -1,28 +1,44 @@
 <template>
-  <div class="container-fluid">
-    <b-row>
-      <b-col cols="1" class="border-right">
-        <b-nav vertical align="left" class="w-50 flex-column text-left">
-          <div v-for="(nation) in nations" :key="nation.Nation" class="m-2">
-              <b-dropdown :text="nation.Nation" split @click="nationSelected(nation.Nation)">
-                <b-dropdown-item v-for="(brand) in nation.Brands" @click="brandSelected(brand)" :key="brand">{{brand}}</b-dropdown-item>
-              </b-dropdown>
+<b-container fluid>
+  <b-row>
+    <b-col sm>
+      <b-nav vertical class="w-50 text-left">
+        <div v-for="(nation) in nations" :key="nation.Nation" class="m-2">
+            <b-dropdown :text="nation.Nation" split @click="nationSelected(nation.Nation)">
+              <b-dropdown-item v-for="(brand) in nation.Brands" @click="brandSelected(brand)" :key="brand">{{brand}}</b-dropdown-item>
+            </b-dropdown>
+        </div>
+        <b-dropdown text="Categories" variant="primary" class="m-2">
+          <b-dropdown-item  v-for="(category) in categories" :key="category.Name" @click="categorySelected(category.Name)">{{category.Name}}</b-dropdown-item>
+        </b-dropdown>
+        <b-nav-item @click="loadAll">All</b-nav-item>
+      </b-nav>
+    </b-col>
+    <b-col lg="8">
+      <b-row>
+        <b-col>
+          <div>
+            <b-jumbotron header="AC Mod Car" lead="A collection of quality mods" class="mb-2 text-left"></b-jumbotron>
           </div>
-          <b-dropdown text="Categories" variant="primary" class="m-2">
-            <b-dropdown-item  v-for="(category) in categories" :key="category.Name" @click="categorySelected(category.Name)">{{category.Name}}</b-dropdown-item>
-          </b-dropdown>
-          <b-nav-item @click="loadAll">All</b-nav-item>
-        </b-nav>
-      </b-col>
-      <b-col cols="11">
-        <b-table striped hover :items="items" :fields="fields">
-          <template #cell(DownloadLink)="data">
-            <a  :href="data.value" >{{data.value}}</a>
-          </template>
-        </b-table>
-      </b-col>
-    </b-row>
-  </div>
+        </b-col>
+      </b-row>
+      <b-row>
+        <b-col>
+          <div v-for="car in cars" :key="car.ModelName" class="text-left">
+            <b-card :title="car.Brand.Name+' '+car.ModelName" :sub-title="car.Drivetrain+' '+car.GearType" class="mb-2">
+              <b-card-text>
+                <b-badge v-for="category in car.Categories" :key="category.Name" class="mb-2">{{category.Name}}</b-badge>
+              </b-card-text>
+              <b-link :href="car.DownloadLink" class="card-link">Download Here</b-link>
+            </b-card>
+          </div>
+        </b-col>
+      </b-row>
+    </b-col>
+    <b-col sm>
+    </b-col>
+  </b-row>
+</b-container>
 </template>
 
 <script>
@@ -30,8 +46,7 @@ export default {
   name : "car-table",
   data() {
     return {
-      fields: ['Model','Brand','DownloadLink'],
-      items: [],
+      cars: [],
       categories: [],
       nations: [],
       serverPath: "https://api.mods.davidebaldelli.it/"
@@ -46,25 +61,25 @@ export default {
     nationSelected(nation){
       this.axios
         .get(this.serverPath+'car/nation/'+nation)
-        .then(response => {this.items = response.data})
+        .then(response => {this.cars = response.data})
         .catch(error => console.log(error));
     },
     brandSelected(brand){
       this.axios
         .get(this.serverPath+'car/brand/'+brand)
-        .then(response => {this.items = response.data})
+        .then(response => {this.cars = response.data})
         .catch(error => console.log(error));
     },
     categorySelected(category){
       this.axios
         .get(this.serverPath+'car/category/'+category)
-        .then(response => {this.items = response.data})
+        .then(response => {this.cars = response.data})
         .catch(error => console.log(error));
     },
     loadAll(){
       this.axios
         .get(this.serverPath+'car/all')
-        .then(response => {this.items = response.data})
+        .then(response => {this.cars = response.data})
         .catch(error => console.log(error));
     }
   }

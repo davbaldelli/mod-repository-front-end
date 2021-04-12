@@ -2,7 +2,7 @@
   <div class="container-fluid">
     <b-row>
       <b-col cols="1" class="border-right">
-        <b-nav vertical align="right" class="w-50 flex-column text-left">
+        <b-nav vertical align="right" class="w-50  text-left">
           <b-dropdown text="Nation" class="m-2" >
             <b-dropdown-item v-for="(nation) in nations" :key="nation.Name" @click="nationSelected(nation.Name)">{{nation.Name}}</b-dropdown-item>
           </b-dropdown>
