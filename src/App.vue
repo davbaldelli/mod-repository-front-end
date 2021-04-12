@@ -70,7 +70,7 @@ export default {
       adminUsername : "",
       adminPassword : "",
       adminLogged : false,
-      serverPath: "http://api.mods.davidebaldelli.it"
+      serverPath: "https://api.mods.davidebaldelli.it"
     }
   },
   methods: {
