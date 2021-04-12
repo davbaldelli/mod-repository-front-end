@@ -35,7 +35,7 @@ data() {
     items: null,
     nations: [],
     categories: [],
-    serverPath: "http://217.61.15.225:6316/"
+    serverPath: "http://api.mods.davidebaldelli.it"
   }
 },
 mounted () {
