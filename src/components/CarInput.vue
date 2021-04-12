@@ -134,7 +134,7 @@ export default {
       existingBrand : true,
       existingNation : true,
       errors: [],
-      serverPath: "https://api.mods.davidebaldelli.it"
+      serverPath: "https://api.mods.davidebaldelli.it/"
     }
   },
   methods: {

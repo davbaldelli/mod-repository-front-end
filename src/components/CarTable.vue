@@ -34,7 +34,7 @@ export default {
       items: [],
       categories: [],
       nations: [],
-      serverPath: "https://api.mods.davidebaldelli.it"
+      serverPath: "https://api.mods.davidebaldelli.it/"
     }
   },
   mounted () {
