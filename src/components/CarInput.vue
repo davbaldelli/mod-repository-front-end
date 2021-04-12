@@ -34,7 +34,6 @@
       >
         <b-form-input
           id="input-year"
-          v-model="form.Year"
           placeholder="Enter car production year"
           type="number"
           trim
@@ -162,7 +161,7 @@ export default {
             Name : ""
           }
         },
-        Year : null,
+        Year : 0,
         Drivetrain : "",
         GearType : "",
         Categories : [{
@@ -195,7 +194,7 @@ export default {
         this.axios
             .post(this.serverPath+"car/new", this.form ,)
             .then(res => alert(JSON.stringify("Macchina Inserita Correttamente : "+res.status)))
-            .catch(err => alert(JSON.stringify(err)))
+            .catch(err => alert(JSON.stringify(err.data)))
       } else {
         this.errors.push("brand or nation already existing")
       }
