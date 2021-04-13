@@ -138,7 +138,7 @@ export default {
       nations : [],
       nationOptions : [],
       existingNation : true,
-      serverPath: "https://api.mods.davidebaldelli.it/"
+      serverPath: "http://api.mods.davidebaldelli.it/"
     }
   },
   methods: {

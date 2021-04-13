@@ -62,7 +62,7 @@ export default {
       adminUsername : "",
       adminPassword : "",
       adminLogged : false,
-      serverPath: "https://api.mods.davidebaldelli.it/"
+      serverPath: "https://api.mod.davidebaldelli.it/"
     }
   },
   methods: {

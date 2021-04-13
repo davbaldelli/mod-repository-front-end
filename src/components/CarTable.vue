@@ -49,7 +49,7 @@ export default {
       cars: [],
       categories: [],
       nations: [],
-      serverPath: "https://api.mods.davidebaldelli.it/"
+      serverPath: "https://api.mod.davidebaldelli.it/"
     }
   },
   mounted () {
