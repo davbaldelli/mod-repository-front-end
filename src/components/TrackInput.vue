@@ -31,9 +31,9 @@
             :aria-describedby="ariaDescribedby"
             name="flavour-1"
           >
-          </b-form-checkbox-group>
-          <b-form-checkbox id="checkbox-1" v-model="form.Premium" name="checkbox-1">Premium</b-form-checkbox> 
+          </b-form-checkbox-group>         
       </b-form-group>
+      <b-form-checkbox id="checkbox-1" v-model="form.Premium" name="checkbox-1">Premium</b-form-checkbox> 
       <b-form-group
           id="input-group-0"
           label-cols-sm="4"
@@ -161,7 +161,8 @@ export default {
         {text: "Rally", value : "Rally"},
         {text: "Drift", value : "Drift"},
         {text: "Open World", value : "Open World"},
-        {text: "City Track", value : "City Track"}
+        {text: "Street Circuit", value : "City Track"},
+        {text: "Touge", value : "Touge"}
       ],
       nations : [],
       nationOptions : [],

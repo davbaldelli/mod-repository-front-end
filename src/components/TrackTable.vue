@@ -20,7 +20,7 @@
         <b-row>
           <b-col>
             <div v-for="track in tracks" :key="track.Name" class="text-left">
-              <b-card :title="track.Name" :sub-title="track.Location+', '+track.Nation.Name">
+              <b-card :title="track.Name" :sub-title="track.Location+', '+track.Nation.Name" class="mb-2">
                 <b-card-text>
                   <b-badge v-for="tag in track.Tags" :key="tag" class="m-1">{{tag}}</b-badge>
                   <b-badge v-if="track.Premium" class="m-1" variant="warning">Premium</b-badge>
