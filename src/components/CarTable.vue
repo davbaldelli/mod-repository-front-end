@@ -14,7 +14,7 @@
         <b-nav-item @click="loadAll">All</b-nav-item>
       </b-nav>
     </b-col>
-    <b-col lg="8">
+    <b-col lg="6">
       <b-row>
         <b-col>
           <div>
@@ -24,7 +24,7 @@
       </b-row>
       <b-row>
         <b-col>
-            <div v-for="car in cars" :key="car.ModelName" class="text-left">
+          <div v-for="car in cars" :key="car.ModelName" class="text-left">
             <b-card :title="car.Brand.Name+' '+car.ModelName" :sub-title="car.Drivetrain+' '+car.GearType" class="mb-2">
               <b-card-text>
                 <b-badge v-for="category in car.Categories" :key="category.Name" class="m-1">{{category.Name}}</b-badge>

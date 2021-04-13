@@ -17,7 +17,23 @@
             required
         ></b-form-input>
       </b-form-group>
-      <b-form-checkbox id="checkbox-1" v-model="form.Premium" name="checkbox-1">Premium</b-form-checkbox> 
+      <b-form-group 
+        label="Select tags:" 
+        v-slot="{ ariaDescribedby }"
+        label-cols-sm="4"
+        label-cols-lg="3"
+        content-cols-lg="7"
+        >
+        <b-form-checkbox-group
+            id="checkbox-group-1"
+            v-model="form.Tags"
+            :options="trackTags"
+            :aria-describedby="ariaDescribedby"
+            name="flavour-1"
+          >
+          </b-form-checkbox-group>
+          <b-form-checkbox id="checkbox-1" v-model="form.Premium" name="checkbox-1">Premium</b-form-checkbox> 
+      </b-form-group>
       <b-form-group
           id="input-group-0"
           label-cols-sm="4"
@@ -98,13 +114,13 @@
           ></b-form-input>
           <b-form-select
               id="input-layout-Type"
-              v-model="form.Layouts[index].Category.Name"
+              v-model="form.Layouts[index].Category"
               :options="layoutTypeOptions"
               placeholder="Enter layout type"
               class="mb-3"/>
         </div>
       </b-form-group>
-      <b-button @click="removeLayout" variant="danger">Remove Category</b-button>
+      <b-button @click="removeLayout" variant="danger">Remove Layout</b-button>
       <b-button @click="addLayout" variant="success">Add Layout</b-button>
       <b-button type="submit" variant="primary">Submit</b-button>
     </b-form>
@@ -128,21 +144,29 @@ export default {
         Layouts : [
           {
             LengthKm : 0,
-            Category : {
-              Name : ""
-            },
+            Category : "",
             Name : ""
           },
         ]
       },
       layoutTypeOptions:[
         {text: "Oval", value: "Oval"},
-        {text: "Road Course", value: "Road Course"}
+        {text: "Road Course", value: "Road Course"},
+        {text: "A to B", value: "A to B"}
+      ],
+      trackTags :[
+        {text: "F1", value : "F1"},
+        {text: "NASCAR", value : "NASCAR"},
+        {text: "Historic", value : "Historic"},
+        {text: "Rally", value : "Rally"},
+        {text: "Drift", value : "Drift"},
+        {text: "Open World", value : "Open World"},
+        {text: "City Track", value : "City Track"}
       ],
       nations : [],
       nationOptions : [],
       existingNation : true,
-      serverPath: "http://api.mod.davidebaldelli.it/"
+      serverPath: "https://api.mod.davidebaldelli.it/"
     }
   },
   methods: {
