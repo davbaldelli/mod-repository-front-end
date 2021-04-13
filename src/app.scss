@@ -1,0 +1,11 @@
+.bd-sidebar {
+    position: -webkit-sticky;
+    position: sticky;
+    top: 4rem;
+    z-index: 1000;
+    height: calc(100vh - 4rem);
+}
+
+// Then import Bootstrap an BootstrapVue SCSS files (order is important)
+@import 'node_modules/bootstrap/scss/bootstrap.scss';
+@import 'node_modules/bootstrap-vue/src/index.scss';

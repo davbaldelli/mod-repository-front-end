@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-      <b-navbar type="dark" variant="dark">
+      <b-navbar type="dark" variant="dark" class="fixed-top">
         <b-navbar-nav>
           <b-nav-item to="/cars">Cars</b-nav-item>
           <b-nav-item to="/tracks">Tracks</b-nav-item>

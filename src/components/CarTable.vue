@@ -2,7 +2,7 @@
 <b-container fluid>
   <b-row>
     <b-col sm>
-      <b-nav vertical class="w-50 text-left">
+      <b-nav vertical class="w-50 text-left bd-sidebar">
         <div v-for="(nation) in nations" :key="nation.Nation" class="m-2">
             <b-dropdown :text="nation.Nation" split @click="nationSelected(nation.Nation)">
               <b-dropdown-item v-for="(brand) in nation.Brands" @click="brandSelected(brand)" :key="brand">{{brand}}</b-dropdown-item>
@@ -24,10 +24,11 @@
       </b-row>
       <b-row>
         <b-col>
-          <div v-for="car in cars" :key="car.ModelName" class="text-left">
+            <div v-for="car in cars" :key="car.ModelName" class="text-left">
             <b-card :title="car.Brand.Name+' '+car.ModelName" :sub-title="car.Drivetrain+' '+car.GearType" class="mb-2">
               <b-card-text>
-                <b-badge v-for="category in car.Categories" :key="category.Name" class="mb-2">{{category.Name}}</b-badge>
+                <b-badge v-for="category in car.Categories" :key="category.Name" class="m-1">{{category.Name}}</b-badge>
+                <b-badge v-if="car.Premium" class="m-1" variant="warning">Premium</b-badge>
               </b-card-text>
               <b-link :href="car.DownloadLink" class="card-link">Download Here</b-link>
             </b-card>

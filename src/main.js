@@ -13,6 +13,9 @@ import TrackInput from "@/components/TrackInput"
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
 
+import './app.scss'
+
+Vue.use(BootstrapVue)
 Vue.use(VueRouter)
 Vue.use(BootstrapVue)
 Vue.use(IconsPlugin)
