@@ -88,5 +88,11 @@ export default {
 </script>
 
 <style scoped>
-
+  .bd-sidebar {
+    position: -webkit-sticky;
+    position: sticky;
+    top: 4rem;
+    z-index: 1000;
+    height: calc(100vh - 4rem);
+}
 </style>
