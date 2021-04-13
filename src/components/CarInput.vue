@@ -1,4 +1,6 @@
 <template>
+<b-row>
+  <b-col>
   <div class="container">
     <b-form @submit.prevent="onSubmit()" >
       <ul id="errors">
@@ -23,6 +25,7 @@
           trim
         ></b-form-input>
       </b-form-group>
+      <b-form-checkbox id="checkbox-1" v-model="form.Premium" name="checkbox-1">Premium</b-form-checkbox> 
       <b-form-group
         id="input-group-year"
         label-cols-sm="4"
@@ -34,9 +37,11 @@
       >
         <b-form-input
           id="input-year"
+          v-model="form.Year"
           placeholder="Enter car production year"
           type="number"
-          trim
+          number
+          required
         ></b-form-input>
       </b-form-group>
       <b-form-group
@@ -129,21 +134,21 @@
          <b-form-input
              v-model="form.Categories[index].Name"
              id="input-category-name"
+             required
          ></b-form-input>
        </div>
       </b-form-group>
       <b-row>
-        <b-col cols="6" md="4"/>
-        <b-col cols="6" md="4">
-          <b-button @click="addNewCategory">Add Category</b-button>
+        <b-col>
+          <b-button @click="addNewCategory" variant="success">Add Category</b-button>
+          <b-button @click="removeCategory" variant="danger">Remove Category</b-button>
         </b-col>
-
       </b-row>
-
       <b-button type="submit" variant="primary">Submit</b-button>
     </b-form>
   </div>
-
+  </b-col>
+</b-row>
 </template>
 
 <script>
@@ -166,7 +171,8 @@ export default {
         GearType : "",
         Categories : [{
           Name : ""
-        }]
+        }],
+        Premium : false
       },
       gearTypeOptions : [
         {value : "SEQUENTIAL", text : "Sequential"},
@@ -183,25 +189,26 @@ export default {
       nations: [],
       existingBrand : true,
       existingNation : true,
-      errors: [],
       serverPath: "https://api.mod.davidebaldelli.it/"
     }
   },
   methods: {
     onSubmit() {
       if(!this.checkExistingBrand(this.form.Brand.Name) && !this.checkExistingNation(this.form.Brand.Nation.Name)) {
-        this.errors = []
         this.axios
             .post(this.serverPath+"car/new", this.form ,)
             .then(res => alert(JSON.stringify("Macchina Inserita Correttamente : "+res.status)))
             .catch(err => alert(JSON.stringify(err.data)))
       } else {
-        this.errors.push("brand or nation already existing")
+        alert("Brand or nation already existing!")
       }
 
     },
     addNewCategory(){
       this.form.Categories.push({Name : ""})
+    },
+    removeCategory(){
+      this.form.Categories.pop()
     },
     addBrandOpts(brandName){
       this.brandsOpts.push(JSON.parse('{"value" : "'+brandName+'", "text" : "'+brandName+'"}'));

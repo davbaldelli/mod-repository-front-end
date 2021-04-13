@@ -1,18 +1,18 @@
 <template>
   <div id="app">
-      <b-navbar type="dark" variant="dark" class="fixed-top">
-        <b-navbar-nav>
-          <b-nav-item to="/cars">Cars</b-nav-item>
-          <b-nav-item to="/tracks">Tracks</b-nav-item>
-          <b-nav-item v-if="adminLogged" to="/track/new">Add Tracks</b-nav-item>
-          <b-nav-item v-if="adminLogged" to="/car/new">Add Cars</b-nav-item>
-        </b-navbar-nav>
-        <b-navbar-nav class="ml-auto">
-          <b-nav-item v-if="!adminLogged" v-b-modal.modal-login>Admin</b-nav-item>
-          <b-nav-item v-if="adminLogged" @click="logOut" to="/cars">User</b-nav-item>
-        </b-navbar-nav>
-      </b-navbar>
-      <router-view></router-view>
+    <b-navbar type="dark" variant="dark" fixed="top" sticky>
+      <b-navbar-nav>
+        <b-nav-item to="/cars">Cars</b-nav-item>
+        <b-nav-item to="/tracks">Tracks</b-nav-item>
+        <b-nav-item v-if="adminLogged" to="/track/new">Add Tracks</b-nav-item>
+        <b-nav-item v-if="adminLogged" to="/car/new">Add Cars</b-nav-item>
+      </b-navbar-nav>
+      <b-navbar-nav class="ml-auto">
+        <b-nav-item v-if="!adminLogged" v-b-modal.modal-login>Admin</b-nav-item>
+        <b-nav-item v-if="adminLogged" @click="logOut" to="/cars">User</b-nav-item>
+      </b-navbar-nav>
+    </b-navbar>
+    <router-view></router-view>
     <div>
       <b-modal
       id="modal-login"
