@@ -1,8 +1,9 @@
 <template>
-<b-container fluid>
+<b-container>
   <b-row>
-    <b-col sm>
-      <b-nav vertical class="w-50 text-left bd-sidebar">
+     <!-- MENU RICERCA -->
+    <b-row>
+      <b-navbar class="fixed-top menuFiltri">
         <b-input-group class="m-2">
             <b-form-input v-model="model_filter" required></b-form-input>
             <b-input-group-append>
@@ -18,18 +19,19 @@
           <b-dropdown-item  v-for="(category) in categories" :key="category.Name" @click="categorySelected(category.Name)">{{category.Name}}</b-dropdown-item>
         </b-dropdown>
         <b-nav-item @click="loadAll">All</b-nav-item>
-      </b-nav>
-    </b-col>
-    <b-col lg="6">
-      <b-row>
-        <b-col>
-          <div>
-            <b-jumbotron header="AC Mod Car" lead="A collection of quality mods" class="mb-2 text-left"></b-jumbotron>
-          </div>
-        </b-col>
-      </b-row>
-      <b-row>
-        <b-col>
+      </b-navbar>
+    </b-row>
+
+    <!-- TITOLO -->
+    <b-row class="titoloMenu">
+      <b-col>
+        <div>
+          <b-jumbotron header="AC Mod Car" lead="A collection of quality mods" class="mb-2 text-center"></b-jumbotron>
+        </div>
+      </b-col>
+    </b-row>
+
+          <!--
           <div v-for="car in cars" :key="car.ModelName" class="text-left">
             <b-card no-body class="overflow-hidden mb-2">
               <b-row no-gutters>
@@ -49,13 +51,36 @@
                 </b-col>
               </b-row>
             </b-card>
-          </div>
-        </b-col>
+          </div> -->
+
+        <!-- LISTA MACCHINE -->
+      <b-row class="carGrid">
+            <b-col md='4' v-for="car in cars" :key="car.ModelName">
+              <div class="flip-card">
+                <div class="flip-card-inner">
+                  <div class="flip-card-front carCard">
+                    <img :src="car.Image" alt="Image">
+                  </div>
+                  <div class="flip-card-back">
+                    <b-card-title>{{car.Brand.Name}} {{car.ModelName}}</b-card-title>
+                    <b-card-sub-title>Trazione: {{car.Drivetrain}}</b-card-sub-title>
+                    <b-card-text>
+                      <b-badge v-for="category in car.Categories" :key="category.Name" class="m-1">{{category.Name}}</b-badge>
+                      <b-badge v-if="car.Premium" class="m-1" variant="warning">Premium</b-badge>
+                    </b-card-text>
+                    <b-link :href="car.DownloadLink" class="card-link">Download Here</b-link>
+                  </div>
+                </div>
+              </div>
+            </b-col>
       </b-row>
-    </b-col>
-    <b-col sm>
-    </b-col>
+
+    
+    <!--<b-col sm>
+    </b-col> -->
+
   </b-row>
+
 </b-container>
 </template>
 
@@ -118,5 +143,85 @@ export default {
     top: 4rem;
     z-index: 1000;
     height: calc(100vh - 4rem);
+  }
+
+  .flip-card {
+  background-color: transparent;
+  width: 560px;
+  height: 280px;
+  border: 1px solid #f1f1f1;
+  perspective: 1000px; /* Remove this if you don't want the 3D effect */
+  border-radius: 15px;
+  margin-bottom: 25px;
 }
+
+/* This container is needed to position the front and back side */
+.flip-card-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  transition: transform 0.8s;
+  transform-style: preserve-3d;
+  border-radius: 15px;
+}
+
+/* Do an horizontal flip when you move the mouse over the flip box container */
+.flip-card:hover .flip-card-inner {
+  transform: rotateY(180deg);
+}
+
+/* Position the front and back side */
+.flip-card-front, .flip-card-back {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  -webkit-backface-visibility: hidden; /* Safari */
+  backface-visibility: hidden;
+  border-radius: 15px;
+}
+
+/* Style the front side (fallback if image is missing) */
+.flip-card-front {
+  background-color: #bbb;
+  color: black;
+}
+
+/* Style the back side */
+.flip-card-back {
+  background-color: dodgerblue;
+  color: white;
+  transform: rotateY(180deg);
+}
+
+.carCard img{
+  width: 100%;
+  height: 100%;
+  background-size: contain;  
+  border-radius: 15px;
+}
+
+
+.menuFiltri{
+  top: 50px
+}
+.titoloMenu{
+  display: contents;
+}
+
+.container {
+  max-width: 100%;
+}
+
+.row {
+  margin-right: 0%;
+  margin-left: 0%;
+}
+
+.carGrid {
+  margin-right: 10px;
+  margin-left: 10px;
+}
+
+
 </style>
