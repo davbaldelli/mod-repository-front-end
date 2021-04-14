@@ -6,7 +6,7 @@
           <b-input-group class="m-2">
           <b-form-input v-model="name_filter" required/>
             <b-input-group-append>
-              <b-button @click="filterByName(name_filter)" variant="outline-success">Search</b-button>
+              <b-button @click="filterByName()" variant="outline-success">Search</b-button>
             </b-input-group-append>
           </b-input-group>
           <b-dropdown text="Nation" class="m-2" >
@@ -49,7 +49,8 @@ data() {
   return {
     tracks: [],
     nations: [],
-    serverPath: "https://api.mod.davidebaldelli.it/"
+    serverPath: "https://api.mod.davidebaldelli.it/",
+    name_filter : ""
   }
 },
 mounted () {
@@ -69,9 +70,9 @@ mounted () {
       then(response => this.tracks = response.data).
       catch(error => console.log(error))
     },
-    filterByName(name){
+    filterByName(){
       this.axios.
-      get(this.serverPath+'track/name/'+name).
+      get(this.serverPath+'track/name/'+this.name_filter).
       then(response => this.tracks = response.data).
       catch(error => console.log(error))
     },

@@ -4,9 +4,9 @@
     <b-col sm>
       <b-nav vertical class="w-50 text-left bd-sidebar">
         <b-input-group class="m-2">
-            <b-form-input v-model="model_name_filter" required></b-form-input>
+            <b-form-input v-model="model_filter" required></b-form-input>
             <b-input-group-append>
-              <b-button @click="filterByName(model_name_filter)" variant="outline-success">Search</b-button>
+              <b-button @click="filterByName()" variant="outline-success">Search</b-button>
             </b-input-group-append>
           </b-input-group>
         <div v-for="(nation) in nations" :key="nation.Nation" class="m-2">         
@@ -31,12 +31,23 @@
       <b-row>
         <b-col>
           <div v-for="car in cars" :key="car.ModelName" class="text-left">
-            <b-card :title="car.Brand.Name+' '+car.ModelName" :sub-title="car.Drivetrain+' '+car.GearType" class="mb-2">
-              <b-card-text>
-                <b-badge v-for="category in car.Categories" :key="category.Name" class="m-1">{{category.Name}}</b-badge>
-                <b-badge v-if="car.Premium" class="m-1" variant="warning">Premium</b-badge>
-              </b-card-text>
-              <b-link :href="car.DownloadLink" class="card-link">Download Here</b-link>
+            <b-card no-body class="overflow-hidden mb-2">
+              <b-row no-gutters>
+                <b-col sm>
+                  <b-card-img :src="car.Image" alt="Image " class="rounded-0">></b-card-img>
+                </b-col>
+                <b-col md="9">
+                  <b-card-body>
+                    <b-card-title>{{car.Brand.Name}} {{car.ModelName}}</b-card-title>
+                    <b-card-sub-title>{{car.Drivetrain}} {{car.Drivetrain}}</b-card-sub-title>
+                    <b-card-text>
+                      <b-badge v-for="category in car.Categories" :key="category.Name" class="m-1">{{category.Name}}</b-badge>
+                      <b-badge v-if="car.Premium" class="m-1" variant="warning">Premium</b-badge>
+                    </b-card-text>
+                    <b-link :href="car.DownloadLink" class="card-link">Download Here</b-link>
+                  </b-card-body>                  
+                </b-col>
+              </b-row>
             </b-card>
           </div>
         </b-col>
@@ -56,7 +67,8 @@ export default {
       cars: [],
       categories: [],
       nations: [],
-      serverPath: "https://api.mod.davidebaldelli.it/"
+      serverPath: "https://api.mod.davidebaldelli.it/",
+      model_filter : ""
     }
   },
   mounted () {
@@ -83,9 +95,9 @@ export default {
         .then(response => {this.cars = response.data})
         .catch(error => console.log(error));
     },
-    filterByName(name){
+    filterByName(){
       this.axios
-        .get(this.serverPath+'car/model/'+name)
+        .get(this.serverPath+'car/model/'+this.model_filter)
         .then(response => {this.cars = response.data})
         .catch(error => console.log(error));
     },
