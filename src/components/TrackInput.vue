@@ -61,6 +61,14 @@
           label-for="input-link"
           descripiton="Enter download link"
       >
+        <b-form-input
+            id="input-link"
+            v-model="form.DownloadLink"
+            type="url"
+            placeholder="Enter download link"
+            required
+        ></b-form-input>
+      </b-form-group>
       <b-form-group
           id="input-group-image"
           label-cols-sm="4"
@@ -162,7 +170,7 @@ export default {
     return{
       form : {
         DownloadLink: "",
-        Image: "",
+        Image : "",
         Name : "",
         Location : "",
         Year : 0,
