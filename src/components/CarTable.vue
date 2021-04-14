@@ -3,7 +3,13 @@
   <b-row>
     <b-col sm>
       <b-nav vertical class="w-50 text-left bd-sidebar">
-        <div v-for="(nation) in nations" :key="nation.Nation" class="m-2">
+        <b-input-group class="m-2">
+            <b-form-input v-model="model_name_filter" required></b-form-input>
+            <b-input-group-append>
+              <b-button @click="filterByName(model_name_filter)" variant="outline-success">Search</b-button>
+            </b-input-group-append>
+          </b-input-group>
+        <div v-for="(nation) in nations" :key="nation.Nation" class="m-2">         
             <b-dropdown :text="nation.Nation" split @click="nationSelected(nation.Nation)">
               <b-dropdown-item v-for="(brand) in nation.Brands" @click="brandSelected(brand)" :key="brand">{{brand}}</b-dropdown-item>
             </b-dropdown>
@@ -74,6 +80,12 @@ export default {
     categorySelected(category){
       this.axios
         .get(this.serverPath+'car/category/'+category)
+        .then(response => {this.cars = response.data})
+        .catch(error => console.log(error));
+    },
+    filterByName(name){
+      this.axios
+        .get(this.serverPath+'car/model/'+name)
         .then(response => {this.cars = response.data})
         .catch(error => console.log(error));
     },

@@ -2,7 +2,13 @@
   <div class="container-fluid">
     <b-row>
       <b-col sm>
-        <b-nav vertical class="w-50 text-left bd-nav">
+        <b-nav vertical class="w-50 text-left bd-sidebar">
+          <b-input-group class="m-2">
+          <b-form-input v-model="name_filter" required/>
+            <b-input-group-append>
+              <b-button @click="filterByName(name_filter)" variant="outline-success">Search</b-button>
+            </b-input-group-append>
+          </b-input-group>
           <b-dropdown text="Nation" class="m-2" >
             <b-dropdown-item v-for="(nation) in nations" :key="nation.Name" @click="nationSelected(nation.Name)">{{nation.Name}}</b-dropdown-item>
           </b-dropdown>
@@ -54,19 +60,25 @@ mounted () {
     nationSelected(nation){
       this.axios.
       get(this.serverPath+'track/nation/'+nation).
-      then(response => {this.tracks = response.data; console.log(response.data)}).
+      then(response => this.tracks = response.data).
       catch(error => console.log(error))
     },
     categorySelected(category){
       this.axios.
       get(this.serverPath+'track/layout/type/'+category).
-      then(response => {this.tracks = response.data; console.log(response.data)}).
+      then(response => this.tracks = response.data).
+      catch(error => console.log(error))
+    },
+    filterByName(name){
+      this.axios.
+      get(this.serverPath+'track/name/'+name).
+      then(response => this.tracks = response.data).
       catch(error => console.log(error))
     },
     loadAllTracks(){
       this.axios.
       get(this.serverPath+'track/all').
-      then(response => {this.tracks = response.data; console.log(response.data)}).
+      then(response => this.tracks = response.data).
       catch(error => console.log(error))
     }
   }

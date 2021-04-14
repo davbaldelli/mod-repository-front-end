@@ -2,20 +2,37 @@
   <div class="container">
     <b-form @submit.prevent="onSubmit()">
       <b-form-group
-          id="input-group-1"
+          id="input-group-name"
           label-cols-sm="4"
           label-cols-lg="3"
           content-cols-lg="7"
           label="Track Name:"
-          label-for="input-1"
+          label-for="input-name"
           descripiton="Enter track name"
       >
         <b-form-input
-            id="input-1"
+            id="input-name"
             v-model="form.Name"
             placeholder="Enter track name"
             required
         ></b-form-input>
+      </b-form-group>
+      <b-form-group
+        id="input-group-year"
+        label-cols-sm="4"
+        label-cols-lg="3"
+        content-cols-lg="7"
+        label="Year:"
+        label-for="input-year"
+        description="Enter track year"
+      >
+        <b-form-input
+          v-model="form.Year"
+          type="number"
+          id="input-year"
+          placeholder="Enter Year"
+          number
+      ></b-form-input>
       </b-form-group>
       <b-form-group 
         label="Select tags:" 
@@ -23,9 +40,10 @@
         label-cols-sm="4"
         label-cols-lg="3"
         content-cols-lg="7"
+        label-for="input-tags"
         >
         <b-form-checkbox-group
-            id="checkbox-group-1"
+            id="input-tags"
             v-model="form.Tags"
             :options="trackTags"
             :aria-describedby="ariaDescribedby"
@@ -33,18 +51,18 @@
           >
           </b-form-checkbox-group>         
       </b-form-group>
-      <b-form-checkbox id="checkbox-1" v-model="form.Premium" name="checkbox-1">Premium</b-form-checkbox> 
+      <b-form-checkbox id="input-premium" v-model="form.Premium">Premium</b-form-checkbox> 
       <b-form-group
-          id="input-group-0"
+          id="input-group-link"
           label-cols-sm="4"
           label-cols-lg="3"
           content-cols-lg="7"
           label="Download Link:"
-          label-for="input-0"
+          label-for="input-link"
           descripiton="Enter download link"
       >
         <b-form-input
-            id="input-0"
+            id="input-link"
             v-model="form.DownloadLink"
             type="url"
             placeholder="Enter download link"
@@ -52,37 +70,37 @@
         ></b-form-input>
       </b-form-group>
       <b-form-group
-          id="input-group-2"
+          id="input-group-location"
           label-cols-sm="4"
           label-cols-lg="3"
           content-cols-lg="7"
           label="Track Location:"
-          label-for="input-2"
+          label-for="input-location"
           descripiton="Enter track location"
       >
         <b-form-input
-            id="input-2"
+            id="input-location"
             v-model="form.Location"
             placeholder="Enter track location"
             required
         ></b-form-input>
       </b-form-group>
       <b-form-group
-        id="input-group-3"
+        id="input-group-nation"
         label-cols-sm="4"
         label-cols-lg="3"
         content-cols-lg="7"
         label="Nation:"
-        label-for="input-3"
+        label-for="input-nation"
       >
         <b-form-select
-            id="input-3"
+            id="input-nation"
             v-if="existingNation"
             v-model="form.Nation.Name"
             :options="nationOptions"
             class="mb-3"/>
         <b-form-input
-            id="input-3"
+            id="input-nation"
             v-if="!existingNation"
             v-model="form.Nation.Name"
             placeholder="Enter nation"
@@ -137,6 +155,7 @@ export default {
         DownloadLink: "",
         Name : "",
         Location : "",
+        Year : 0,
         Nation : {
           Name : ""
         },
@@ -161,8 +180,11 @@ export default {
         {text: "Rally", value : "Rally"},
         {text: "Drift", value : "Drift"},
         {text: "Open World", value : "Open World"},
-        {text: "Street Circuit", value : "City Track"},
-        {text: "Touge", value : "Touge"}
+        {text: "City Track", value : "City Track"},
+        {text: "Touge", value : "Touge"},
+        {text: "Endurance", value : "Endurance"},
+        {text: "Street Circuit", value : "Street Track"},
+        {text: "Fictional", value : "Fictional"},
       ],
       nations : [],
       nationOptions : [],
