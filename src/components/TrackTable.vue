@@ -26,12 +26,23 @@
         <b-row>
           <b-col>
             <div v-for="track in tracks" :key="track.Name" class="text-left">
-              <b-card :title="track.Name" :sub-title="track.Location+', '+track.Nation.Name" class="mb-2">
-                <b-card-text>
-                  <b-badge v-for="tag in track.Tags" :key="tag" class="m-1">{{tag}}</b-badge>
-                  <b-badge v-if="track.Premium" class="m-1" variant="warning">Premium</b-badge>
-                </b-card-text>
-                <b-link :href="track.DownloadLink" class="card-link">Download Here</b-link>
+              <b-card no-body class="overflow-hidden mb-2">
+              <b-row no-gutters>
+                <b-col sm>
+                  <b-card-img :src="track.Image" alt="Image " class="rounded-0">></b-card-img>
+                  </b-col>
+                  <b-col md="9">
+                    <b-card-body>
+                      <b-card-title>{{track.Name}}</b-card-title>
+                      <b-card-sub-title>{{track.Location}}, {{track.Nation.Name}}</b-card-sub-title>
+                      <b-card-text>
+                        <b-badge v-for="tag in track.Tags" :key="tag" class="m-1">{{tag}}</b-badge>
+                        <b-badge v-if="track.Premium" class="m-1" variant="warning">Premium</b-badge>
+                      </b-card-text>
+                      <b-link :href="track.DownloadLink" class="card-link">Download Here</b-link>
+                    </b-card-body>                  
+                  </b-col>
+                </b-row>
               </b-card>
             </div>
           </b-col>
