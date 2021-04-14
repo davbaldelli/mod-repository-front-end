@@ -67,6 +67,23 @@
         <b-form-select id="input-geartype" v-model="form.GearType" :options="gearTypeOptions" required></b-form-select>
       </b-form-group>
       <b-form-group
+          id="input-group-image"
+          label-cols-sm="4"
+          label-cols-lg="3"
+          content-cols-lg="7"
+          label="Image Link:"
+          label-for="input-image"
+          descripiton="Enter car image link"
+      >
+        <b-form-input
+            id="input-image"
+            v-model="form.Image"
+            type="url"
+            placeholder="Enter car image link"
+            required
+        ></b-form-input>
+      </b-form-group>
+      <b-form-group
           id="input-group-2"
           label-cols-sm="4"
           label-cols-lg="3"
@@ -159,6 +176,7 @@ export default {
       selected: null,
       form : {
         DownloadLink : '',
+        Image : '',
         ModelName : '',
         Brand : {
           Name : "",
