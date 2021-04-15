@@ -35,10 +35,10 @@
             <div class="text-left" id="track-card-list">
               <b-card  v-for="track in tracksForList" :key="track.Name" no-body class="overflow-hidden mb-2">
               <b-row>
-                <b-col md="4">
+                <b-col md="3">
                   <b-card-img :src="track.Image" alt="Fluid image" class="rounded-2"></b-card-img>
                   </b-col>
-                  <b-col md="8">
+                  <b-col md="9">
                     <b-card-body>
                       <b-card-title>{{track.Name}}</b-card-title>
                       <b-card-sub-title>{{track.Location}}, {{track.Nation.Name}}</b-card-sub-title>

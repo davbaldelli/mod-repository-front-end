@@ -43,7 +43,7 @@
                 <b-col sm>
                   <b-card-img :src="car.Image" alt="Fluid image " class="rounded-2">></b-card-img>
                 </b-col>
-                <b-col md="8">
+                <b-col md="9">
                   <b-card-body>
                     <b-card-title>{{car.Brand.Name}} {{car.ModelName}}</b-card-title>
                     <b-card-sub-title>{{car.Drivetrain}} {{car.Drivetrain}}</b-card-sub-title>
