@@ -46,13 +46,13 @@
                 <b-col md="9">
                   <b-card-body>
                     <b-card-title>{{car.Brand.Name}} {{car.ModelName}}</b-card-title>
-                    <b-card-sub-title>{{car.Drivetrain}} {{car.Drivetrain}}</b-card-sub-title>
+                    <b-card-sub-title>{{car.Drivetrain}} {{car.GearType.toLowerCase()}}</b-card-sub-title>
                     <b-card-text>
-                      <b-badge v-for="category in car.Categories" :key="category.Name" class="m-1">{{category.Name}}</b-badge>
-                      <b-badge v-if="car.Premium" class="m-1" variant="warning">Premium</b-badge>
-                    </b-card-text>
-                    <b-link :href="car.DownloadLink" class="card-link">Download Here</b-link>
-                  </b-card-body>                  
+                      <b-badge v-for="category in car.Categories" :key="category.Name" class="mr-1 mt-3">{{category.Name}}</b-badge>
+                      <b-badge v-if="car.Premium" variant="warning">Premium</b-badge> 
+                    </b-card-text> 
+                    <b-link :href="car.DownloadLink" class="card-link">Download Here</b-link>   
+                  </b-card-body>      
                 </b-col>
               </b-row>
             </b-card>

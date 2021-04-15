@@ -34,7 +34,7 @@
             ></b-pagination>
             <div class="text-left" id="track-card-list">
               <b-card  v-for="track in tracksForList" :key="track.Name" no-body class="overflow-hidden mb-2">
-              <b-row>
+              <b-row no-gutters>
                 <b-col md="3">
                   <b-card-img :src="track.Image" alt="Fluid image" class="rounded-2"></b-card-img>
                   </b-col>
@@ -43,8 +43,8 @@
                       <b-card-title>{{track.Name}}</b-card-title>
                       <b-card-sub-title>{{track.Location}}, {{track.Nation.Name}}</b-card-sub-title>
                       <b-card-text>
-                        <b-badge v-for="tag in track.Tags" :key="tag" class="m-1">{{tag}}</b-badge>
-                        <b-badge v-if="track.Premium" class="m-1" variant="warning">Premium</b-badge>
+                        <b-badge v-for="tag in track.Tags" :key="tag" class="mr-1 mt-3">{{tag}}</b-badge>
+                        <b-badge v-if="track.Premium" variant="warning">Premium</b-badge>
                       </b-card-text>
                       <b-link :href="track.DownloadLink" class="card-link">Download Here</b-link>
                     </b-card-body>                  
