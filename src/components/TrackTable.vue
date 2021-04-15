@@ -25,13 +25,20 @@
         </b-row>
         <b-row>
           <b-col>
-            <div v-for="track in tracks" :key="track.Name" class="text-left">
-              <b-card no-body class="overflow-hidden mb-2">
-              <b-row no-gutters>
-                <b-col sm>
-                  <b-card-img :src="track.Image" alt="Image " class="rounded-0">></b-card-img>
+            <b-pagination
+              v-model="currentPage"
+              :total-rows="rows"
+              :per-page="perPage"
+              aria-controls="car-card-list"
+              align="center"
+            ></b-pagination>
+            <div class="text-left" id="track-card-list">
+              <b-card  v-for="track in tracksForList" :key="track.Name" no-body class="overflow-hidden mb-2">
+              <b-row>
+                <b-col md="4">
+                  <b-card-img :src="track.Image" alt="Fluid image" class="rounded-2"></b-card-img>
                   </b-col>
-                  <b-col md="9">
+                  <b-col md="8">
                     <b-card-body>
                       <b-card-title>{{track.Name}}</b-card-title>
                       <b-card-sub-title>{{track.Location}}, {{track.Nation.Name}}</b-card-sub-title>
@@ -45,6 +52,13 @@
                 </b-row>
               </b-card>
             </div>
+            <b-pagination
+              v-model="currentPage"
+              :total-rows="rows"
+              :per-page="perPage"
+              aria-controls="car-card-list"
+              align="center"
+            ></b-pagination>
           </b-col>
         </b-row>
       </b-col>
@@ -61,8 +75,22 @@ data() {
     tracks: [],
     nations: [],
     serverPath: "https://api.mod.davidebaldelli.it/",
-    name_filter : ""
+    name_filter : "",
+    currentPage : 1,
+    perPage : 25,
+    get tracksForList() {
+      return this.tracks.slice(
+        (this.currentPage - 1) * this.perPage,
+        this.currentPage * this.perPage,
+      );
+    }
   }
+},
+computed : {
+  rows () {
+    return this.tracks.length
+  },
+  
 },
 mounted () {
   this.loadAllTracks()

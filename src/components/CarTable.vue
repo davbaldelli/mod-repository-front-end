@@ -30,13 +30,20 @@
       </b-row>
       <b-row>
         <b-col>
-          <div v-for="car in cars" :key="car.ModelName" class="text-left">
-            <b-card no-body class="overflow-hidden mb-2">
+          <b-pagination
+            v-model="currentPage"
+            :total-rows="rows"
+            :per-page="perPage"
+            aria-controls="car-card-list"
+            align="center"
+          ></b-pagination>
+          <div id="car-card-list" class="text-left">
+            <b-card  v-for="car in carsForList" :key="car.ModelName" no-body class="overflow-hidden mb-2">
               <b-row no-gutters>
                 <b-col sm>
-                  <b-card-img :src="car.Image" alt="Image " class="rounded-0">></b-card-img>
+                  <b-card-img :src="car.Image" alt="Fluid image " class="rounded-2">></b-card-img>
                 </b-col>
-                <b-col md="9">
+                <b-col md="8">
                   <b-card-body>
                     <b-card-title>{{car.Brand.Name}} {{car.ModelName}}</b-card-title>
                     <b-card-sub-title>{{car.Drivetrain}} {{car.Drivetrain}}</b-card-sub-title>
@@ -50,6 +57,13 @@
               </b-row>
             </b-card>
           </div>
+          <b-pagination
+            v-model="currentPage"
+            :total-rows="rows"
+            :per-page="perPage"
+            aria-controls="car-card-list"
+            align="center"
+          ></b-pagination>
         </b-col>
       </b-row>
     </b-col>
@@ -64,12 +78,26 @@ export default {
   name : "car-table",
   data() {
     return {
+      currentPage: 1,
       cars: [],
       categories: [],
       nations: [],
       serverPath: "https://api.mod.davidebaldelli.it/",
-      model_filter : ""
+      model_filter : "",
+      perPage : 25,
+      get carsForList() {
+      return this.cars.slice(
+        (this.currentPage - 1) * this.perPage,
+        this.currentPage * this.perPage,
+      );
+},
     }
+  },
+  computed : {
+    rows () {
+      return this.cars.length
+    },
+    
   },
   mounted () {
     this.loadAll()
