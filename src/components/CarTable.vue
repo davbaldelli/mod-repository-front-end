@@ -23,7 +23,7 @@
     <b-col lg="6">
       <b-row>
         <b-col>
-          <div>
+          <div id="mod-list-title">
             <b-jumbotron header="AC Mod Car" lead="A collection of quality mods" class="mb-2 text-left"></b-jumbotron>
           </div>
         </b-col>
@@ -63,6 +63,7 @@
             :per-page="perPage"
             aria-controls="car-card-list"
             align="center"
+            @change="toTop()"
           ></b-pagination>
         </b-col>
       </b-row>
@@ -110,6 +111,9 @@ export default {
         .get(this.serverPath+'car/nation/'+nation)
         .then(response => {this.cars = response.data})
         .catch(error => console.log(error));
+    },
+    toTop() {
+      document.getElementById('mod-list-title').scrollIntoView();
     },
     brandSelected(brand){
       this.axios

@@ -18,7 +18,7 @@
       <b-col lg="6">
         <b-row>
           <b-col>
-            <div>
+            <div id="mod-list-title">
               <b-jumbotron header="AC Mod Tracks" lead="A collection of quality mods" class="mb-2 text-left"></b-jumbotron>
             </div>
           </b-col>
@@ -57,6 +57,7 @@
               :total-rows="rows"
               :per-page="perPage"
               aria-controls="car-card-list"
+              @change="toTop()"
               align="center"
             ></b-pagination>
           </b-col>
@@ -102,6 +103,9 @@ mounted () {
       get(this.serverPath+'track/nation/'+nation).
       then(response => this.tracks = response.data).
       catch(error => console.log(error))
+    },
+    toTop() {
+      document.getElementById('mod-list-title').scrollIntoView();
     },
     categorySelected(category){
       this.axios.
