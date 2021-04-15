@@ -1,9 +1,9 @@
 <template>
-<b-container>
+<b-container class="bgColor">
   <b-row>
      <!-- MENU RICERCA -->
     <b-row>
-      <b-navbar class="fixed-top menuFiltri">
+      <b-navbar class="fixed-top menuFiltri bg-dark">
         <b-input-group class="m-2">
             <b-form-input v-model="model_filter" required></b-form-input>
             <b-input-group-append>
@@ -24,7 +24,7 @@
 
     <!-- TITOLO -->
     <b-row class="titoloMenu">
-      <b-col>
+      <b-col md='12'>
         <div>
           <b-jumbotron header="AC Mod Car" lead="A collection of quality mods" class="mb-2 text-center"></b-jumbotron>
         </div>
@@ -189,7 +189,7 @@ export default {
 
 /* Style the back side */
 .flip-card-back {
-  background-color: dodgerblue;
+  background-color: #2c3e50;
   color: white;
   transform: rotateY(180deg);
 }
@@ -223,5 +223,15 @@ export default {
   margin-left: 10px;
 }
 
+.card-title{
+  margin-top: 20px;
+}
 
+.card-link{
+  color: #FFFF00;
+}
+
+.bgColor{
+  background-color: #708090;
+}
 </style>
