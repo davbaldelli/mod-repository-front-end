@@ -2,7 +2,7 @@
   <div class="container-fluid">
     <b-row>
       <b-col sm> </b-col>
-      <b-col lg="8">
+      <b-col lg="6">
         <b-row>
           <b-col>
             <div id="mod-list-title">
@@ -54,14 +54,14 @@
                 class="overflow-hidden mb-2"
               >
                 <b-row no-gutters>
-                  <b-col md="3">
+                  <b-col sm class="d-flex align-items-center">
                     <b-card-img
                       :src="track.Image"
                       alt="Fluid image"
-                      class="rounded-2"
+                      class="rounded-2 m-1"
                     ></b-card-img>
                   </b-col>
-                  <b-col md="9">
+                  <b-col md="8">
                     <b-card-body>
                       <b-card-title>{{ track.Name }}</b-card-title>
                       <b-card-sub-title class="mb-2"

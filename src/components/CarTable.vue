@@ -75,7 +75,7 @@
                       <b-card-img
                         :src="car.Image"
                         alt="Fluid image "
-                        class="rounded-4 p-1"
+                        class="rounded-4 m-1"
                         >></b-card-img
                       >
                     </b-col>
