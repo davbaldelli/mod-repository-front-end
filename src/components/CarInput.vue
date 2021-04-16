@@ -32,6 +32,74 @@
             >Premium</b-form-checkbox
           >
           <b-form-group
+            id="input-group-bhp"
+            label-cols-sm="4"
+            label-cols-lg="3"
+            content-cols-lg="7"
+            label="Car Horsepower (BHP):"
+            label-for="input-bhp"
+            descripiton="Enter car horsepower"
+          >
+            <b-form-input
+              id="input-bhp"
+              v-model="form.BHP"
+              placeholder="Enter car horsepower"
+              type="number"
+              number
+            ></b-form-input>
+          </b-form-group>
+          <b-form-group
+            id="input-group-torque"
+            label-cols-sm="4"
+            label-cols-lg="3"
+            content-cols-lg="7"
+            label="Car Toruqe (Nm):"
+            label-for="input-torque"
+            descripiton="Enter car torque"
+          >
+            <b-form-input
+              id="input-bhp"
+              v-model="form.Torque"
+              placeholder="Enter car torque"
+              type="number"
+              number
+            ></b-form-input>
+          </b-form-group>
+          <b-form-group
+            id="input-group-weight"
+            label-cols-sm="4"
+            label-cols-lg="3"
+            content-cols-lg="7"
+            label="Car Weight (Kg):"
+            label-for="input-weight"
+            descripiton="Enter car weight"
+          >
+            <b-form-input
+              id="input-weight"
+              v-model="form.Weight"
+              placeholder="Enter car weight"
+              type="number"
+              number
+            ></b-form-input>
+          </b-form-group>
+          <b-form-group
+            id="input-group-top-speed"
+            label-cols-sm="4"
+            label-cols-lg="3"
+            content-cols-lg="7"
+            label="Car Top Speed (Km/h):"
+            label-for="input-top-speed"
+            descripiton="Enter car Top Speed"
+          >
+            <b-form-input
+              id="input-top-speed"
+              v-model="form.TopSpeed"
+              placeholder="Enter car top speed"
+              type="number"
+              number
+            ></b-form-input>
+          </b-form-group>
+          <b-form-group
             id="input-group-year"
             label-cols-sm="4"
             label-cols-lg="3"
@@ -221,6 +289,10 @@ export default {
     return {
       selected: null,
       form: {
+        Torque: 0,
+        BHP: 0,
+        Weight : 0,
+        TopSpeed : 0,
         DownloadLink: "",
         Image: "",
         ModelName: "",
