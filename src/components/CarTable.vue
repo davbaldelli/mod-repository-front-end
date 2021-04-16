@@ -79,30 +79,29 @@
                         >></b-card-img
                       >
                     </b-col>
-                    <b-col md="8" style="height: calc(100%);">
-                      <b-card-body>
+                    <b-col md="8" style="height: calc(100%)">
+                      <b-card-body class="p-3">
                         <b-card-title
                           >{{ car.Brand.Name }}
                           {{ car.ModelName }}</b-card-title
                         >
-                        <b-card-sub-title class="mb-2"
+                        <b-card-sub-title class="mb-1"
                           >{{ car.Drivetrain }}
                           {{ car.GearType.toLowerCase() }}</b-card-sub-title
                         >
-                        <b-link :href="car.DownloadLink"
-                          >Download Here</b-link
-                        >
-                        <b-card-text class="align-bottom mt-2">
+                        <b-card-text class="mb-1"> <b>BHP:</b> {{car.BHP}}, <b>Nm:</b> {{car.Torque}}, <b>Max Speed:</b> {{car.TopSpeed}}km/h, <b>Weight:</b> {{car.Weight}}kg  </b-card-text>
+                        <b-link :href="car.DownloadLink">Download Here</b-link>
+                        <b-card-text class="align-bottom">
                           <b-badge
                             v-for="category in car.Categories"
                             :key="category.Name"
-                            class="mr-1 mt-2"
+                            class="mr-1 mt-1"
                             >{{ category.Name }}</b-badge
                           >
                           <b-badge v-if="car.Premium" variant="warning"
                             >Premium</b-badge
                           >
-                        </b-card-text>                      
+                        </b-card-text>
                       </b-card-body>
                     </b-col>
                   </b-row>
