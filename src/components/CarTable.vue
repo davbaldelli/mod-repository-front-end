@@ -71,11 +71,11 @@
                   class="overflow-hidden mb-2"
                 >
                   <b-row no-gutters>
-                    <b-col sm>
+                    <b-col sm class="d-flex align-items-center">
                       <b-card-img
                         :src="car.Image"
                         alt="Fluid image "
-                        class="rounded-2"
+                        class="rounded-4 p-1"
                         >></b-card-img
                       >
                     </b-col>
@@ -85,11 +85,10 @@
                           >{{ car.Brand.Name }}
                           {{ car.ModelName }}</b-card-title
                         >
-                        <b-card-sub-title class="mb-1"
-                          >{{ car.Drivetrain }}
-                          {{ car.GearType.toLowerCase() }}</b-card-sub-title
-                        >
-                        <b-card-text class="mb-1"> <b>BHP:</b> {{car.BHP}}, <b>Nm:</b> {{car.Torque}}, <b>Max Speed:</b> {{car.TopSpeed}}km/h, <b>Weight:</b> {{car.Weight}}kg  </b-card-text>
+                        <b-card-sub-title class="mb-1">{{car.Year}} </b-card-sub-title>
+                        <b-card-text class="mb-1">
+                          <b>{{car.Transmission}}</b>, <b>{{car.Drivetrain}}</b>, <b>BHP:</b> {{ car.BHP }}, <b>Nm: </b>{{ car.Torque }}, <b>Kg:</b> {{ car.Weight }}, <b>Top Speed:</b> {{ car.TopSpeed }}km/h  
+                        </b-card-text>
                         <b-link :href="car.DownloadLink">Download Here</b-link>
                         <b-card-text class="align-bottom">
                           <b-badge

@@ -66,18 +66,18 @@
             ></b-form-select>
           </b-form-group>
           <b-form-group
-            id="input-group-geartype"
+            id="input-group-transmission"
             label-cols-sm="4"
             label-cols-lg="3"
             content-cols-lg="7"
             label="Gear Type: "
-            label-for="input-geartype"
-            description="Select gear type"
+            label-for="input-transmission"
+            description="Select transmission type"
           >
             <b-form-select
-              id="input-geartype"
-              v-model="form.GearType"
-              :options="gearTypeOptions"
+              id="input-transmission"
+              v-model="form.Transmission"
+              :options="transmissionOptions"
               required
             ></b-form-select>
           </b-form-group>
@@ -232,7 +232,7 @@ export default {
         },
         Year: 0,
         Drivetrain: "",
-        GearType: "",
+        Transmission: "",
         Categories: [
           {
             Name: "",
@@ -240,9 +240,9 @@ export default {
         ],
         Premium: false,
       },
-      gearTypeOptions: [
-        { value: "SEQUENTIAL", text: "Sequential" },
-        { value: "MANUAL", text: "Manual" },
+      transmissionOptions: [
+        { value: "Sequential", text: "Sequential" },
+        { value: "Manual", text: "Manual" },
       ],
       drivetrainOptions: [
         { value: "AWD", text: "AWD" },
