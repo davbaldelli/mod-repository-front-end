@@ -71,6 +71,9 @@ export default {
       serverPath: "https://api.mod.davidebaldelli.it/",
     };
   },
+  mounted () {
+    this.adminLogged = JSON.parse(localStorage.getItem('user')).IsAdmin == 1
+  },
   methods: {
     goBack() {
       window.history.length > 1 ? this.$router.go(-1) : this.$router.push("/");

@@ -25,7 +25,25 @@
                   >{{ nation.Name }}</b-dropdown-item
                 >
               </b-dropdown>
-              <b-button variant="primary" class="m-2" @click="loadAllTracks">All</b-button>
+              <b-dropdown text="Category" class="m-2">
+                <b-dropdown-item
+                  v-for="tag in trackTags"
+                  :key="tag"
+                  @click="tagSelected(tag)"
+                  >{{ tag }}</b-dropdown-item
+                >
+              </b-dropdown>
+              <b-dropdown text="Layout Type" class="m-2">
+                <b-dropdown-item
+                  v-for="type in layoutTypeOptions"
+                  :key="type"
+                  @click="categorySelected(type)"
+                  >{{ type }}</b-dropdown-item
+                >
+              </b-dropdown>
+              <b-button variant="primary" class="m-2" @click="loadAllTracks"
+                >All</b-button
+              >
               <b-input-group class="m-2">
                 <b-form-input v-model="name_filter" required />
                 <b-input-group-append>
@@ -114,6 +132,21 @@ export default {
       name_filter: "",
       currentPage: 1,
       perPage: 25,
+      layoutTypeOptions: ["Oval", "Road Course", "A to B"],
+      trackTags: [
+        "F1",
+        "NASCAR",
+        "Historic",
+        "Rally",
+        "Drift",
+        "Open World",
+        "City Track",
+        "Touge",
+        "Endurance",
+        "Street Track",
+        "Fictional",
+        "Karting",
+      ],
       get tracksForList() {
         return this.tracks.slice(
           (this.currentPage - 1) * this.perPage,
@@ -146,6 +179,12 @@ export default {
     categorySelected(category) {
       this.axios
         .get(this.serverPath + "track/layout/type/" + category)
+        .then((response) => (this.tracks = response.data))
+        .catch((error) => console.log(error));
+    },
+    tagSelected(tag) {
+      this.axios
+        .get(this.serverPath + "track/tag/" + tag)
         .then((response) => (this.tracks = response.data))
         .catch((error) => console.log(error));
     },

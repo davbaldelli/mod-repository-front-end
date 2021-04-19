@@ -211,6 +211,7 @@ export default {
         { text: "Endurance", value: "Endurance" },
         { text: "Street Circuit", value: "Street Track" },
         { text: "Fictional", value: "Fictional" },
+        { text: "Karting", value: "Karting" },
       ],
       nations: [],
       nationOptions: [],
