@@ -8,9 +8,11 @@
         <b-nav-item v-if="adminLogged" to="/car/new">Add Cars</b-nav-item>
       </b-navbar-nav>
       <b-navbar-nav class="ml-auto">
-        <b-nav-item v-if="!adminLogged" v-b-modal.modal-login>Admin</b-nav-item>
-        <b-nav-item v-if="adminLogged" @click="logOut" to="/cars"
-          >User</b-nav-item
+        <div v-if="!logged">
+          <b-nav-item v-b-modal.modal-login to="/">Login</b-nav-item>
+        </div>
+        <b-nav-item v-if="logged" @click="logOut" to="/"
+          >Logout</b-nav-item
         >
       </b-navbar-nav>
     </b-navbar>
@@ -64,23 +66,28 @@ export default {
   components: {},
   data() {
     return {
+      logged : false,
       nameState: null,
+      production: true,
       adminUsername: "",
       adminPassword: "",
       adminLogged: false,
-      serverPath: "https://api.mod.davidebaldelli.it/",
     };
   },
   mounted () {
-    this.adminLogged = JSON.parse(localStorage.getItem('user')).IsAdmin == 1
+    if (localStorage.getItem('user') != {}){
+      this.logged = true
+      this.adminLogged = JSON.parse(localStorage.getItem('user')).IsAdmin == 1
+    }
   },
   methods: {
     goBack() {
       window.history.length > 1 ? this.$router.go(-1) : this.$router.push("/");
     },
     logOut() {
-      localStorage.setItem("user", {});
-      this.adminLogged = false;
+      localStorage.setItem("user", {})
+      this.adminLogged = false
+      this.logged = false
     },
     checkFormValidity() {
       const valid = this.$refs.form.checkValidity();
@@ -105,7 +112,7 @@ export default {
       }
 
       this.axios
-        .post(this.serverPath + "login", {
+        .post(this.$serverPath + "login", {
           username: this.adminUsername,
           password: this.adminPassword,
         })
@@ -116,7 +123,9 @@ export default {
           if (this.$route.params.nextUrl != null) {
             this.$router.push(this.$route.params.nextUrl);
           } else {
-            this.adminLogged = true;
+            this.logged = true
+            console.log("is premium: "+this.$premium)
+            this.adminLogged = response.data.IsAdmin;
           }
         })
         .catch((err) => alert("autenticazione fallita => " + err));

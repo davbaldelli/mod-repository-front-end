@@ -87,9 +87,10 @@
                         >
                         <b-card-sub-title class="mb-1">{{car.Year}} </b-card-sub-title>
                         <b-card-text class="mb-1">
-                          <b>{{car.Transmission}}</b>, <b>{{car.Drivetrain}}</b>, <b>BHP:</b> {{ car.BHP }}, <b>Nm: </b>{{ car.Torque }}, <b>Kg:</b> {{ car.Weight }}, <b>Top Speed:</b> {{ car.TopSpeed }}km/h  
+                          <b>{{car.Transmission}}</b>, <b>{{car.Drivetrain}}</b>, <b>BHP:</b> {{ car.BHP }}, <b>Nm: </b>{{ car.Torque }}, <b>Kg:</b> {{ car.Weight }}, <b>Top Speed:</b> {{ car.TopSpeed }}km/h, 
+                          <b>Author: </b><b-link :href="car.Author.Link">{{car.Author.Name}}</b-link> 
                         </b-card-text>
-                        <b-link :href="car.DownloadLink">Download Here</b-link>
+                        <b-link v-if="premium || !car.Premium" :href="car.DownloadLink">Download Here</b-link>
                         <b-card-text class="align-bottom">
                           <b-badge
                             v-for="category in car.Categories"
@@ -132,9 +133,9 @@ export default {
       cars: [],
       categories: [],
       nations: [],
-      serverPath: "https://api.mod.davidebaldelli.it/",
       model_filter: "",
       perPage: 25,
+      premium : false,
       get carsForList() {
         return this.cars.slice(
           (this.currentPage - 1) * this.perPage,
@@ -151,16 +152,20 @@ export default {
   mounted() {
     this.loadAll();
     this.axios
-      .get(this.serverPath + "car/type/all")
+      .get(this.$serverPath + "car/type/all")
       .then((res) => (this.categories = res.data));
     this.axios
-      .get(this.serverPath + "brand/all/grouped/nation")
+      .get(this.$serverPath + "brand/all/grouped/nation")
       .then((res) => (this.nations = res.data));
+
+    if(localStorage.getItem('user') != {}){
+      this.premium = JSON.parse(localStorage.getItem('user')).Username == "premium"
+    }
   },
   methods: {
     nationSelected(nation) {
       this.axios
-        .get(this.serverPath + "car/nation/" + nation)
+        .get(this.$serverPath + "car/nation/" + nation)
         .then((response) => {
           this.cars = response.data;
         })
@@ -171,7 +176,7 @@ export default {
     },
     brandSelected(brand) {
       this.axios
-        .get(this.serverPath + "car/brand/" + brand)
+        .get(this.$serverPath + "car/brand/" + brand)
         .then((response) => {
           this.cars = response.data;
         })
@@ -179,7 +184,7 @@ export default {
     },
     categorySelected(category) {
       this.axios
-        .get(this.serverPath + "car/category/" + category)
+        .get(this.$serverPath + "car/category/" + category)
         .then((response) => {
           this.cars = response.data;
         })
@@ -187,7 +192,7 @@ export default {
     },
     filterByName() {
       this.axios
-        .get(this.serverPath + "car/model/" + this.model_filter)
+        .get(this.$serverPath + "car/model/" + this.model_filter)
         .then((response) => {
           this.cars = response.data;
         })
@@ -195,7 +200,7 @@ export default {
     },
     loadAll() {
       this.axios
-        .get(this.serverPath + "car/all")
+        .get(this.$serverPath + "car/all")
         .then((response) => {
           this.cars = response.data;
         })

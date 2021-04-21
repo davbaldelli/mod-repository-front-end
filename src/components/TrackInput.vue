@@ -216,13 +216,12 @@ export default {
       nations: [],
       nationOptions: [],
       existingNation: true,
-      serverPath: "https://api.mod.davidebaldelli.it/",
     };
   },
   methods: {
     onSubmit() {
       this.axios
-        .post(this.serverPath + "track/new", this.form)
+        .post(this.$serverPath + "track/new", this.form)
         .then((res) =>
           alert(JSON.stringify("Pista Inserita Correttamente : " + res.status))
         )
@@ -249,7 +248,7 @@ export default {
     },
   },
   mounted() {
-    this.axios.get(this.serverPath + "nation/track/all").then((res) => {
+    this.axios.get(this.$serverPath + "nation/track/all").then((res) => {
       this.nations = res.data;
       res.data.forEach((nation) => this.addNationOpt(nation.Name));
     });
