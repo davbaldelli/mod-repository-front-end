@@ -75,7 +75,7 @@ export default {
     };
   },
   mounted () {
-    if (localStorage.getItem('user') != {}){
+    if (localStorage.getItem('user') != null){
       this.logged = true
       this.adminLogged = JSON.parse(localStorage.getItem('user')).IsAdmin == 1
     }
