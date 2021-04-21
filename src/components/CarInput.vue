@@ -3,11 +3,6 @@
     <b-col>
       <div class="container">
         <b-form @submit.prevent="onSubmit()">
-          <ul id="errors">
-            <li v-for="error in errors" :key="error">
-              {{ error }}
-            </li>
-          </ul>
           <b-form-group
             id="input-group-1"
             label-cols-sm="4"
@@ -327,7 +322,6 @@ export default {
       nations: [],
       existingBrand: true,
       existingNation: true,
-      serverPath: "https://api.mod.davidebaldelli.it/",
     };
   },
   methods: {
@@ -337,7 +331,7 @@ export default {
         !this.checkExistingNation(this.form.Brand.Nation.Name)
       ) {
         this.axios
-          .post(this.serverPath + "car/new", this.form)
+          .post(this.$serverPath + "car/new", this.form)
           .then((res) =>
             alert(
               JSON.stringify("Macchina Inserita Correttamente : " + res.status)
@@ -398,11 +392,11 @@ export default {
     },
   },
   mounted() {
-    this.axios.get(this.serverPath + "brand/all").then((res) => {
+    this.axios.get(this.$serverPath + "brand/all").then((res) => {
       this.brands = res.data;
       res.data.forEach((val) => this.addBrandOpts(val.Name));
     });
-    this.axios.get(this.serverPath + "nation/brand/all").then((res) => {
+    this.axios.get(this.$serverPath + "nation/brand/all").then((res) => {
       this.nations = res.data;
       res.data.forEach((res) => this.addNationOpt(res.Name));
     });

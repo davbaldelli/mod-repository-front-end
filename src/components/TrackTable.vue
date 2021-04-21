@@ -64,6 +64,7 @@
               aria-controls="car-card-list"
               align="center"
             ></b-pagination>
+            <pre>{{this.$premium}}</pre>
             <div class="text-left" id="track-card-list">
               <b-card
                 v-for="track in tracksForList"
@@ -86,7 +87,8 @@
                         >{{ track.Location }},
                         {{ track.Nation.Name }}</b-card-sub-title
                       >
-                      <b-link :href="track.DownloadLink" class="card-link"
+                    
+                      <b-link v-if="!track.Premium || premium" :href="track.DownloadLink" class="card-link"
                         >Download Here</b-link
                       >
                       <b-card-text class="mt-2">
@@ -128,10 +130,10 @@ export default {
     return {
       tracks: [],
       nations: [],
-      serverPath: "https://api.mod.davidebaldelli.it/",
       name_filter: "",
       currentPage: 1,
       perPage: 25,
+      premium : false,
       layoutTypeOptions: ["Oval", "Road Course", "A to B"],
       trackTags: [
         "F1",
@@ -152,7 +154,7 @@ export default {
           (this.currentPage - 1) * this.perPage,
           this.currentPage * this.perPage
         );
-      },
+      }
     };
   },
   computed: {
@@ -163,13 +165,16 @@ export default {
   mounted() {
     this.loadAllTracks();
     this.axios
-      .get(this.serverPath + "nation/track/all")
+      .get(this.$serverPath + "nation/track/all")
       .then((res) => (this.nations = res.data));
+    if(localStorage.getItem('user') != {}){
+      this.premium = JSON.parse(localStorage.getItem('user')).Username == "premium"
+    }
   },
   methods: {
     nationSelected(nation) {
       this.axios
-        .get(this.serverPath + "track/nation/" + nation)
+        .get(this.$serverPath + "track/nation/" + nation)
         .then((response) => (this.tracks = response.data))
         .catch((error) => console.log(error));
     },
@@ -178,25 +183,25 @@ export default {
     },
     categorySelected(category) {
       this.axios
-        .get(this.serverPath + "track/layout/type/" + category)
+        .get(this.$serverPath + "track/layout/type/" + category)
         .then((response) => (this.tracks = response.data))
         .catch((error) => console.log(error));
     },
     tagSelected(tag) {
       this.axios
-        .get(this.serverPath + "track/tag/" + tag)
+        .get(this.$serverPath + "track/tag/" + tag)
         .then((response) => (this.tracks = response.data))
         .catch((error) => console.log(error));
     },
     filterByName() {
       this.axios
-        .get(this.serverPath + "track/name/" + this.name_filter)
+        .get(this.$serverPath + "track/name/" + this.name_filter)
         .then((response) => (this.tracks = response.data))
         .catch((error) => console.log(error));
     },
     loadAllTracks() {
       this.axios
-        .get(this.serverPath + "track/all")
+        .get(this.$serverPath + "track/all")
         .then((response) => (this.tracks = response.data))
         .catch((error) => console.log(error));
     },

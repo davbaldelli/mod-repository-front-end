@@ -8,6 +8,7 @@ import TrackTable from "@/components/TrackTable"
 import CarTable from "@/components/CarTable";
 import CarInput from "@/components/CarInput"
 import TrackInput from "@/components/TrackInput"
+import HelloWorld from "@/components/HelloWorld"
 
 // Import Bootstrap an BootstrapVue CSS files (order is important)
 import 'bootstrap/dist/css/bootstrap.css'
@@ -18,7 +19,12 @@ Vue.use(BootstrapVue)
 Vue.use(IconsPlugin)
 Vue.use(VueAxios,axios)
 
+Vue.prototype.$serverPath = "https://api.mod.davidebaldelli.it/"
+
 const routes = [
+  {
+    path: '/', component: HelloWorld,
+  },
   { path: '/tracks', component: TrackTable, meta :{
     guest : true
   } },
