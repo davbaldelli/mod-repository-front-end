@@ -87,7 +87,8 @@
                         >
                         <b-card-sub-title class="mb-1">{{car.Year}} </b-card-sub-title>
                         <b-card-text class="mb-1">
-                          <b>{{car.Transmission}}</b>, <b>{{car.Drivetrain}}</b>, <b>BHP:</b> {{ car.BHP }}, <b>Nm: </b>{{ car.Torque }}, <b>Kg:</b> {{ car.Weight }}, <b>Top Speed:</b> {{ car.TopSpeed }}km/h  
+                          <b>{{car.Transmission}}</b>, <b>{{car.Drivetrain}}</b>, <b>BHP:</b> {{ car.BHP }}, <b>Nm: </b>{{ car.Torque }}, <b>Kg:</b> {{ car.Weight }}, <b>Top Speed:</b> {{ car.TopSpeed }}km/h, 
+                          <b>Author: </b><b-link :href="car.Author.Link">{{car.Author.Name}}</b-link> 
                         </b-card-text>
                         <b-link v-if="premium || !car.Premium" :href="car.DownloadLink">Download Here</b-link>
                         <b-card-text class="align-bottom">

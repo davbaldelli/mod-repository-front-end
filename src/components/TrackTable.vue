@@ -64,7 +64,7 @@
               aria-controls="car-card-list"
               align="center"
             ></b-pagination>
-            <pre>{{this.$premium}}</pre>
+            <pre>{{ this.$premium }}</pre>
             <div class="text-left" id="track-card-list">
               <b-card
                 v-for="track in tracksForList"
@@ -87,8 +87,16 @@
                         >{{ track.Location }},
                         {{ track.Nation.Name }}</b-card-sub-title
                       >
-                    
-                      <b-link v-if="!track.Premium || premium" :href="track.DownloadLink" class="card-link"
+                      <b-card-text>
+                        <b>Author: </b
+                        ><b-link :href="track.Author.Link">{{
+                          track.Author.Name
+                        }}</b-link>
+                      </b-card-text>
+                      <b-link
+                        v-if="!track.Premium || premium"
+                        :href="track.DownloadLink"
+                        class="card-link"
                         >Download Here</b-link
                       >
                       <b-card-text class="mt-2">
@@ -133,7 +141,7 @@ export default {
       name_filter: "",
       currentPage: 1,
       perPage: 25,
-      premium : false,
+      premium: false,
       layoutTypeOptions: ["Oval", "Road Course", "A to B"],
       trackTags: [
         "F1",
@@ -154,7 +162,7 @@ export default {
           (this.currentPage - 1) * this.perPage,
           this.currentPage * this.perPage
         );
-      }
+      },
     };
   },
   computed: {
@@ -167,8 +175,9 @@ export default {
     this.axios
       .get(this.$serverPath + "nation/track/all")
       .then((res) => (this.nations = res.data));
-    if(localStorage.getItem('user') != {}){
-      this.premium = JSON.parse(localStorage.getItem('user')).Username == "premium"
+    if (localStorage.getItem("user") != {}) {
+      this.premium =
+        JSON.parse(localStorage.getItem("user")).Username == "premium";
     }
   },
   methods: {
