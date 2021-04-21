@@ -117,14 +117,12 @@ export default {
           password: this.adminPassword,
         })
         .then((response) => {
-          console.log(response.data);
           localStorage.setItem("user", JSON.stringify(response.data));
           this.$emit("loggedIn");
           if (this.$route.params.nextUrl != null) {
             this.$router.push(this.$route.params.nextUrl);
           } else {
             this.logged = true
-            console.log("is premium: "+this.$premium)
             this.adminLogged = response.data.IsAdmin;
           }
         })
