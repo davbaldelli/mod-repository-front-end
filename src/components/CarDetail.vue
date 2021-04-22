@@ -2,7 +2,7 @@
   <div class="container">
     <b-row id="title" class="mb-3">
       <b-col>
-        <h1 class="mt-4 mb-1">{{ car.ModelName }}</h1>
+        <h1 class="mt-4 mb-1">{{car.Brand.Name}} {{ car.ModelName }}</h1>
         <b-badge v-for="cat in car.Categories" :key="cat.Name" class="mr-1">{{
           cat.Name
         }}</b-badge>

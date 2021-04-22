@@ -8,7 +8,7 @@
             <b-col>
               <div id="mod-list-title">
                 <b-jumbotron
-                  header="AC Mod Car"
+                  header="AC Mod Cars"
                   lead="A collection of quality mods"
                   class="mb-2 text-left"
                 ></b-jumbotron>
@@ -79,31 +79,42 @@
                         >></b-card-img
                       >
                     </b-col>
-                    <b-col md="8" style="height: calc(100%)">
-                      <b-card-body class="p-3">
-                        <b-card-title>
-                          <b-link :to="'/car/'+car.ModelName">{{ car.Brand.Name }} {{ car.ModelName }}</b-link>
+                    <b-col md="8" class="mh-100">
+                      <b-card-body class="p-3 h-100">
+                        <b-card-title class="mb-2">
+                          <b-link :to="'/car/' + car.ModelName"
+                            >{{ car.Brand.Name }} {{ car.ModelName }}</b-link
+                          >
                         </b-card-title>
-                        <b-card-sub-title class="mb-1">{{car.Year}} </b-card-sub-title>
-                        <b-card-text class="mb-1">
-                          <b>{{car.Transmission}}</b>, <b>{{car.Drivetrain}}</b>, <b>BHP:</b> {{ car.BHP }}, <b>Nm: </b>{{ car.Torque }}, <b>Kg:</b> {{ car.Weight }}, <b>Top Speed:</b> {{ car.TopSpeed }}km/h, 
-                          <b>Author: </b><b-link :href="car.Author.Link">{{car.Author.Name}}</b-link> 
-                        </b-card-text>
-                        <b-link v-if="premium || !car.Premium" :href="car.DownloadLink">Download Here</b-link>
-                        <b-card-text class="align-bottom">
+                        <b-card-sub-title class="mb-3 mt-1">
                           <b-badge
                             v-for="category in car.Categories"
                             :key="category.Name"
-                            class="mr-1 mt-1"
+                            class="mr-1"
                             >{{ category.Name }}</b-badge
                           >
                           <b-badge v-if="car.Premium" variant="warning"
                             >Premium</b-badge
                           >
+                        </b-card-sub-title>
+                        <b-card-text class="ml-2 mb-1">
+                          <b>Year: </b>{{ car.Year }}<br/>
+                          <b>Author: </b
+                          ><b-link :href="car.Author.Link">{{
+                            car.Author.Name
+                          }}</b-link><br/>
+                          <b>{{ car.Transmission }}</b
+                          >, <b>{{ car.Drivetrain }}</b
+                          >, <b>BHP:</b> {{ car.BHP }}, <b>Nm: </b
+                          >{{ car.Torque }}, <b>Kg:</b> {{ car.Weight }},
+                          <b>Top Speed:</b> {{ car.TopSpeed }}km/h,
                         </b-card-text>
                       </b-card-body>
                     </b-col>
                   </b-row>
+                  <b-card-footer v-if="premium || !car.Premium" class="p-1 text-center">
+                    <b-button :href="car.DownloadLink" variant="primary" >Download</b-button>
+                  </b-card-footer>
                 </b-card>
               </div>
               <b-pagination
@@ -134,7 +145,7 @@ export default {
       nations: [],
       model_filter: "",
       perPage: 25,
-      premium : false,
+      premium: false,
       get carsForList() {
         return this.cars.slice(
           (this.currentPage - 1) * this.perPage,
@@ -157,8 +168,9 @@ export default {
       .get(this.$serverPath + "brand/all/grouped/nation")
       .then((res) => (this.nations = res.data));
 
-    if(localStorage.getItem('user') != {}){
-      this.premium = JSON.parse(localStorage.getItem('user')).Username == "premium"
+    if (localStorage.getItem("user") != {}) {
+      this.premium =
+        JSON.parse(localStorage.getItem("user")).Username == "premium";
     }
   },
   methods: {

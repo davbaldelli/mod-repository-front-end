@@ -83,36 +83,30 @@
                   <b-col md="8">
                     <b-card-body class="p-3">
                       <b-card-title><b-link :href="'/track/'+track.Name">{{ track.Name }}</b-link></b-card-title>
-                      <b-card-sub-title class="mb-2"
-                        >{{ track.Location }},
-                        {{ track.Nation.Name }}</b-card-sub-title
+                      <b-card-sub-title class="mb-2">
+                        <b-badge
+                          v-for="tag in track.Tags"
+                          :key="tag"
+                          class="mr-1"
+                          >{{ tag }}</b-badge
+                        >
+                        <b-badge v-if="track.Premium" variant="warning"
+                          >Premium</b-badge
+                        ></b-card-sub-title
                       >
-                      <b-card-text>
+                      <b-card-text class="ml-2 mb-1">
+                        <b>Location: </b>{{ track.Location }}, {{ track.Nation.Name }}<br/>
                         <b>Author: </b
                         ><b-link :href="track.Author.Link">{{
                           track.Author.Name
                         }}</b-link>
                       </b-card-text>
-                      <b-link
-                        v-if="!track.Premium || premium"
-                        :href="track.DownloadLink"
-                        class="card-link"
-                        >Download Here</b-link
-                      >
-                      <b-card-text class="mt-2">
-                        <b-badge
-                          v-for="tag in track.Tags"
-                          :key="tag"
-                          class="mr-1 mt-3"
-                          >{{ tag }}</b-badge
-                        >
-                        <b-badge v-if="track.Premium" variant="warning"
-                          >Premium</b-badge
-                        >
-                      </b-card-text>
                     </b-card-body>
                   </b-col>
                 </b-row>
+                <b-card-footer v-if="!track.Premium || premium" class="text-center p-2">
+                  <b-button :href="track.DownloadLink" variant="primary">Download</b-button>
+                </b-card-footer>
               </b-card>
             </div>
             <b-pagination
