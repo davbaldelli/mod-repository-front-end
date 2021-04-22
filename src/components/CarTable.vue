@@ -192,7 +192,7 @@ export default {
     },
     filterByName() {
       this.axios
-        .get(this.$serverPath + "car/model/" + this.model_filter)
+        .get(this.$serverPath + "car/find/model/" + this.model_filter)
         .then((response) => {
           this.cars = response.data;
         })
