@@ -34,8 +34,8 @@
                   <p class="text-left">
                     <b>Year: </b>{{track.Year}}<br/>
                     <b>Location: </b>{{track.Location}}, {{track.Nation.Name}}<br/>
-                    <b>Author: </b><a :href="track.Author.Link">{{track.Author.Name}}</a> <br/> 
-                    <b class="mt-1">Link: </b><a :href="track.DownloadLink">{{track.DownloadLink}}</a>  
+                    <b>Author: </b><a :href="track.Author.Link">{{track.Author.Name}}</a><br/><br/> 
+                    <b-link v-if="!track.Premium || premium" :href="track.DownloadLink">Download Here</b-link>  
                   </p>
                 </b-card-text>
               </b-card-body>
@@ -46,6 +46,7 @@
     </b-row>
     <b-row>
       <b-col>
+        <h4 class="m-4">Layouts</h4>
         <b-card v-for="layout in track.Layouts" :key="layout.Name" :title="layout.Name + ' Layout'" class="text-left">
           <b-card-body>
             <b-card-text>
@@ -86,7 +87,8 @@ export default {
           Name : "",
           Link : ""
         }
-      }
+      },
+      premium : false
     }
   },
   mounted () {
@@ -94,6 +96,9 @@ export default {
         .get(this.$serverPath + "track/name/" + this.$route.params.name)
         .then((response) => (this.track = response.data))
         .catch((error) => console.log(error));
+    if(localStorage.getItem('user') != {}){
+      this.premium = JSON.parse(localStorage.getItem('user')).Username == "premium"
+    }
   }
 }
 </script>
