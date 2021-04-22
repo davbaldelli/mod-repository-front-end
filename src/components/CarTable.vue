@@ -81,10 +81,9 @@
                     </b-col>
                     <b-col md="8" style="height: calc(100%)">
                       <b-card-body class="p-3">
-                        <b-card-title
-                          >{{ car.Brand.Name }}
-                          {{ car.ModelName }}</b-card-title
-                        >
+                        <b-card-title>
+                          <b-link :to="'/car/'+car.ModelName">{{ car.Brand.Name }} {{ car.ModelName }}</b-link>
+                        </b-card-title>
                         <b-card-sub-title class="mb-1">{{car.Year}} </b-card-sub-title>
                         <b-card-text class="mb-1">
                           <b>{{car.Transmission}}</b>, <b>{{car.Drivetrain}}</b>, <b>BHP:</b> {{ car.BHP }}, <b>Nm: </b>{{ car.Torque }}, <b>Kg:</b> {{ car.Weight }}, <b>Top Speed:</b> {{ car.TopSpeed }}km/h, 

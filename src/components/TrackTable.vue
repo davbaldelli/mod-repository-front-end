@@ -81,8 +81,8 @@
                     ></b-card-img>
                   </b-col>
                   <b-col md="8">
-                    <b-card-body>
-                      <b-card-title>{{ track.Name }}</b-card-title>
+                    <b-card-body class="p-3">
+                      <b-card-title><b-link :href="'/track/'+track.Name">{{ track.Name }}</b-link></b-card-title>
                       <b-card-sub-title class="mb-2"
                         >{{ track.Location }},
                         {{ track.Nation.Name }}</b-card-sub-title
