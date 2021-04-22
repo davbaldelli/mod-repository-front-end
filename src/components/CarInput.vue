@@ -210,6 +210,42 @@
             >Existing Brand</b-form-checkbox
           >
           <b-form-group
+            id="input-group-author"
+            label-cols-sm="4"
+            label-cols-lg="3"
+            content-cols-lg="7"
+            label="Author Name:"
+            label-for="input-author"
+            descripiton="Enter Author Name"
+          >
+            <b-form-select
+              id="input-author"
+              v-if="existingAuthor"
+              v-model="form.Author.Name"
+              :options="auhtorsOptions"
+              class="mb-3"
+            />
+            <b-form-input
+              v-if="!existingAuthor"
+              id="input-author"
+              v-model="form.Author.Name"
+              placeholder="Enter new Author Name"
+              required
+            ></b-form-input>
+            <b-form-input
+              v-if="!existingAuthor"
+              id="input-author-link"
+              v-model="form.Author.Link"
+              placeholder="Enter new Author Link"
+            ></b-form-input>
+          </b-form-group>
+          <b-form-checkbox
+            v-model="existingAuthor"
+            name="check-button-author"
+            switch
+            >Existing Author</b-form-checkbox
+          >
+          <b-form-group
             id="input-group-4"
             label-cols-sm="4"
             label-cols-lg="3"
@@ -291,6 +327,10 @@ export default {
         DownloadLink: "",
         Image: "",
         ModelName: "",
+        Author : {
+          Name : "",
+          Link : ""
+        },
         Brand: {
           Name: "",
           Nation: {
@@ -318,10 +358,13 @@ export default {
       ],
       brandsOpts: [],
       nationOptions: [],
+      auhtorsOptions : [],
       brands: [],
       nations: [],
+      authors: [],
       existingBrand: true,
       existingNation: true,
+      existingAuthor: true,
     };
   },
   methods: {
@@ -362,6 +405,13 @@ export default {
         )
       );
     },
+    addAuthorOpt(authorName) {
+      this.auhtorsOptions.push(
+        JSON.parse(
+          '{"value" : "' + authorName + '", "text" : "' + authorName + '"}'
+        )
+      );
+    },
     onBrandChange() {
       this.nationOptions = [];
       var nation = "";
@@ -399,6 +449,10 @@ export default {
     this.axios.get(this.$serverPath + "nation/brand/all").then((res) => {
       this.nations = res.data;
       res.data.forEach((res) => this.addNationOpt(res.Name));
+    });
+    this.axios.get(this.$serverPath + "author/all").then((res) => {
+      this.authors = res.data;
+      res.data.forEach((res) => this.addAuthorOpt(res.Name));
     });
   },
 };

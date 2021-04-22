@@ -204,7 +204,7 @@ export default {
     },
     filterByName() {
       this.axios
-        .get(this.$serverPath + "track/name/" + this.name_filter)
+        .get(this.$serverPath + "track/find/name/" + this.name_filter)
         .then((response) => (this.tracks = response.data))
         .catch((error) => console.log(error));
     },
