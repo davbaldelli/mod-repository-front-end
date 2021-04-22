@@ -96,7 +96,7 @@ export default {
         .get(this.$serverPath + "track/name/" + this.$route.params.name)
         .then((response) => (this.track = response.data))
         .catch((error) => console.log(error));
-    if(localStorage.getItem('user') != {}){
+    if(localStorage.getItem('user').Username != null){
       this.premium = JSON.parse(localStorage.getItem('user')).Username == "premium"
     }
   }

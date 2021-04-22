@@ -91,7 +91,7 @@ export default {
       .get(this.$serverPath + "car/model/" + this.$route.params.model)
       .then((response) => (this.car = response.data))
       .catch((error) => console.log(error));
-    if(localStorage.getItem('user') != {}){
+    if(localStorage.getItem('user').Username != null){
       this.premium = JSON.parse(localStorage.getItem('user')).Username == "premium"
     }
   },
