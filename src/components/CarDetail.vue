@@ -1,5 +1,5 @@
 <template>
-  
+  <div>Detail of car: {{ $route.params.model }}</div>
 </template>
 
 <script>

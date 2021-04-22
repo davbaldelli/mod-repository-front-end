@@ -218,7 +218,7 @@ export default {
         Premium: false,
         Layouts: [
           {
-            LengthKm: 0,
+            LengthM: 0,
             Category: "",
             Name: "",
           },

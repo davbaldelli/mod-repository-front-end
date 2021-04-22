@@ -9,6 +9,8 @@ import CarTable from "@/components/CarTable";
 import CarInput from "@/components/CarInput"
 import TrackInput from "@/components/TrackInput"
 import HelloWorld from "@/components/HelloWorld"
+import CarDetail from "@/components/CarDetail"
+import TrackDetail from "@/components/TrackDetail"
 
 // Import Bootstrap an BootstrapVue CSS files (order is important)
 import 'bootstrap/dist/css/bootstrap.css'
@@ -38,7 +40,13 @@ const routes = [
   { path: '/car/new' , component : CarInput, meta :{
     requiresAuth: true,
     is_admin : true,
-  }}
+  }},
+  { path: '/car/:model', component : CarDetail, props : true ,meta :{
+    guest : true
+  }},
+  { path: '/track/:name', component : TrackDetail, props : true, meta :{
+    guest : true
+  }},
 ]
 
 const router = new VueRouter({
