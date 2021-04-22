@@ -11,9 +11,7 @@
         <div v-if="!logged">
           <b-nav-item v-b-modal.modal-login to="/">Login</b-nav-item>
         </div>
-        <b-nav-item v-if="logged" @click="logOut" to="/"
-          >Logout</b-nav-item
-        >
+        <b-nav-item v-if="logged" @click="logOut" to="/">Logout</b-nav-item>
       </b-navbar-nav>
     </b-navbar>
     <router-view></router-view>
@@ -66,7 +64,7 @@ export default {
   components: {},
   data() {
     return {
-      logged : false,
+      logged: false,
       nameState: null,
       production: true,
       adminUsername: "",
@@ -74,10 +72,10 @@ export default {
       adminLogged: false,
     };
   },
-  mounted () {
-    if (localStorage.getItem('user').Username != null){
-      this.logged = true
-      this.adminLogged = JSON.parse(localStorage.getItem('user')).IsAdmin == 1
+  mounted() {
+    if (localStorage.getItem("user").Username != null) {
+      this.logged = true;
+      this.adminLogged = JSON.parse(localStorage.getItem("user")).IsAdmin == 1;
     }
   },
   methods: {
@@ -85,9 +83,9 @@ export default {
       window.history.length > 1 ? this.$router.go(-1) : this.$router.push("/");
     },
     logOut() {
-      localStorage.setItem("user", {})
-      this.adminLogged = false
-      this.logged = false
+      localStorage.setItem("user", {});
+      this.adminLogged = false;
+      this.logged = false;
     },
     checkFormValidity() {
       const valid = this.$refs.form.checkValidity();
@@ -122,7 +120,7 @@ export default {
           if (this.$route.params.nextUrl != null) {
             this.$router.push(this.$route.params.nextUrl);
           } else {
-            this.logged = true
+            this.logged = true;
             this.adminLogged = response.data.IsAdmin;
           }
         })

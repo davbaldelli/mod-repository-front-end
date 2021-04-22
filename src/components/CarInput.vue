@@ -48,7 +48,7 @@
             label-cols-sm="4"
             label-cols-lg="3"
             content-cols-lg="7"
-            label="Car Toruqe (Nm):"
+            label="Car Torque (Nm):"
             label-for="input-torque"
             descripiton="Enter car torque"
           >
@@ -222,7 +222,7 @@
               id="input-author"
               v-if="existingAuthor"
               v-model="form.Author.Name"
-              :options="auhtorsOptions"
+              :options="authorsOptions"
               class="mb-3"
             />
             <b-form-input
@@ -322,14 +322,14 @@ export default {
       form: {
         Torque: 0,
         BHP: 0,
-        Weight : 0,
-        TopSpeed : 0,
+        Weight: 0,
+        TopSpeed: 0,
         DownloadLink: "",
         Image: "",
         ModelName: "",
-        Author : {
-          Name : "",
-          Link : ""
+        Author: {
+          Name: "",
+          Link: "",
         },
         Brand: {
           Name: "",
@@ -358,7 +358,7 @@ export default {
       ],
       brandsOpts: [],
       nationOptions: [],
-      auhtorsOptions : [],
+      authorsOptions: [],
       brands: [],
       nations: [],
       authors: [],
@@ -369,21 +369,14 @@ export default {
   },
   methods: {
     onSubmit() {
-      if (
-        !this.checkExistingBrand(this.form.Brand.Name) &&
-        !this.checkExistingNation(this.form.Brand.Nation.Name)
-      ) {
-        this.axios
-          .post(this.$serverPath + "car/new", this.form)
-          .then((res) =>
-            alert(
-              JSON.stringify("Macchina Inserita Correttamente : " + res.status)
-            )
+      this.axios
+        .post(this.$serverPath + "car/new", this.form)
+        .then((res) =>
+          alert(
+            JSON.stringify("Macchina Inserita Correttamente : " + res.status)
           )
-          .catch((err) => alert(JSON.stringify(err.data)));
-      } else {
-        alert("Brand or nation already existing!");
-      }
+        )
+        .catch((err) => alert(JSON.stringify(err.data)));
     },
     addNewCategory() {
       this.form.Categories.push({ Name: "" });
@@ -406,7 +399,7 @@ export default {
       );
     },
     addAuthorOpt(authorName) {
-      this.auhtorsOptions.push(
+      this.authorsOptions.push(
         JSON.parse(
           '{"value" : "' + authorName + '", "text" : "' + authorName + '"}'
         )
@@ -414,31 +407,13 @@ export default {
     },
     onBrandChange() {
       this.nationOptions = [];
-      var nation = "";
+      let nation = "";
       this.brands.forEach((brand) => {
         if (brand.Name === this.form.Brand.Name) {
           nation = brand.Nation;
         }
       });
       this.form.Brand.Nation.Name = nation;
-    },
-    checkExistingBrand(brnd) {
-      var existing = false;
-      this.brands.forEach((brand) => {
-        if (brand.Name === brnd) {
-          existing = true;
-        }
-      });
-      return existing && !this.existingBrand;
-    },
-    checkExistingNation(nat) {
-      var existing = false;
-      this.nations.forEach((nation) => {
-        if (nation.Name === nat) {
-          existing = true;
-        }
-      });
-      return existing && !this.existingNation;
     },
   },
   mounted() {
