@@ -35,7 +35,7 @@
                     <b>Year: </b>{{track.Year}}<br/>
                     <b>Location: </b>{{track.Location}}, {{track.Nation.Name}}<br/>
                     <b>Author: </b><a :href="track.Author.Link">{{track.Author.Name}}</a><br/><br/> 
-                    <b-link v-if="!track.Premium || premium" :href="track.DownloadLink">Download Here</b-link>  
+                    <b-button v-if="premium || !track.Premium" :href="track.DownloadLink" variant="primary">Download</b-button>
                   </p>
                 </b-card-text>
               </b-card-body>

@@ -35,8 +35,7 @@
                     <b>Weight: </b> {{ car.Weight }}Kg<br/>
                     <b>Top Speed :</b>{{ car.TopSpeed }}Km/h<br/>
                     <b>Author: </b><b-link :href="car.Author.Link">{{car.Author.Name}}</b-link><br/><br/>
-                    <b-link v-if="premium || !car.Premium" :href="car.DownloadLink">Download Here</b-link
-                >
+                    <b-button v-if="premium || !car.Premium" :href="car.DownloadLink" variant="primary" >Download</b-button>
                   </p>
                 </b-card-text>
                 <b-card-text class="align-bottom">
