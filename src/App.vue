@@ -83,7 +83,7 @@ export default {
       window.history.length > 1 ? this.$router.go(-1) : this.$router.push("/");
     },
     logOut() {
-      localStorage.setItem("user", {});
+      localStorage.setItem("user", JSON.stringify({}));
       this.adminLogged = false;
       this.logged = false;
     },

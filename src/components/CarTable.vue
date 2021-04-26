@@ -67,6 +67,7 @@
                   aria-controls="car-card-list"
                   align="center"
               ></b-pagination>
+              <pre>{{premium}}</pre>
               <div id="car-card-list" class="text-left">
                 <b-card
                     v-for="car in carsForList"
@@ -179,9 +180,9 @@ export default {
         .get(this.$serverPath + "brand/all/grouped/nation")
         .then((res) => (this.nations = res.data));
 
-    if (localStorage.getItem("user").Username != null) {
-      this.premium =
-          JSON.parse(localStorage.getItem("user")).Username == "premium";
+    let user = JSON.parse(localStorage.getItem('user'))
+    if (user != null) {
+      this.premium = user.Username == "premium";
     }
   },
   methods: {

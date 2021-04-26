@@ -192,9 +192,9 @@ export default {
     this.axios
         .get(this.$serverPath + "nation/track/all")
         .then((res) => (this.nations = res.data));
-    if (localStorage.getItem("user").Username != null) {
-      this.premium =
-          JSON.parse(localStorage.getItem("user")).Username == "premium";
+    let user = JSON.parse(localStorage.getItem('user'))
+    if (user != null) {
+      this.premium = user.Username == "premium";
     }
   },
   methods: {
