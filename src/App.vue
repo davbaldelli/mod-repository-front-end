@@ -9,12 +9,12 @@
       </b-navbar-nav>
       <b-navbar-nav class="ml-auto">
         <div v-if="!logged">
-          <b-nav-item v-b-modal.modal-login to="/">Login</b-nav-item>
+          <b-nav-item v-b-modal.modal-login>Login</b-nav-item>
         </div>
-        <b-nav-item v-if="logged" @click="logOut" to="/">Logout</b-nav-item>
+        <b-nav-item v-if="logged" @click="logOut" >Logout</b-nav-item>
       </b-navbar-nav>
     </b-navbar>
-    <router-view></router-view>
+    <router-view :key="routerViewKey"></router-view>
     <div>
       <b-modal
         id="modal-login"
@@ -70,6 +70,7 @@ export default {
       adminUsername: "",
       adminPassword: "",
       adminLogged: false,
+      routerViewKey : 0,
     };
   },
   mounted() {
@@ -86,6 +87,7 @@ export default {
       localStorage.setItem("user", JSON.stringify({}));
       this.adminLogged = false;
       this.logged = false;
+      this.routerViewKey += 1;
     },
     checkFormValidity() {
       const valid = this.$refs.form.checkValidity();
@@ -122,6 +124,7 @@ export default {
           } else {
             this.logged = true;
             this.adminLogged = response.data.IsAdmin;
+            this.routerViewKey += 1;
           }
         })
         .catch((err) => alert("autenticazione fallita => " + err));
