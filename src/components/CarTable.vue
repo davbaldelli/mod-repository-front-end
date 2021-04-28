@@ -67,7 +67,6 @@
                   aria-controls="car-card-list"
                   align="center"
               ></b-pagination>
-              <pre>{{premium}}</pre>
               <div id="car-card-list" class="text-left">
                 <b-card
                     v-for="car in carsForList"
