@@ -119,6 +119,12 @@
             placeholder="Enter new Author Link"
         ></b-form-input>
       </b-form-group>
+      <b-form-checkbox
+          v-model="existingAuthor"
+          name="check-button-author"
+          switch
+      >Existing Author</b-form-checkbox
+      >
       <b-form-group
           id="input-group-location"
           label-cols-sm="4"

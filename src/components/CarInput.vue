@@ -210,42 +210,6 @@
             >Existing Brand</b-form-checkbox
           >
           <b-form-group
-            id="input-group-author"
-            label-cols-sm="4"
-            label-cols-lg="3"
-            content-cols-lg="7"
-            label="Author Name:"
-            label-for="input-author"
-            descripiton="Enter Author Name"
-          >
-            <b-form-select
-              id="input-author"
-              v-if="existingAuthor"
-              v-model="form.Author.Name"
-              :options="authorsOptions"
-              class="mb-3"
-            />
-            <b-form-input
-              v-if="!existingAuthor"
-              id="input-author"
-              v-model="form.Author.Name"
-              placeholder="Enter new Author Name"
-              required
-            ></b-form-input>
-            <b-form-input
-              v-if="!existingAuthor"
-              id="input-author-link"
-              v-model="form.Author.Link"
-              placeholder="Enter new Author Link"
-            ></b-form-input>
-          </b-form-group>
-          <b-form-checkbox
-            v-model="existingAuthor"
-            name="check-button-author"
-            switch
-            >Existing Author</b-form-checkbox
-          >
-          <b-form-group
             id="input-group-4"
             label-cols-sm="4"
             label-cols-lg="3"
@@ -277,6 +241,42 @@
             name="check-button-nation"
             switch
             >Existing Nation</b-form-checkbox
+          >
+          <b-form-group
+              id="input-group-author"
+              label-cols-sm="4"
+              label-cols-lg="3"
+              content-cols-lg="7"
+              label="Author Name:"
+              label-for="input-author"
+              descripiton="Enter Author Name"
+          >
+            <b-form-select
+                id="input-author"
+                v-if="existingAuthor"
+                v-model="form.Author.Name"
+                :options="authorsOptions"
+                class="mb-3"
+            />
+            <b-form-input
+                v-if="!existingAuthor"
+                id="input-author"
+                v-model="form.Author.Name"
+                placeholder="Enter new Author Name"
+                required
+            ></b-form-input>
+            <b-form-input
+                v-if="!existingAuthor"
+                id="input-author-link"
+                v-model="form.Author.Link"
+                placeholder="Enter new Author Link"
+            ></b-form-input>
+          </b-form-group>
+          <b-form-checkbox
+              v-model="existingAuthor"
+              name="check-button-author"
+              switch
+          >Existing Author</b-form-checkbox
           >
           <b-form-group
             id="form-cat-group"
