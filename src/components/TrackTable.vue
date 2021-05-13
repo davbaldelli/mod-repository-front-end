@@ -57,6 +57,11 @@
                   >
                 </b-input-group-append>
               </b-input-group>
+              <div style="width: 100%">
+                <b-alert v-model="search_error" class="m-2" dismissible variant="danger">
+                  Track not found!
+                </b-alert>
+              </div>
             </b-nav>
           </b-col>
         </b-row>
@@ -153,6 +158,7 @@ export default {
   name: "TrackTable",
   data() {
     return {
+      search_error: false,
       tracks: [],
       nations: [],
       name_filter: "",
@@ -191,7 +197,8 @@ export default {
     this.loadAllTracks();
     this.axios
         .get(this.$serverPath + "nation/track/all")
-        .then((res) => (this.nations = res.data));
+        .then((res) => (this.nations = res.data))
+        .catch(error => console.log(error));
     let user = JSON.parse(localStorage.getItem('user'))
     if (user != null) {
       this.premium = user.Username == "premium";
@@ -223,7 +230,10 @@ export default {
       this.axios
           .get(this.$serverPath + "track/find/name/" + this.name_filter)
           .then((response) => (this.tracks = response.data))
-          .catch((error) => console.log(error));
+          .catch((error) => {
+            console.log(error);
+            this.search_error = true
+          });
     },
     loadAllTracks() {
       this.axios

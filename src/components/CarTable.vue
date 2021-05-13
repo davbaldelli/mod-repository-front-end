@@ -55,6 +55,11 @@
                     >
                   </b-input-group-append>
                 </b-input-group>
+                <div style="width: 100%" class="text-left">
+                  <b-alert v-model="search_error" class="m-2" dismissible variant="danger">
+                    Car not found!
+                  </b-alert>
+                </div>
               </b-nav>
             </b-col>
           </b-row>
@@ -150,6 +155,7 @@ export default {
   name: "car-table",
   data() {
     return {
+      search_error : false,
       currentPage: 1,
       cars: [],
       categories: [],
@@ -218,7 +224,10 @@ export default {
           .then((response) => {
             this.cars = response.data;
           })
-          .catch((error) => console.log(error));
+          .catch((error) => {
+            console.log(error);
+            this.search_error = true
+          });
     },
     loadAll() {
       this.axios
