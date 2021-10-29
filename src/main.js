@@ -15,7 +15,7 @@ Vue.use(BootstrapVue)
 Vue.use(IconsPlugin)
 Vue.use(VueAxios,axios)
 
-Vue.prototype.$serverPath = "http://localhost:6316/"
+Vue.prototype.$serverPath = "https://api.mod.davidebaldelli.it/"
 
 let user = JSON.parse(localStorage.getItem('user'))
 if(!user){

@@ -57,11 +57,6 @@
                   >
                 </b-input-group-append>
               </b-input-group>
-              <div style="width: 100%">
-                <b-alert v-model="search_error" class="m-2" dismissible variant="danger">
-                  Track not found!
-                </b-alert>
-              </div>
             </b-nav>
           </b-col>
         </b-row>
@@ -158,13 +153,12 @@ export default {
   name: "TrackTable",
   data() {
     return {
-      search_error: false,
+      selector : t => t,
       tracks: [],
       nations: [],
       name_filter: "",
       currentPage: 1,
       perPage: 25,
-      premium: false,
       layoutTypeOptions: ["Oval", "Road Course", "A to B"],
       trackTags: [
         "F1",
@@ -180,18 +174,21 @@ export default {
         "Fictional",
         "Karting",
       ],
-      get tracksForList() {
-        return this.tracks.slice(
-            (this.currentPage - 1) * this.perPage,
-            this.currentPage * this.perPage
-        );
-      },
     };
   },
   computed: {
     rows() {
       return this.tracks.length;
     },
+    tracksForList() {
+      return this.selector(this.tracks).slice(
+          (this.currentPage - 1) * this.perPage,
+          this.currentPage * this.perPage
+      )
+    },
+    premium() {
+      return this.$store.getters["authentication/isLogged"]
+    }
   },
   mounted() {
     this.loadAllTracks();
@@ -199,32 +196,49 @@ export default {
         .get(this.$serverPath + "nation/track/all")
         .then((res) => (this.nations = res.data))
         .catch(error => console.log(error));
-    let user = JSON.parse(localStorage.getItem('user'))
-    if (user != null) {
-      this.premium = user.Username == "premium";
-    }
   },
   methods: {
     nationSelected(nation) {
-      this.axios
-          .get(this.$serverPath + "track/nation/" + nation)
-          .then((response) => (this.tracks = response.data))
-          .catch((error) => console.log(error));
+      this.selector = tracks => {
+        let fTracks = []
+        tracks.forEach( track =>{
+          if(track.Nation.Name === nation){
+            fTracks.push(track)
+          }
+        })
+        return fTracks
+      }
     },
     toTop() {
       document.getElementById("mod-list-title").scrollIntoView();
     },
     categorySelected(category) {
-      this.axios
-          .get(this.$serverPath + "track/layout/type/" + category)
-          .then((response) => (this.tracks = response.data))
-          .catch((error) => console.log(error));
+      this.selector = tracks => {
+        let fTracks = []
+        tracks.forEach( track =>{
+          if(track.Layouts){
+            if(track.Layouts.some(e => e.Category === category)){
+              fTracks.push(track)
+            }
+          }
+
+        })
+        return fTracks
+      }
     },
     tagSelected(tag) {
-      this.axios
-          .get(this.$serverPath + "track/tag/" + tag)
-          .then((response) => (this.tracks = response.data))
-          .catch((error) => console.log(error));
+      this.selector = tracks => {
+        let fTracks = []
+        tracks.forEach( track =>{
+          if(track.Tags){
+            if(track.Tags.some(e => e === tag)){
+              fTracks.push(track)
+            }
+          }
+
+        })
+        return fTracks
+      }
     },
     filterByName() {
       this.axios
