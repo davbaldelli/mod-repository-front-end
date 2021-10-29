@@ -226,7 +226,7 @@ export default {
     },
     filterByName() {
       this.axios
-          .get(this.$serverPath + "car/find/model/" + this.model_filter, {headers : {token : this.$store.getters["authentication/token"]}})
+          .get(this.$serverPath + "car/find/model/" + this.model_filter)
           .then((response) => {
             this.cars = response.data;
           })
@@ -237,7 +237,7 @@ export default {
     },
     getAllCars() {
       this.axios
-          .get(this.$serverPath + "car/all", {headers : {token : this.$store.getters["authentication/token"]}})
+          .get(this.$serverPath + "car/all")
           .then((response) => {
             this.cars = response.data;
           })
