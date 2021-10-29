@@ -42,7 +42,7 @@
                   </b-dropdown-item
                   >
                 </b-dropdown>
-                <b-button variant="primary" class="m-2 mt-2" @click="loadAll"
+                <b-button variant="primary" class="m-2 mt-2" @click="getAllCars"
                 >All
                 </b-button
                 >
@@ -55,11 +55,6 @@
                     >
                   </b-input-group-append>
                 </b-input-group>
-                <div style="width: 100%" class="text-left">
-                  <b-alert v-model="search_error" class="m-2" dismissible variant="danger">
-                    Car not found!
-                  </b-alert>
-                </div>
               </b-nav>
             </b-col>
           </b-row>
@@ -155,72 +150,83 @@ export default {
   name: "car-table",
   data() {
     return {
-      search_error : false,
+      selector : function (cars) {return cars},
       currentPage: 1,
       cars: [],
       categories: [],
       nations: [],
       model_filter: "",
       perPage: 25,
-      premium: false,
-      get carsForList() {
-        return this.cars.slice(
-            (this.currentPage - 1) * this.perPage,
-            this.currentPage * this.perPage
-        );
-      },
     };
   },
   computed: {
     rows() {
       return this.cars.length;
     },
+    premium() {
+      return this.$store.getters["authentication/isLogged"]
+    },
+    filteredCars() {
+      return this.selector(this.cars)
+    },
+    carsForList() {
+      return this.filteredCars.slice(
+          (this.currentPage - 1) * this.perPage,
+          this.currentPage * this.perPage
+      );
+    }
   },
   mounted() {
-    this.loadAll();
+    this.getAllCars();
     this.axios
         .get(this.$serverPath + "car/type/all")
         .then((res) => (this.categories = res.data));
     this.axios
         .get(this.$serverPath + "brand/all/grouped/nation")
         .then((res) => (this.nations = res.data));
-
-    let user = JSON.parse(localStorage.getItem('user'))
-    if (user != null) {
-      this.premium = user.Username == "premium";
-    }
   },
   methods: {
     nationSelected(nation) {
-      this.axios
-          .get(this.$serverPath + "car/nation/" + nation)
-          .then((response) => {
-            this.cars = response.data;
-          })
-          .catch((error) => console.log(error));
+      this.selector = cars => {
+        let fCars = []
+        cars.forEach(car => {
+          if(car.Brand.Nation.Name === nation){
+            fCars.push(car)
+          }
+        })
+        return fCars
+      }
     },
     toTop() {
       document.getElementById("mod-list-title").scrollIntoView();
     },
     brandSelected(brand) {
-      this.axios
-          .get(this.$serverPath + "car/brand/" + brand)
-          .then((response) => {
-            this.cars = response.data;
-          })
-          .catch((error) => console.log(error));
+      this.selector = cars => {
+        let fCars = []
+        cars.forEach(car => {
+          if(car.Brand.Name === brand){
+            fCars.push(car)
+          }
+        })
+        return fCars
+      }
     },
     categorySelected(category) {
-      this.axios
-          .get(this.$serverPath + "car/category/" + category)
-          .then((response) => {
-            this.cars = response.data;
-          })
-          .catch((error) => console.log(error));
+      this.selector = cars => {
+        let fCars = []
+        cars.forEach(car => {
+          if(car.Categories) {
+            if (car.Categories.some(e => e.Name === category)) {
+              fCars.push(car)
+            }
+          }
+        })
+        return fCars
+      }
     },
     filterByName() {
       this.axios
-          .get(this.$serverPath + "car/find/model/" + this.model_filter)
+          .get(this.$serverPath + "car/find/model/" + this.model_filter, {headers : {token : this.$store.getters["authentication/token"]}})
           .then((response) => {
             this.cars = response.data;
           })
@@ -229,9 +235,9 @@ export default {
             this.search_error = true
           });
     },
-    loadAll() {
+    getAllCars() {
       this.axios
-          .get(this.$serverPath + "car/all")
+          .get(this.$serverPath + "car/all", {headers : {token : this.$store.getters["authentication/token"]}})
           .then((response) => {
             this.cars = response.data;
           })

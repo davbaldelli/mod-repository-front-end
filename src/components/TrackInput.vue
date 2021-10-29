@@ -102,7 +102,7 @@
             id="input-author"
             v-if="existingAuthor"
             v-model="form.Author.Name"
-            :options="auhtorsOptions"
+            :options="authorsOptions"
             class="mb-3"
         />
         <b-form-input
@@ -259,7 +259,7 @@ export default {
       nationOptions: [],
       existingNation: true,
       authors: [],
-      auhtorsOptions: [],
+      authorsOptions: [],
       existingAuthor: true,
     };
   },
@@ -280,7 +280,7 @@ export default {
       );
     },
     addAuthorOpt(authorName) {
-      this.auhtorsOptions.push(
+      this.authorsOptions.push(
           JSON.parse(
               '{"value" : "' + authorName + '", "text" : "' + authorName + '"}'
           )

@@ -4,14 +4,8 @@ import { BootstrapVue, IconsPlugin } from 'bootstrap-vue'
 import axios from 'axios'
 import VueAxios from 'vue-axios'
 import VueRouter from "vue-router"
-import TrackTable from "@/components/TrackTable"
-import CarTable from "@/components/CarTable";
-import CarInput from "@/components/CarInput"
-import TrackInput from "@/components/TrackInput"
-import HelloWorld from "@/components/HelloWorld"
-import CarDetail from "@/components/CarDetail"
-import TrackDetail from "@/components/TrackDetail"
-
+import { store } from './_store';
+import { router } from './_helpers';
 // Import Bootstrap an BootstrapVue CSS files (order is important)
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
@@ -23,62 +17,18 @@ Vue.use(VueAxios,axios)
 
 Vue.prototype.$serverPath = "https://api.mod.davidebaldelli.it/"
 
-const routes = [
-  {
-    path: '/', component: HelloWorld,
-  },
-  { path: '/tracks', component: TrackTable, meta :{
-    guest : true
-  } },
-  { path: '/cars', component: CarTable, meta :{
-    guest : true
-  } },
-  { path: '/track/new', component : TrackInput, meta :{
-    requiresAuth: true,
-    is_admin : true
-  }},
-  { path: '/car/new' , component : CarInput, meta :{
-    requiresAuth: true,
-    is_admin : true,
-  }},
-  { path: '/car/:model', component : CarDetail, props : true ,meta :{
-    guest : true
-  }},
-  { path: '/track/:name', component : TrackDetail, props : true, meta :{
-    guest : true
-  }},
-]
+let user = JSON.parse(localStorage.getItem('user'))
+if(!user){
+    store.dispatch('authentication/login', { 'username' : 'base', 'password' : 'dumbass' })
+}
 
-const router = new VueRouter({
-  mode : 'history',
-  routes : routes 
-})
 
-router.beforeEach((to, from, next) => {
-  if(to.matched.some(record => record.meta.requiresAuth)) { 
-    let user = JSON.parse(localStorage.getItem('user'))
-    console.log(user)
-    if(to.matched.some(record => record.meta.is_admin)) {
-        if(user.IsAdmin == 1){
-            next()
-        }
-        else{
-            next(false)
-        }
-    }else {
-        next()
-    }
-  } else if(to.matched.some(record => record.meta.guest)) {
-     next()
-  }else {
-      next()
-  }
-})
 
 
 Vue.config.productionTip = false
 
 new Vue({
-  router,
+    router,
+    store,
   render: h => h(App),
 }).$mount('#app')

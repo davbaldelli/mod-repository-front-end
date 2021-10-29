@@ -59,24 +59,25 @@
 </template>
 
 <script>
+
 export default {
   name: "App",
   components: {},
   data() {
     return {
-      logged: false,
       nameState: null,
       production: true,
       adminUsername: "",
       adminPassword: "",
-      adminLogged: false,
       routerViewKey : 0,
     };
   },
-  mounted() {
-    if (localStorage.getItem("user").Username != null) {
-      this.logged = true;
-      this.adminLogged = JSON.parse(localStorage.getItem("user")).IsAdmin == 1;
+  computed : {
+    logged() {
+      return this.$store.getters["authentication/isLogged"]
+    },
+    adminLogged() {
+      return this.$store.getters["authentication/isAdmin"]
     }
   },
   methods: {
@@ -84,9 +85,7 @@ export default {
       window.history.length > 1 ? this.$router.go(-1) : this.$router.push("/");
     },
     logOut() {
-      localStorage.setItem("user", JSON.stringify({}));
-      this.adminLogged = false;
-      this.logged = false;
+      this.$store.dispatch('authentication/login', { 'username' : 'base', 'password' : 'dumbass' })
       this.routerViewKey += 1;
     },
     checkFormValidity() {
@@ -110,24 +109,19 @@ export default {
       if (!this.checkFormValidity()) {
         return;
       }
-
-      this.axios
-        .post(this.$serverPath + "login", {
-          username: this.adminUsername,
-          password: this.adminPassword,
-        })
-        .then((response) => {
-          localStorage.setItem("user", JSON.stringify(response.data));
-          this.$emit("loggedIn");
-          if (this.$route.params.nextUrl != null) {
-            this.$router.push(this.$route.params.nextUrl);
-          } else {
-            this.logged = true;
-            this.adminLogged = response.data.IsAdmin;
-            this.routerViewKey += 1;
+      this.$store.dispatch('authentication/login', {
+        username: this.adminUsername,
+        password: this.adminPassword,
+      }).then((response) => {
+            this.$emit("loggedIn");
+            console.log(response)
+            if (this.$route.params.nextUrl != null) {
+              this.$router.push(this.$route.params.nextUrl);
+            } else {
+              this.routerViewKey += 1;
+            }
           }
-        })
-        .catch((err) => alert("autenticazione fallita => " + err));
+      )
 
       this.$nextTick(() => {
         this.$bvModal.hide("modal-login");
