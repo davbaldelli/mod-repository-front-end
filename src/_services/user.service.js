@@ -4,7 +4,7 @@ export const userService = {
 };
 
 
-const API_URL = "https://api.mod.davidebaldelli.it/";
+const API_URL = "https://api.mod.davidebaldelli.it";
 
 function login(username, password) {
     const requestOptions = {
