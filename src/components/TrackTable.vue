@@ -246,7 +246,7 @@ export default {
     },
     filterByName() {
       this.axios
-          .get(this.$serverPath + "track/find/name/" + this.name_filter)
+          .get(this.$serverPath + "track/find/name/" + this.name_filter, {headers : {Token : this.$store.getters["authentication/token"]}})
           .then((response) => (this.tracks = response.data))
           .catch((error) => {
             console.log(error);
@@ -258,7 +258,7 @@ export default {
     },
     getAllTracks() {
       this.axios
-          .get(this.$serverPath + "track/all")
+          .get(this.$serverPath + "track/all", {headers : {Token : this.$store.getters["authentication/token"]}})
           .then((response) => (this.tracks = response.data))
           .catch((error) => console.log(error));
     },
