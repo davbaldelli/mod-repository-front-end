@@ -44,7 +44,7 @@
                 </b-dropdown-item
                 >
               </b-dropdown>
-              <b-button class="m-2" variant="primary" @click="loadAllTracks"
+              <b-button class="m-2" variant="primary" @click="resetFilter"
               >All
               </b-button
               >
@@ -191,11 +191,15 @@ export default {
     }
   },
   mounted() {
-    this.loadAllTracks();
+    this.getAllTracks();
     this.axios
         .get(this.$serverPath + "nation/track/all")
         .then((res) => (this.nations = res.data))
         .catch(error => console.log(error));
+  },
+  created() {
+    this.$parent.$on('loggedIn', this.getAllTracks)
+    this.$parent.$on('loggedOut',this.getAllTracks)
   },
   methods: {
     nationSelected(nation) {
@@ -249,7 +253,10 @@ export default {
             this.search_error = true
           });
     },
-    loadAllTracks() {
+    resetFilter(){
+      this.selector = t =>t
+    },
+    getAllTracks() {
       this.axios
           .get(this.$serverPath + "track/all")
           .then((response) => (this.tracks = response.data))

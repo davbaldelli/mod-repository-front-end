@@ -42,7 +42,7 @@
                   </b-dropdown-item
                   >
                 </b-dropdown>
-                <b-button variant="primary" class="m-2 mt-2" @click="getAllCars"
+                <b-button variant="primary" class="m-2 mt-2" @click="resetFilter"
                 >All
                 </b-button
                 >
@@ -178,7 +178,7 @@ export default {
   },
   created() {
     this.$parent.$on('loggedIn', this.getAllCars)
-    this.$parent.$on('loggedOut', this.getAllCars)
+    this.$parent.$on('loggedOut',this.getAllCars)
   },
   mounted() {
     this.getAllCars();
@@ -230,7 +230,7 @@ export default {
     },
     filterByName() {
       this.axios
-          .get(this.$serverPath + "car/find/model/" + this.model_filter)
+          .get(this.$serverPath + "car/find/model/" + this.model_filter, {headers : {Token : this.$store.getters["authentication/token"]}})
           .then((response) => {
             this.cars = response.data;
           })
@@ -238,6 +238,9 @@ export default {
             console.log(error);
             this.search_error = true
           });
+    },
+    resetFilter(){
+      this.selector = c => c
     },
     getAllCars() {
       this.axios

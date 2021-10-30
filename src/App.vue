@@ -84,8 +84,8 @@ export default {
     goBack() {
       window.history.length > 1 ? this.$router.go(-1) : this.$router.push("/");
     },
-    logOut() {
-      this.$store.dispatch('authentication/login', { 'username' : 'base', 'password' : 'dumbass' })
+    async logOut() {
+      await this.$store.dispatch('authentication/login', {'username': 'base', 'password': 'dumbass'})
       this.$emit('loggedOut')
     },
     checkFormValidity() {
@@ -104,18 +104,17 @@ export default {
       // Trigger submit handler
       this.handleSubmit();
     },
-    handleSubmit() {
+    async handleSubmit() {
       // Exit when the form isn't valid
       if (!this.checkFormValidity()) {
         return;
       }
-      this.$store.dispatch('authentication/login', {
+      await this.$store.dispatch('authentication/login', {
         username: this.adminUsername,
         password: this.adminPassword,
-      }).then(() => {
-            this.$emit("loggedIn");
-          }
-      )
+      })
+      this.$emit("loggedIn");
+
       this.$nextTick(() => {
         this.$bvModal.hide("modal-login");
       });

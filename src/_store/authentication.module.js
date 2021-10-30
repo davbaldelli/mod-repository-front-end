@@ -17,13 +17,16 @@ export const authentication = {
         },
         token : state => {
             return state.user.token
+        },
+        user : state => {
+            return state.user
         }
     },
     actions: {
-        login({ dispatch, commit }, { username, password }) {
+        async login({ dispatch, commit }, { username, password }) {
             commit('loginRequest', { username });
 
-            userService.login(username, password)
+            await userService.login(username, password)
                 .then(
                     user => {
                         commit('loginSuccess', user);
