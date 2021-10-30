@@ -183,7 +183,7 @@ export default {
   mounted() {
     this.getAllCars();
     this.axios
-        .get(this.$serverPath + "car/type/all")
+        .get(this.$serverPath + "car/type/all", {headers : {Token : this.$store.getters["authentication/token"]}})
         .then((res) => (this.categories = res.data));
     this.axios
         .get(this.$serverPath + "brand/all/grouped/nation")
