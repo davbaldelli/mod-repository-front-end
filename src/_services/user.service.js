@@ -1,3 +1,5 @@
+import axios from "axios";
+
 export const userService = {
     login,
     logout,
@@ -5,15 +7,11 @@ export const userService = {
 
 
 const API_URL = "https://api.mod.davidebaldelli.it";
+//const API_URL = "http://localhost:6316";
 
 function login(username, password) {
-    const requestOptions = {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ username, password })
-    };
-    return fetch(`${API_URL}/login`, requestOptions)
-        .then(r => handleResponse(r))
+
+    return axios.post(`${API_URL}/login`, {username, password}).then(r => handleResponse(r))
         .then(user => {
             // login successful if there's a jwt token in the response
             if (user.token) {
@@ -32,13 +30,12 @@ function logout() {
 }
 
 function handleResponse(response) {
-    return response.text().then(text => {
-        const data = text && JSON.parse(text);
-        if (!response.ok) {
+        const data = response.data
+        if (!(response.status === 202)) {
             if (response.status === 401) {
                 // auto logout if 401 response returned from api
                 logout();
-                location.reload(true);
+                location.reload();
             }
 
             const error = (data && data.message) || response.statusText;
@@ -46,5 +43,4 @@ function handleResponse(response) {
         }
 
         return data;
-    });
 }

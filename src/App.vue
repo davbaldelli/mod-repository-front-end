@@ -86,7 +86,7 @@ export default {
     },
     logOut() {
       this.$store.dispatch('authentication/login', { 'username' : 'base', 'password' : 'dumbass' })
-      this.routerViewKey += 1;
+      this.$emit('loggedOut')
     },
     checkFormValidity() {
       const valid = this.$refs.form.checkValidity();
@@ -112,17 +112,10 @@ export default {
       this.$store.dispatch('authentication/login', {
         username: this.adminUsername,
         password: this.adminPassword,
-      }).then((response) => {
+      }).then(() => {
             this.$emit("loggedIn");
-            console.log(response)
-            if (this.$route.params.nextUrl != null) {
-              this.$router.push(this.$route.params.nextUrl);
-            } else {
-              this.routerViewKey += 1;
-            }
           }
       )
-
       this.$nextTick(() => {
         this.$bvModal.hide("modal-login");
       });

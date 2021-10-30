@@ -176,6 +176,10 @@ export default {
       );
     }
   },
+  created() {
+    this.$parent.$on('loggedIn', this.getAllCars)
+    this.$parent.$on('loggedOut', this.getAllCars)
+  },
   mounted() {
     this.getAllCars();
     this.axios
@@ -237,12 +241,13 @@ export default {
     },
     getAllCars() {
       this.axios
-          .get(this.$serverPath + "car/all")
+          .get(this.$serverPath + "car/all", {headers : {Token : this.$store.getters["authentication/token"]}})
           .then((response) => {
             this.cars = response.data;
           })
           .catch((error) => console.log(error));
-    },
+    }
+
   },
 };
 </script>

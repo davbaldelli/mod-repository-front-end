@@ -17,8 +17,9 @@ Vue.use(VueAxios,axios)
 
 Vue.prototype.$serverPath = "https://api.mod.davidebaldelli.it/"
 
+
 let user = JSON.parse(localStorage.getItem('user'))
-if(!user){
+if(!user || user.username === 'base'){
     store.dispatch('authentication/login', { 'username' : 'base', 'password' : 'dumbass' })
 }
 
