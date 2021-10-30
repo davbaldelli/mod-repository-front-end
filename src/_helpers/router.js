@@ -49,14 +49,16 @@ router.beforeEach((to, from, next) => {
             if(to.matched.some(record => record.meta.is_admin)) {
                 if(user.role === "admin"){
                     next()
+                    console.log("ciao admin!")
                 }
                 else{
-                    next(false)
+                    console.log("questa pagina non fa per te!")
+                    next('/')
                 }
             }
             next()
         } else {
-            next(false)
+            next('/')
         }
     } else {
         next()
