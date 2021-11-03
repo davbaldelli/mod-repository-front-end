@@ -61,7 +61,10 @@
           </b-col>
         </b-row>
         <b-row>
-          <b-col>
+          <b-col v-if="loadingTracks">
+            <b-spinner label="Loading..."></b-spinner>
+          </b-col>
+          <b-col v-if="!loadingTracks">
             <b-pagination
                 v-model="currentPage"
                 :per-page="perPage"
@@ -177,6 +180,9 @@ export default {
     };
   },
   computed: {
+    loadingTracks() {
+      return this.$store.getters["tracks/loadingTracks"]
+    },
     rows() {
       return this.filteredCars.length;
     },
