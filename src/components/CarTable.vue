@@ -47,7 +47,7 @@
                 </b-button
                 >
                 <b-input-group class="m-2">
-                  <b-form-input v-model="model_filter" required></b-form-input>
+                  <b-form-input v-on:keyup.enter="filterByName" v-model="model_filter" required></b-form-input>
                   <b-input-group-append>
                     <b-button @click="filterByName()" variant="outline-success"
                     >Search
@@ -59,7 +59,10 @@
             </b-col>
           </b-row>
           <b-row>
-            <b-col>
+            <b-col v-if="loadingCars">
+              <b-spinner  label="Loading..."></b-spinner>
+            </b-col>
+            <b-col v-if="!loadingCars">
               <b-pagination
                   v-model="currentPage"
                   :total-rows="rows"
@@ -146,15 +149,14 @@
 </template>
 
 <script>
+import {CarsFilters} from "@/_helpers";
+
 export default {
   name: "car-table",
   data() {
     return {
       selector : function (cars) {return cars},
       currentPage: 1,
-      cars: [],
-      categories: [],
-      nations: [],
       model_filter: "",
       perPage: 25,
     };
@@ -172,8 +174,19 @@ export default {
     carsForList() {
       return this.filteredCars.slice(
           (this.currentPage - 1) * this.perPage,
-          this.currentPage * this.perPage
-      );
+          this.currentPage * this.perPage)
+    },
+    cars(){
+      return this.$store.getters["cars/cars"]
+    },
+    nations() {
+      return this.$store.getters['cars/brands']
+    },
+    categories() {
+      return this.$store.getters['cars/types']
+    },
+    loadingCars(){
+      return this.$store.getters['cars/loadingCars']
     }
   },
   created() {
@@ -182,75 +195,31 @@ export default {
   },
   mounted() {
     this.getAllCars();
-    this.axios
-        .get(this.$serverPath + "car/type/all", {headers : {Token : this.$store.getters["authentication/token"]}})
-        .then((res) => (this.categories = res.data));
-    this.axios
-        .get(this.$serverPath + "brand/all/grouped/nation")
-        .then((res) => (this.nations = res.data));
+    this.$store.dispatch('cars/getCarTypes')
+    this.$store.dispatch('cars/getCarBrandsGroupedByNation')
   },
   methods: {
-    nationSelected(nation) {
-      this.selector = cars => {
-        let fCars = []
-        cars.forEach(car => {
-          if(car.Brand.Nation.Name === nation){
-            fCars.push(car)
-          }
-        })
-        return fCars
-      }
-    },
     toTop() {
       document.getElementById("mod-list-title").scrollIntoView();
     },
+    nationSelected(nation) {
+      this.selector = CarsFilters.filterByNation(nation)
+    },
     brandSelected(brand) {
-      this.selector = cars => {
-        let fCars = []
-        cars.forEach(car => {
-          if(car.Brand.Name === brand){
-            fCars.push(car)
-          }
-        })
-        return fCars
-      }
+      this.selector = CarsFilters.filterByBrand(brand)
     },
     categorySelected(category) {
-      this.selector = cars => {
-        let fCars = []
-        cars.forEach(car => {
-          if(car.Categories) {
-            if (car.Categories.some(e => e.Name === category)) {
-              fCars.push(car)
-            }
-          }
-        })
-        return fCars
-      }
+      this.selector = CarsFilters.filterByCategory(category)
     },
     filterByName() {
-      this.axios
-          .get(this.$serverPath + "car/find/model/" + this.model_filter, {headers : {Token : this.$store.getters["authentication/token"]}})
-          .then((response) => {
-            this.cars = response.data;
-          })
-          .catch((error) => {
-            console.log(error);
-            this.search_error = true
-          });
+      this.selector = CarsFilters.filterByName(this.model_filter)
     },
     resetFilter(){
       this.selector = c => c
     },
     getAllCars() {
-      this.axios
-          .get(this.$serverPath + "car/all", {headers : {Token : this.$store.getters["authentication/token"]}})
-          .then((response) => {
-            this.cars = response.data;
-          })
-          .catch((error) => console.log(error));
-    }
-
+      this.$store.dispatch('cars/getAll')
+    },
   },
 };
 </script>

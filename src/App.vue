@@ -11,45 +11,45 @@
         <div v-if="!logged">
           <b-nav-item v-b-modal.modal-login>Login</b-nav-item>
         </div>
-        <b-nav-item v-if="logged" @click="logOut" >Logout</b-nav-item>
+        <b-nav-item v-if="logged" @click="logOut">Logout</b-nav-item>
       </b-navbar-nav>
     </b-navbar>
     <router-view :key="routerViewKey"></router-view>
     <div>
       <b-modal
-        id="modal-login"
-        ref="modal"
-        title="Admin Login"
-        @show="resetModal"
-        @hidden="resetModal"
-        @ok="handleOk"
+          id="modal-login"
+          ref="modal"
+          title="Admin Login"
+          @hidden="resetModal"
+          @ok="handleOk"
+          @keydown.native.enter="handleOk"
       >
-        <form ref="form" @submit.stop.prevent="handleSubmit">
+        <form ref="form" v-on:keyup.enter.stop.prevent="handleSubmit" @submit.stop.prevent="handleSubmit">
           <b-form-group
-            label="Username"
-            label-for="username-input"
-            invalid-feedback="Username is required"
-            :state="nameState"
+              label="Username"
+              label-for="username-input"
+              invalid-feedback="Username is required"
+              :state="nameState"
           >
             <b-form-input
-              id="username-input"
-              v-model="adminUsername"
-              :state="nameState"
-              required
+                id="username-input"
+                v-model="adminUsername"
+                :state="nameState"
+                required
             ></b-form-input>
           </b-form-group>
           <b-form-group
-            label="Password"
-            label-for="text-password"
-            invalid-feedback="Password is required"
+              label="Password"
+              label-for="text-password"
+              invalid-feedback="Password is required"
           >
             <b-form-input
-              v-model="adminPassword"
-              type="password"
-              id="text-password"
-              aria-describedby="password-help-block"
-              :state="nameState"
-              required
+                v-model="adminPassword"
+                type="password"
+                id="text-password"
+                aria-describedby="password-help-block"
+                :state="nameState"
+                required
             ></b-form-input>
           </b-form-group>
         </form>
@@ -59,7 +59,6 @@
 </template>
 
 <script>
-
 export default {
   name: "App",
   components: {},
@@ -69,23 +68,45 @@ export default {
       production: true,
       adminUsername: "",
       adminPassword: "",
-      routerViewKey : 0,
+      routerViewKey: 0,
     };
   },
-  computed : {
+  computed: {
     logged() {
       return this.$store.getters["authentication/isLogged"]
     },
     adminLogged() {
       return this.$store.getters["authentication/isAdmin"]
+    },
+    alert() {
+      return this.$store.getters["alert/alert"]
+    }
+  },
+  watch: {
+    $route() {
+      // clear alert on location change
+      this.$store.dispatch('alert/clear');
+    },
+    alert: {
+      async handler(value) {
+        if (value.message && value.message.status === 401) {
+          if (this.$store.getters['authentication/user'].username === 'base') {
+            await this.$store.dispatch('authentication/login', {'username': 'base', 'password': 'dumbass'})
+                .then(() => this.$store.dispatch('alert/clear'))
+            this.$emit('loggedOut')
+          } else {
+            this.adminUsername = this.$store.getters['authentication/user'].username
+            this.$bvModal.show("modal-login")
+          }
+        }
+      }, deep: true
     }
   },
   methods: {
-    goBack() {
-      window.history.length > 1 ? this.$router.go(-1) : this.$router.push("/");
-    },
     async logOut() {
-      await this.$store.dispatch('authentication/login', {'username': 'base', 'password': 'dumbass'})
+      await this.$store.dispatch('authentication/login', {'username': 'base', 'password': 'dumbass'}).then(() =>
+          this.$store.dispatch('alert/clear')
+      )
       this.$emit('loggedOut')
     },
     checkFormValidity() {
@@ -112,7 +133,7 @@ export default {
       await this.$store.dispatch('authentication/login', {
         username: this.adminUsername,
         password: this.adminPassword,
-      })
+      }).then(() => this.$store.dispatch('alert/clear'))
       this.$emit("loggedIn");
 
       this.$nextTick(() => {

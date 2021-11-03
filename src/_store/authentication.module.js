@@ -31,10 +31,11 @@ export const authentication = {
                     user => {
                         commit('loginSuccess', user);
                         return user
-                    },
+                    }
+                ).catch(
                     error => {
-                        commit('loginFailure', error);
-                        dispatch('alert/error', error, { root: true });
+                        commit('loginFailure');
+                        dispatch('alert/error', error, {root: true});
                     }
                 );
         },

@@ -4,6 +4,10 @@ export const alert = {
         type: null,
         message: null
     },
+    getters: {
+        alert: state => state
+    }
+    ,
     actions: {
         success({ commit }, message) {
             commit('success', message);
