@@ -13,11 +13,11 @@
       </h5>
       <h5 class="mb-2">
         Se ti piace il nostro lavoro e vorresti premiarci ti invito a fare una piccola donazione
-        <a href="https://paypal.me/teamItaliaracing?locale.x=it_IT">qui</a>
+        <a href="https://paypal.me/teamItaliaracing?locale.x=it_IT" target="_blank">qui</a>
       </h5>
       <h5>
-        Se invece siete in ricerca di una comunità dove poter girare in compagnia vi invitiamo sul nostro gruppo <a
-          href="">discord</a>
+        Se invece siete in ricerca di una comunità dove poter girare in compagnia vi invitiamo sul nostro gruppo <a target="_blank"
+          href="https://discord.gg/5HTA8xZgTA">discord</a>
       </h5>
     </div>
   </div>

@@ -127,7 +127,7 @@
                     </b-col>
                   </b-row>
                   <b-card-footer v-if="premium || !car.Premium" class="p-1 text-center">
-                    <b-button :href="car.DownloadLink" variant="primary">Download</b-button>
+                    <b-button target="_blank" :href="car.DownloadLink" variant="primary">Download</b-button>
                   </b-card-footer>
                 </b-card>
               </div>

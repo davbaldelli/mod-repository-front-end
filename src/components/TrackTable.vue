@@ -128,7 +128,7 @@
                     v-if="!track.Premium || premium"
                     class="text-center p-2"
                 >
-                  <b-button :href="track.DownloadLink" variant="primary"
+                  <b-button target="_blank" :href="track.DownloadLink" variant="primary"
                   >Download
                   </b-button
                   >
