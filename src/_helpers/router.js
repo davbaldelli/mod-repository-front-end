@@ -3,11 +3,11 @@ import Router from 'vue-router';
 import VueRouter from 'vue-router';
 import HelloWorld from "@/components/HelloWorld";
 import TrackTable from "@/components/TrackTable";
-import CarTable from "@/components/CarTable";
 import TrackInput from "@/components/TrackInput";
 import CarInput from "@/components/CarInput";
 import CarDetail from "@/components/CarDetail";
 import TrackDetail from "@/components/TrackDetail";
+import CarList from "@/components/CarList";
 
 Vue.use(Router);
 
@@ -21,7 +21,7 @@ const routes = [
         }
     },
     {
-        path: '/cars', component: CarTable, meta: {
+        path: '/cars', component: CarList, meta: {
             requiresAuth: true,
         }
     },
