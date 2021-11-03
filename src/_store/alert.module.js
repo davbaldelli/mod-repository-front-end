@@ -9,13 +9,13 @@ export const alert = {
     }
     ,
     actions: {
-        success({ commit }, message) {
+        success({commit}, message) {
             commit('success', message);
         },
-        error({ commit }, message) {
+        error({commit}, message) {
             commit('error', message);
         },
-        clear({ commit }) {
+        clear({commit}) {
             commit('clear');
         }
     },

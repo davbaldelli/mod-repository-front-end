@@ -3,12 +3,12 @@
     <b-form @submit.prevent="onSubmit()">
       <b-form-group
           id="input-group-name"
-          label-cols-sm="4"
-          label-cols-lg="3"
           content-cols-lg="7"
-          label="Track Name:"
-          label-for="input-name"
           descripiton="Enter track name"
+          label="Track Name:"
+          label-cols-lg="3"
+          label-cols-sm="4"
+          label-for="input-name"
       >
         <b-form-input
             id="input-name"
@@ -19,34 +19,34 @@
       </b-form-group>
       <b-form-group
           id="input-group-year"
-          label-cols-sm="4"
-          label-cols-lg="3"
           content-cols-lg="7"
-          label="Year:"
-          label-for="input-year"
           description="Enter track year"
+          label="Year:"
+          label-cols-lg="3"
+          label-cols-sm="4"
+          label-for="input-year"
       >
         <b-form-input
-            v-model="form.Year"
-            type="number"
             id="input-year"
-            placeholder="Enter Year"
+            v-model="form.Year"
             number
+            placeholder="Enter Year"
+            type="number"
         ></b-form-input>
       </b-form-group>
       <b-form-group
-          label="Select tags:"
           v-slot="{ ariaDescribedby }"
-          label-cols-sm="4"
-          label-cols-lg="3"
           content-cols-lg="7"
+          label="Select tags:"
+          label-cols-lg="3"
+          label-cols-sm="4"
           label-for="input-tags"
       >
         <b-form-checkbox-group
             id="input-tags"
             v-model="form.Tags"
-            :options="trackTags"
             :aria-describedby="ariaDescribedby"
+            :options="trackTags"
             name="flavour-1"
         >
         </b-form-checkbox-group>
@@ -57,50 +57,50 @@
       >
       <b-form-group
           id="input-group-link"
-          label-cols-sm="4"
-          label-cols-lg="3"
           content-cols-lg="7"
-          label="Download Link:"
-          label-for="input-link"
           descripiton="Enter download link"
+          label="Download Link:"
+          label-cols-lg="3"
+          label-cols-sm="4"
+          label-for="input-link"
       >
         <b-form-input
             id="input-link"
             v-model="form.DownloadLink"
-            type="url"
             placeholder="Enter download link"
             required
+            type="url"
         ></b-form-input>
       </b-form-group>
       <b-form-group
           id="input-group-image"
-          label-cols-sm="4"
-          label-cols-lg="3"
           content-cols-lg="7"
-          label="Image Link:"
-          label-for="input-image"
           descripiton="Enter image link"
+          label="Image Link:"
+          label-cols-lg="3"
+          label-cols-sm="4"
+          label-for="input-image"
       >
         <b-form-input
             id="input-image"
             v-model="form.Image"
-            type="url"
             placeholder="Enter image link"
             required
+            type="url"
         ></b-form-input>
       </b-form-group>
       <b-form-group
           id="input-group-author"
-          label-cols-sm="4"
-          label-cols-lg="3"
           content-cols-lg="7"
-          label="Author Name:"
-          label-for="input-author"
           descripiton="Enter Author Name"
+          label="Author Name:"
+          label-cols-lg="3"
+          label-cols-sm="4"
+          label-for="input-author"
       >
         <b-form-select
-            id="input-author"
             v-if="existingAuthor"
+            id="input-author"
             v-model="form.Author.Name"
             :options="authorsOptions"
             class="mb-3"
@@ -123,16 +123,17 @@
           v-model="existingAuthor"
           name="check-button-author"
           switch
-      >Existing Author</b-form-checkbox
+      >Existing Author
+      </b-form-checkbox
       >
       <b-form-group
           id="input-group-location"
-          label-cols-sm="4"
-          label-cols-lg="3"
           content-cols-lg="7"
-          label="Track Location:"
-          label-for="input-location"
           descripiton="Enter track location"
+          label="Track Location:"
+          label-cols-lg="3"
+          label-cols-sm="4"
+          label-for="input-location"
       >
         <b-form-input
             id="input-location"
@@ -143,22 +144,22 @@
       </b-form-group>
       <b-form-group
           id="input-group-nation"
-          label-cols-sm="4"
-          label-cols-lg="3"
           content-cols-lg="7"
           label="Nation:"
+          label-cols-lg="3"
+          label-cols-sm="4"
           label-for="input-nation"
       >
         <b-form-select
-            id="input-nation"
             v-if="existingNation"
+            id="input-nation"
             v-model="form.Nation.Name"
             :options="nationOptions"
             class="mb-3"
         />
         <b-form-input
-            id="input-nation"
             v-if="!existingNation"
+            id="input-nation"
             v-model="form.Nation.Name"
             placeholder="Enter nation"
             required
@@ -173,37 +174,37 @@
       >
       <b-form-group
           id="form-layouts-group"
-          label-cols-sm="4"
-          label-cols-lg="3"
           content-cols-lg="7"
           label="Enter Layouts:"
+          label-cols-lg="3"
+          label-cols-sm="4"
       >
         <div v-for="(layout, index) in form.Layouts" v-bind:key="layout.name">
           <b-form-input
-              v-model="form.Layouts[index].Name"
               id="input-layout-name"
+              v-model="form.Layouts[index].Name"
               placeholder="Enter layout name"
               required
           ></b-form-input>
           <b-form-input
-              v-model="form.Layouts[index].LengthM"
-              type="number"
               id="input-layout-length"
-              placeholder="Enter layout length (meters)"
+              v-model="form.Layouts[index].LengthM"
               number
+              placeholder="Enter layout length (meters)"
               required
+              type="number"
           ></b-form-input>
           <b-form-select
               id="input-layout-Type"
               v-model="form.Layouts[index].Category"
               :options="layoutTypeOptions"
-              placeholder="Enter layout type"
               class="mb-3"
+              placeholder="Enter layout type"
           />
         </div>
       </b-form-group>
-      <b-button @click="removeLayout" variant="danger">Remove Layout</b-button>
-      <b-button @click="addLayout" variant="success">Add Layout</b-button>
+      <b-button variant="danger" @click="removeLayout">Remove Layout</b-button>
+      <b-button variant="success" @click="addLayout">Add Layout</b-button>
       <b-button type="submit" variant="primary">Submit</b-button>
     </b-form>
   </div>

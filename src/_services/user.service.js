@@ -1,4 +1,5 @@
 import axios from "axios";
+import {API_URL} from "@/_services/config";
 
 export const userService = {
     login,
@@ -6,11 +7,9 @@ export const userService = {
 };
 
 
-const API_URL = "https://api.mod.davidebaldelli.it";
-//const API_URL = "http://localhost:6316";
 
 function login(username, password) {
-    return axios.post(`${API_URL}/login`, {username, password}, {validateStatus : status => status === 202})
+    return axios.post(`${API_URL}/login`, {username, password}, {validateStatus: status => status === 202})
         .then(response => {
             let user = response.data
             // login successful if there's a jwt token in the response

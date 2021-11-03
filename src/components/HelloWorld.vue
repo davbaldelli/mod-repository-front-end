@@ -1,8 +1,8 @@
 <template>
   <div class="container">
     <b-jumbotron
-        header="AC Mod Repository"
         class="mb-2 mt-2 text-left"
+        header="AC Mod Repository"
     ></b-jumbotron>
     <div class="text-center">
       <h5 class="mb-2">

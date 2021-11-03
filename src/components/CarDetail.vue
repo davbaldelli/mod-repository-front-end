@@ -13,8 +13,8 @@
     <b-row>
       <b-col>
         <b-card
-            no-body
             class="overflow-hidden mb-2 text-left"
+            no-body
         >
           <b-row no-gutters>
             <b-col class="d-flex align-items-center">

@@ -19,8 +19,8 @@
     <b-row class="mt-5">
       <b-col>
         <b-card
-            no-body
             class="overflow-hidden mb-2"
+            no-body
         >
           <b-row no-gutters>
             <b-col class="d-flex align-items-center">

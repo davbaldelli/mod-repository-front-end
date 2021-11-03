@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <b-navbar type="dark" variant="dark" fixed="top" sticky>
+    <b-navbar fixed="top" sticky type="dark" variant="dark">
       <b-navbar-nav>
         <b-nav-item to="/cars">Cars</b-nav-item>
         <b-nav-item to="/tracks">Tracks</b-nav-item>
@@ -26,10 +26,10 @@
       >
         <form ref="form" v-on:keyup.enter.stop.prevent="handleSubmit" @submit.stop.prevent="handleSubmit">
           <b-form-group
+              :state="nameState"
+              invalid-feedback="Username is required"
               label="Username"
               label-for="username-input"
-              invalid-feedback="Username is required"
-              :state="nameState"
           >
             <b-form-input
                 id="username-input"
@@ -39,17 +39,17 @@
             ></b-form-input>
           </b-form-group>
           <b-form-group
+              invalid-feedback="Password is required"
               label="Password"
               label-for="text-password"
-              invalid-feedback="Password is required"
           >
             <b-form-input
-                v-model="adminPassword"
-                type="password"
                 id="text-password"
-                aria-describedby="password-help-block"
+                v-model="adminPassword"
                 :state="nameState"
+                aria-describedby="password-help-block"
                 required
+                type="password"
             ></b-form-input>
           </b-form-group>
         </form>

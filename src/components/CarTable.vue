@@ -8,9 +8,9 @@
             <b-col>
               <div id="mod-list-title">
                 <b-jumbotron
+                    class="mb-2 text-left"
                     header="AC Mod Cars"
                     lead="A collection of quality mods"
-                    class="mb-2 text-left"
                 ></b-jumbotron>
               </div>
             </b-col>
@@ -26,14 +26,14 @@
                   >
                     <b-dropdown-item
                         v-for="brand in nation.Brands"
-                        @click="brandSelected(brand)"
                         :key="brand"
+                        @click="brandSelected(brand)"
                     >{{ brand }}
                     </b-dropdown-item
                     >
                   </b-dropdown>
                 </div>
-                <b-dropdown text="Categories" variant="primary" class="m-2">
+                <b-dropdown class="m-2" text="Categories" variant="primary">
                   <b-dropdown-item
                       v-for="category in categories"
                       :key="category.Name"
@@ -42,14 +42,14 @@
                   </b-dropdown-item
                   >
                 </b-dropdown>
-                <b-button variant="primary" class="m-2 mt-2" @click="resetFilter"
+                <b-button class="m-2 mt-2" variant="primary" @click="resetFilter"
                 >All
                 </b-button
                 >
                 <b-input-group class="m-2">
-                  <b-form-input v-on:keyup.enter="filterByName" v-model="model_filter" required></b-form-input>
+                  <b-form-input v-model="model_filter" required v-on:keyup.enter="filterByName"></b-form-input>
                   <b-input-group-append>
-                    <b-button @click="filterByName()" variant="outline-success"
+                    <b-button variant="outline-success" @click="filterByName()"
                     >Search
                     </b-button
                     >
@@ -60,22 +60,22 @@
           </b-row>
           <b-row>
             <b-col v-if="loadingCars">
-              <b-spinner  label="Loading..."></b-spinner>
+              <b-spinner label="Loading..."></b-spinner>
             </b-col>
             <b-col v-if="!loadingCars">
               <b-pagination
                   v-model="currentPage"
-                  :total-rows="rows"
                   :per-page="perPage"
-                  aria-controls="car-card-list"
+                  :total-rows="rows"
                   align="center"
+                  aria-controls="car-card-list"
               ></b-pagination>
               <div id="car-card-list" class="text-left">
                 <b-card
                     v-for="car in carsForList"
                     :key="car.ModelName"
-                    no-body
                     class="overflow-hidden mb-2"
+                    no-body
                 >
                   <b-row no-gutters>
                     <b-col class="d-flex align-items-center">
@@ -87,7 +87,7 @@
                       </b-card-img
                       >
                     </b-col>
-                    <b-col md="8" class="mh-100">
+                    <b-col class="mh-100" md="8">
                       <b-card-body class="p-3 h-100">
                         <b-card-title class="mb-2">
                           <b-link :to="'/car/' + car.ModelName"
@@ -133,10 +133,10 @@
               </div>
               <b-pagination
                   v-model="currentPage"
-                  :total-rows="rows"
                   :per-page="perPage"
-                  aria-controls="car-card-list"
+                  :total-rows="rows"
                   align="center"
+                  aria-controls="car-card-list"
                   @change="toTop()"
               ></b-pagination>
             </b-col>
@@ -149,13 +149,13 @@
 </template>
 
 <script>
-import {CarsFilters} from "@/_helpers";
+import {carsFilters} from "@/_helpers";
 
 export default {
   name: "car-table",
   data() {
     return {
-      selector : function (cars) {return cars},
+      selector:  cars => cars,
       currentPage: 1,
       model_filter: "",
       perPage: 25,
@@ -163,7 +163,7 @@ export default {
   },
   computed: {
     rows() {
-      return this.cars.length;
+      return this.filteredCars.length;
     },
     premium() {
       return this.$store.getters["authentication/isLogged"]
@@ -176,7 +176,7 @@ export default {
           (this.currentPage - 1) * this.perPage,
           this.currentPage * this.perPage)
     },
-    cars(){
+    cars() {
       return this.$store.getters["cars/cars"]
     },
     nations() {
@@ -185,13 +185,13 @@ export default {
     categories() {
       return this.$store.getters['cars/types']
     },
-    loadingCars(){
+    loadingCars() {
       return this.$store.getters['cars/loadingCars']
     }
   },
   created() {
     this.$parent.$on('loggedIn', this.getAllCars)
-    this.$parent.$on('loggedOut',this.getAllCars)
+    this.$parent.$on('loggedOut', this.getAllCars)
   },
   mounted() {
     this.getAllCars();
@@ -203,18 +203,18 @@ export default {
       document.getElementById("mod-list-title").scrollIntoView();
     },
     nationSelected(nation) {
-      this.selector = CarsFilters.filterByNation(nation)
+      this.selector = carsFilters.filterByNation(nation)
     },
     brandSelected(brand) {
-      this.selector = CarsFilters.filterByBrand(brand)
+      this.selector = carsFilters.filterByBrand(brand)
     },
     categorySelected(category) {
-      this.selector = CarsFilters.filterByCategory(category)
+      this.selector = carsFilters.filterByCategory(category)
     },
     filterByName() {
-      this.selector = CarsFilters.filterByName(this.model_filter)
+      this.selector = carsFilters.filterByName(this.model_filter)
     },
-    resetFilter(){
+    resetFilter() {
       this.selector = c => c
     },
     getAllCars() {

@@ -1,36 +1,23 @@
-import {carsService} from "@/_services";
+import {carService} from "@/_services";
 
-const initialState = {cars : {items : []}, brands: {items: []}, types :{items : []}}
+const initialState = {cars: {items: []}, brands: {items: []}, types: {items: []}}
 
 export const cars = {
     namespaced: true,
     state: initialState,
-    getters : {
-        loadingCars : state => {
-            return state.cars.fetching
-        },
-        cars : state => {
-            return state.cars.items
-        },
-        loadingBrands : state => {
-            return state.brands.fetching
-        },
-        brands : state => {
-            return state.brands.items
-        },
-        loadingTypes : state => {
-            return state.types.loading
-        },
-        types : state => {
-            return state.types.items
-        }
-
+    getters: {
+        loadingCars: state => state.cars.fetching,
+        cars: state => state.cars.items,
+        loadingBrands: state => state.brands.fetching,
+        brands: state => state.brands.items,
+        loadingTypes: state => state.types.loading,
+        types: state => state.types.items
     },
     actions: {
         async getAll({dispatch, commit}) {
             commit('carsFetching')
 
-            await carsService.getAll()
+            await carService.getAll()
                 .then(
                     cars => {
                         commit('carsFetched', cars)
@@ -43,10 +30,10 @@ export const cars = {
                     }
                 )
         },
-        async findByModel({dispatch, commit}, model){
+        async findByModel({dispatch, commit}, model) {
             commit('carsFetching')
 
-            await carsService.findByModel(model)
+            await carService.findByModel(model)
                 .then(
                     cars => {
                         commit('carsFetched', cars)
@@ -59,56 +46,56 @@ export const cars = {
                     }
                 )
         },
-        async getCarBrandsGroupedByNation({dispatch, commit}){
+        async getCarBrandsGroupedByNation({dispatch, commit}) {
             commit('brandsFetching')
-            await carsService.getCarBrandsGroupedByNation()
-                .then( brands => {
+            await carService.getCarBrandsGroupedByNation()
+                .then(brands => {
                     commit('brandFetched', brands)
                 })
-                .catch( error => {
+                .catch(error => {
                     commit('brandFetchingError', error)
                     dispatch('alert/error', error, {root: true});
                 })
         },
-        async getCarTypes({dispatch, commit}){
+        async getCarTypes({dispatch, commit}) {
             commit('typesFetching')
-            await carsService.getCarTypes()
-                .then( types => {
+            await carService.getCarTypes()
+                .then(types => {
                     commit('typesFetched', types)
                 })
-                .catch( error => {
+                .catch(error => {
                     commit('typesFetchingError', error)
                     dispatch('alert/error', error, {root: true});
                 })
         }
     },
     mutations: {
-        carsFetching(state){
-            state.cars = {items :[], fetching : true}
+        carsFetching(state) {
+            state.cars = {items: [], fetching: true}
         },
-        carsFetched(state, cars){
-            state.cars = {items : cars}
+        carsFetched(state, cars) {
+            state.cars = {items: cars}
         },
-        carsFetchingError(state, error){
-            state.cars = {items :[], error}
+        carsFetchingError(state, error) {
+            state.cars = {items: [], error}
         },
-        brandsFetching(state){
-            state.brands =  {items :[], fetching : true}
+        brandsFetching(state) {
+            state.brands = {items: [], fetching: true}
         },
-        brandFetched(state, brands){
-            state.brands = {items : brands}
+        brandFetched(state, brands) {
+            state.brands = {items: brands}
         },
-        brandFetchingError(state, error){
-            state.brands =  {items :[], error}
+        brandFetchingError(state, error) {
+            state.brands = {items: [], error}
         },
-        typesFetching(state){
-            state.types =  {items :[], fetching : true}
+        typesFetching(state) {
+            state.types = {items: [], fetching: true}
         },
-        typesFetched(state, types){
-            state.types = {items : types}
+        typesFetched(state, types) {
+            state.types = {items: types}
         },
-        typesFetchingError(state, error){
-            state.types=  {items :[], error}
+        typesFetchingError(state, error) {
+            state.types = {items: [], error}
         }
     }
 }

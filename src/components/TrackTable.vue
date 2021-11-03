@@ -49,7 +49,7 @@
               </b-button
               >
               <b-input-group class="m-2">
-                <b-form-input v-model="name_filter" required/>
+                <b-form-input v-on:keyup.enter="filterByName" v-model="name_filter" required/>
                 <b-input-group-append>
                   <b-button variant="outline-success" @click="filterByName()"
                   >Search
@@ -149,13 +149,13 @@
 </template>
 
 <script>
+import {tracksFilters} from "@/_helpers/tracks-filters";
+
 export default {
   name: "TrackTable",
   data() {
     return {
-      selector : t => t,
-      tracks: [],
-      nations: [],
+      selector: t => t,
       name_filter: "",
       currentPage: 1,
       perPage: 25,
@@ -178,89 +178,56 @@ export default {
   },
   computed: {
     rows() {
-      return this.tracks.length;
+      return this.filteredCars.length;
     },
     tracksForList() {
-      return this.selector(this.tracks).slice(
+      return this.filteredCars.slice(
           (this.currentPage - 1) * this.perPage,
           this.currentPage * this.perPage
       )
     },
     premium() {
       return this.$store.getters["authentication/isLogged"]
+    },
+    filteredCars() {
+      return this.selector(this.tracks)
+    },
+    tracks() {
+      return this.$store.getters['tracks/tracks']
+    },
+    nations(){
+      return this.$store.getters['tracks/nations']
     }
   },
   mounted() {
     this.getAllTracks();
-    this.axios
-        .get(this.$serverPath + "nation/track/all")
-        .then((res) => (this.nations = res.data))
-        .catch(error => console.log(error));
+    this.$store.dispatch('tracks/getAllNations')
   },
   created() {
     this.$parent.$on('loggedIn', this.getAllTracks)
-    this.$parent.$on('loggedOut',this.getAllTracks)
+    this.$parent.$on('loggedOut', this.getAllTracks)
   },
   methods: {
     nationSelected(nation) {
-      this.selector = tracks => {
-        let fTracks = []
-        tracks.forEach( track =>{
-          if(track.Nation.Name === nation){
-            fTracks.push(track)
-          }
-        })
-        return fTracks
-      }
+      this.selector = tracksFilters.filterByNation(nation)
     },
     toTop() {
       document.getElementById("mod-list-title").scrollIntoView();
     },
     categorySelected(category) {
-      this.selector = tracks => {
-        let fTracks = []
-        tracks.forEach( track =>{
-          if(track.Layouts){
-            if(track.Layouts.some(e => e.Category === category)){
-              fTracks.push(track)
-            }
-          }
-
-        })
-        return fTracks
-      }
+      this.selector = tracksFilters.filterByLayoutCategory(category)
     },
     tagSelected(tag) {
-      this.selector = tracks => {
-        let fTracks = []
-        tracks.forEach( track =>{
-          if(track.Tags){
-            if(track.Tags.some(e => e === tag)){
-              fTracks.push(track)
-            }
-          }
-
-        })
-        return fTracks
-      }
+      this.selector = tracksFilters.filterByTag(tag)
     },
     filterByName() {
-      this.axios
-          .get(this.$serverPath + "track/find/name/" + this.name_filter, {headers : {Token : this.$store.getters["authentication/token"]}})
-          .then((response) => (this.tracks = response.data))
-          .catch((error) => {
-            console.log(error);
-            this.search_error = true
-          });
+      this.selector = tracksFilters.filterByName(this.name_filter)
     },
-    resetFilter(){
-      this.selector = t =>t
+    resetFilter() {
+      this.selector = t => t
     },
     getAllTracks() {
-      this.axios
-          .get(this.$serverPath + "track/all", {headers : {Token : this.$store.getters["authentication/token"]}})
-          .then((response) => (this.tracks = response.data))
-          .catch((error) => console.log(error));
+      this.$store.dispatch('tracks/getAllTracks')
     },
   },
 };
