@@ -130,7 +130,7 @@
                         {{ track.Nation.Name }}<br/>
                         <b>Author: </b
                         >
-                        <b-link :href="track.Author.Link">{{
+                        <b-link target="_blank" :href="track.Author.Link">{{
                             track.Author.Name
                           }}
                         </b-link>

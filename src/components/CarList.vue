@@ -126,7 +126,7 @@
                         <b>Year: </b>{{ car.Year }}<br/>
                         <b>Author: </b
                         >
-                        <b-link :href="car.Author.Link">{{
+                        <b-link target="_blank" :href="car.Author.Link">{{
                             car.Author.Name
                           }}
                         </b-link>
