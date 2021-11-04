@@ -14,62 +14,58 @@
     <b-row>
       <b-col md="2" sm="1" xl="3"></b-col>
       <b-col md="8" sm="10" xl="6">
-        <b-row>
-          <b-col cols="12">
-            <b-nav class="px-0" sticky toggleable>
-              <b-input-group size="lg">
-                <b-form-input v-model="model_filter" required v-on:keyup.enter="filterByName"></b-form-input>
-                <b-input-group-append>
-                  <b-button variant="outline-success" @click="filterByName()"
-                  >Search
-                  </b-button
+        <b-nav class="px-0" sticky toggleable>
+          <b-input-group>
+            <b-form-input v-model="model_filter" required v-on:keyup.enter="filterByName"></b-form-input>
+            <b-input-group-append>
+              <b-button variant="outline-success" @click="filterByName()"
+              >Search
+              </b-button
+              >
+            </b-input-group-append>
+          </b-input-group>
+          <b-navbar-nav class="ml-auto">
+            <b-nav-text class="mx-2" right>filters</b-nav-text>
+          </b-navbar-nav>
+          <b-navbar-toggle target="navbar-toggle-collapse">
+            <template #default="{ expanded }">
+              <b-icon v-if="expanded" icon="chevron-bar-up"></b-icon>
+              <b-icon v-else icon="chevron-bar-down"></b-icon>
+            </template>
+          </b-navbar-toggle>
+          <b-collapse id="navbar-toggle-collapse" is-nav>
+            <b-nav>
+              <div v-for="(brands, nation) in nations" :key="nation" class="my-2 mr-2">
+                <b-dropdown
+                    :text="nation"
+                    split
+                    @click="nationSelected(nation)"
+                >
+                  <b-dropdown-item
+                      v-for="brand in brands"
+                      :key="brand"
+                      @click="brandSelected(brand)"
+                  >{{ brand }}
+                  </b-dropdown-item
                   >
-                </b-input-group-append>
-              </b-input-group>
-              <b-navbar-nav class="ml-auto">
-                <b-nav-text class="mx-2" right>filters</b-nav-text>
-              </b-navbar-nav>
-              <b-navbar-toggle target="navbar-toggle-collapse">
-                <template #default="{ expanded }">
-                  <b-icon v-if="expanded" icon="chevron-bar-up"></b-icon>
-                  <b-icon v-else icon="chevron-bar-down"></b-icon>
-                </template>
-              </b-navbar-toggle>
-              <b-collapse id="navbar-toggle-collapse" is-nav>
-                <b-nav>
-                  <div v-for="(brands, nation) in nations" :key="nation" class="my-2 mr-2">
-                    <b-dropdown
-                        :text="nation"
-                        split
-                        @click="nationSelected(nation)"
-                    >
-                      <b-dropdown-item
-                          v-for="brand in brands"
-                          :key="brand"
-                          @click="brandSelected(brand)"
-                      >{{ brand }}
-                      </b-dropdown-item
-                      >
-                    </b-dropdown>
-                  </div>
-                  <b-dropdown class="my-2 mr-2" text="Categories" variant="primary">
-                    <b-dropdown-item
-                        v-for="category in categories"
-                        :key="category.Name"
-                        @click="categorySelected(category.Name)"
-                    >{{ category.Name }}
-                    </b-dropdown-item
-                    >
-                  </b-dropdown>
-                  <b-button class="mr-2 my-2" variant="primary" @click="resetFilter"
-                  >All
-                  </b-button
-                  >
-                </b-nav>
-              </b-collapse>
+                </b-dropdown>
+              </div>
+              <b-dropdown class="my-2 mr-2" text="Category" variant="primary">
+                <b-dropdown-item
+                    v-for="category in categories"
+                    :key="category.Name"
+                    @click="categorySelected(category.Name)"
+                >{{ category.Name }}
+                </b-dropdown-item
+                >
+              </b-dropdown>
+              <b-button class="mr-2 my-2" variant="primary" @click="resetFilter"
+              >All
+              </b-button
+              >
             </b-nav>
-          </b-col>
-        </b-row>
+          </b-collapse>
+        </b-nav>
       </b-col>
       <b-col md="2" sm="1" xl="3"></b-col>
     </b-row>

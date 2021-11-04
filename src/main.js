@@ -6,10 +6,11 @@ import VueAxios from 'vue-axios'
 import VueRouter from "vue-router"
 import {store} from './_store';
 import {router} from './_helpers';
-// Import Bootstrap an BootstrapVue CSS files (order is important)
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
+import VueBootstrapTypeahead from 'vue-bootstrap-typeahead'
 
+Vue.component('vue-bootstrap-typeahead', VueBootstrapTypeahead)
 Vue.use(VueRouter)
 Vue.use(BootstrapVue)
 Vue.use(IconsPlugin)

@@ -1,32 +1,49 @@
 <template>
-  <div class="container-fluid">
+  <b-container fluid>
     <b-row>
-      <b-col></b-col>
-      <b-col lg="6">
-        <b-row>
-          <b-col>
-            <div id="mod-list-title">
-              <b-jumbotron
-                  class="mb-2 text-left"
-                  header="AC Mod Tracks"
-                  lead="A collection of quality mods"
-              ></b-jumbotron>
-            </div>
-          </b-col>
-        </b-row>
-        <b-row>
-          <b-col>
-            <b-nav class="text-left">
-              <b-dropdown class="m-2" text="Nation">
-                <b-dropdown-item
-                    v-for="nation in nations"
-                    :key="nation.Name"
-                    @click="nationSelected(nation.Name)"
-                >{{ nation.Name }}
-                </b-dropdown-item
-                >
-              </b-dropdown>
-              <b-dropdown class="m-2" text="Category">
+      <b-col md="2" sm="1" xl="3"></b-col>
+      <b-col cols="12" md="8" sm="10" xl="6">
+        <b-jumbotron
+            class="py-3 py-sm-4 py-lg-5 mb-2 text-left"
+            header="AC Mod Tracks"
+            lead="A collection of quality mods"
+        ></b-jumbotron>
+      </b-col>
+      <b-col md="2" sm="1" xl="3"></b-col>
+    </b-row>
+    <b-row>
+      <b-col md="2" sm="1" xl="3"></b-col>
+      <b-col md="8" sm="10" xl="6">
+        <b-nav class="px-0" sticky toggleable>
+          <b-input-group>
+            <b-form-input v-model="name_filter" required v-on:keyup.enter="filterByName"></b-form-input>
+            <b-input-group-append>
+              <b-button variant="outline-success" @click="filterByName()"
+              >Search
+              </b-button
+              >
+            </b-input-group-append>
+          </b-input-group>
+          <b-navbar-nav class="ml-auto">
+            <b-nav-text class="mx-2" right>filters</b-nav-text>
+          </b-navbar-nav>
+          <b-navbar-toggle target="navbar-toggle-collapse">
+            <template #default="{ expanded }">
+              <b-icon v-if="expanded" icon="chevron-bar-up"></b-icon>
+              <b-icon v-else icon="chevron-bar-down"></b-icon>
+            </template>
+          </b-navbar-toggle>
+          <b-collapse id="navbar-toggle-collapse" is-nav>
+            <b-nav>
+              <vue-bootstrap-typeahead
+                  class="my-2 mr-2"
+                  placeholder="Type a nation..."
+                  :data="this.nations"
+                  :serializer="n => n.Name"
+                  :v-for="this.nation_name_filter"
+                  @hit="nationSelected($event.Name)"
+              />
+              <b-dropdown class="my-2 mr-2" text="Category">
                 <b-dropdown-item
                     v-for="tag in trackTags"
                     :key="tag"
@@ -35,7 +52,7 @@
                 </b-dropdown-item
                 >
               </b-dropdown>
-              <b-dropdown class="m-2" text="Layout Type">
+              <b-dropdown class="my-2 mr-2" text="Layout Type">
                 <b-dropdown-item
                     v-for="type in layoutTypeOptions"
                     :key="type"
@@ -44,27 +61,24 @@
                 </b-dropdown-item
                 >
               </b-dropdown>
-              <b-button class="m-2" variant="primary" @click="resetFilter"
+              <b-button class="mr-2 my-2" variant="primary" @click="resetFilter"
               >All
               </b-button
               >
-              <b-input-group class="m-2">
-                <b-form-input v-model="name_filter" required v-on:keyup.enter="filterByName"/>
-                <b-input-group-append>
-                  <b-button variant="outline-success" @click="filterByName()"
-                  >Search
-                  </b-button
-                  >
-                </b-input-group-append>
-              </b-input-group>
             </b-nav>
-          </b-col>
-        </b-row>
+          </b-collapse>
+        </b-nav>
+      </b-col>
+      <b-col md="2" sm="1" xl="3"></b-col>
+    </b-row>
+    <b-row>
+      <b-col md="2" sm="1" xl="3"></b-col>
+      <b-col md="8" sm="10" xl="6">
         <b-row>
-          <b-col v-if="loadingTracks">
+          <b-col v-if="loadingTracks" cols="12">
             <b-spinner label="Loading..."></b-spinner>
           </b-col>
-          <b-col v-if="!loadingTracks">
+          <b-col v-if="!loadingTracks" cols="12">
             <b-pagination
                 v-model="currentPage"
                 :per-page="perPage"
@@ -91,7 +105,7 @@
                     <b-card-body class="p-3">
                       <b-card-title
                       >
-                        <b-link :href="'/track/' + track.Name">{{
+                        <b-link href="#">{{
                             track.Name
                           }}
                         </b-link>
@@ -146,20 +160,21 @@
           </b-col>
         </b-row>
       </b-col>
-      <b-col></b-col>
+      <b-col md="2" sm="1" xl="3"></b-col>
     </b-row>
-  </div>
+  </b-container>
 </template>
 
 <script>
 import {tracksFilters} from "@/_helpers/tracks-filters";
 
 export default {
-  name: "TrackTable",
+  name: "track-list",
   data() {
     return {
       selector: t => t,
       name_filter: "",
+      nation_name_filter :"",
       currentPage: 1,
       perPage: 25,
       layoutTypeOptions: ["Oval", "Road Course", "A to B"],
@@ -178,6 +193,11 @@ export default {
         "Karting",
       ],
     };
+  },
+  watch :{
+    nation_name_filter() {
+      this.selector = tracksFilters.filterByNation(this.nation_name_filter)
+    }
   },
   computed: {
     loadingTracks() {
