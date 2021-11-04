@@ -102,7 +102,7 @@
             v-if="existingAuthor"
             id="input-author"
             v-model="form.Author.Name"
-            :options="authorsOptions"
+            :options="authorsOpts"
             class="mb-3"
         />
         <b-form-input
@@ -154,7 +154,7 @@
             v-if="existingNation"
             id="input-nation"
             v-model="form.Nation.Name"
-            :options="nationOptions"
+            :options="nationsOpts"
             class="mb-3"
         />
         <b-form-input
@@ -256,36 +256,29 @@ export default {
         {text: "Fictional", value: "Fictional"},
         {text: "Karting", value: "Karting"},
       ],
-      nations: [],
-      nationOptions: [],
       existingNation: true,
-      authors: [],
-      authorsOptions: [],
       existingAuthor: true,
     };
   },
+  computed: {
+    nations() {
+      return this.$store.getters["tracks/nations"]
+    },
+    nationsOpts() {
+      return this.nations.map(n => {return {value : n.Name, text : n.Name}})
+    },
+    authors() {
+      return this.$store.getters["tracks/authors"]
+    },
+    authorsOpts() {
+      return this.authors.map(a => {return {value : a.Name, text : a.Name}})
+    }
+  },
   methods: {
     onSubmit() {
-      this.axios
-          .post(this.$serverPath + "track/new", this.form)
-          .then((res) =>
-              alert(JSON.stringify("Pista Inserita Correttamente : " + res.status))
-          )
-          .catch((err) => alert(JSON.stringify(err)));
-    },
-    addNationOpt(nationName) {
-      this.nationOptions.push(
-          JSON.parse(
-              '{"value" : "' + nationName + '", "text" : "' + nationName + '"}'
-          )
-      );
-    },
-    addAuthorOpt(authorName) {
-      this.authorsOptions.push(
-          JSON.parse(
-              '{"value" : "' + authorName + '", "text" : "' + authorName + '"}'
-          )
-      );
+      this.$store.dispatch('tracks/addTrack', this.form)
+          .then(() => alert(`Pista inserita correttamente: ${JSON.stringify(this.$store.getters["alert/alert"].message.data)}`))
+          .catch(() => alert(`Errore nell'inserimento della pista: ${JSON.stringify(this.$store.getters["alert/alert"].message.data)}`))
     },
     addLayout() {
       this.form.Layouts.push({
@@ -299,14 +292,8 @@ export default {
     },
   },
   mounted() {
-    this.axios.get(this.$serverPath + "nation/track/all").then((res) => {
-      this.nations = res.data;
-      res.data.forEach((nation) => this.addNationOpt(nation.Name));
-    });
-    this.axios.get(this.$serverPath + "author/all").then((res) => {
-      this.authors = res.data;
-      res.data.forEach((res) => this.addAuthorOpt(res.Name));
-    });
+    this.$store.dispatch('tracks/getTracksAuthors')
+    this.$store.dispatch('tracks/getAllNations')
   },
 };
 </script>

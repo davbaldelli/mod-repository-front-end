@@ -5,7 +5,7 @@ const initialState = {
     brands: {items: []},
     types: {items: []},
     authors: {items: []},
-    nations : {items : []}
+    nations: {items: []}
 }
 
 export const cars = {
@@ -55,8 +55,8 @@ export const cars = {
             commit('carPushing')
             return await carService.addCar(car)
                 .then(car => {
-                    commit('carPushed',car)
-                    dispatch('alert/success', car, {root : true})
+                    commit('carPushed', car)
+                    dispatch('alert/success', car, {root: true})
                     return car
                 })
                 .catch(err => {
@@ -80,16 +80,16 @@ export const cars = {
                 .then(authors => commit('authorsFetched', authors))
                 .catch(err => {
                     commit('authorsFetchError', err)
-                    dispatch('alert/error', err, {root : true})
+                    dispatch('alert/error', err, {root: true})
                 })
         },
-        async getBrandNations({dispatch, commit}){
+        async getBrandNations({dispatch, commit}) {
             commit('nationsFetching')
             await carService.getCarNations()
                 .then(nations => commit('nationsFetched', nations))
                 .catch(err => {
                     commit('nationsFetchError', err)
-                    dispatch('alert/error', err, {root : true})
+                    dispatch('alert/error', err, {root: true})
                 })
         }
     },
@@ -104,13 +104,15 @@ export const cars = {
             state.cars = {items: [], error}
         },
         carPushing(state) {
-          state.cars.pushing = true
+            delete state.cars.error
+            state.cars.pushing = true
         },
         carPushed(state, car) {
-          state.cars = {items: state.cars.items}
-          state.cars.items.push(car)
+            delete state.cars.pushing
+            state.cars.items.push(car)
         },
-        carPushError(state, error){
+        carPushError(state, error) {
+            delete state.cars.pushing
             state.cars = {items: state.cars.items, error}
         },
         brandsFetching(state) {
@@ -132,18 +134,18 @@ export const cars = {
             state.types = {items: [], error}
         },
         authorsFetching(state) {
-            state.authors = {items: [], fetching : true}
+            state.authors = {items: [], fetching: true}
         },
         authorsFetched(state, authors) {
             state.authors = {items: authors}
         },
-        authorsFetchError(state, error){
+        authorsFetchError(state, error) {
             state.authors = {items: [], error}
         },
-        nationsFetching(state){
-            state.nations = {items: [], fetching : true}
+        nationsFetching(state) {
+            state.nations = {items: [], fetching: true}
         },
-        nationsFetched(state, nations){
+        nationsFetched(state, nations) {
             state.nations = {items: nations}
         },
         nationsFetchError(state, error) {

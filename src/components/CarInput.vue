@@ -367,31 +367,37 @@ export default {
       existingAuthor: true,
     };
   },
-  computed:{
+  computed: {
     brands() {
       return this.$store.getters["cars/brands"]
     },
-    brandsOpts(){
-      return this.brands.map(b => { return {value : b.Name, text : b.Name}})
+    brandsOpts() {
+      return this.brands.map(b => {
+        return {value: b.Name, text: b.Name}
+      })
     },
-    authors(){
+    authors() {
       return this.$store.getters["cars/authors"]
     },
     authorsOpts() {
-      return this.authors.map(a => { return {value: a.Name, text: a.Name}})
+      return this.authors.map(a => {
+        return {value: a.Name, text: a.Name}
+      })
     },
-    nations(){
+    nations() {
       return this.$store.getters['cars/nations']
     },
-    nationsOpts(){
-      return this.nations.map(n => { return {value: n.Name, text: n.Name}})
+    nationsOpts() {
+      return this.nations.map(n => {
+        return {value: n.Name, text: n.Name}
+      })
     }
   },
   methods: {
     onSubmit() {
       this.$store.dispatch('cars/addCar', this.form)
-      .then((res) => alert(`Macchina inserita correttamente: ${this.$store.getters["alert/alert"].message}`))
-      .catch(() => alert(`Errore nell'inserimento dell'auto : ${this.$store.getters["alert/alert"].message}`))
+          .then(() => alert(`Macchina inserita correttamente: ${JSON.stringify(this.$store.getters["alert/alert"].message.data)}`))
+          .catch(() => alert(`Errore nell'inserimento dell'auto : ${JSON.stringify(this.$store.getters["alert/alert"].message.data)}`))
     },
     addNewCategory() {
       this.form.Categories.push({Name: ""});

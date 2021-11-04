@@ -49,7 +49,7 @@
               </b-button
               >
               <b-input-group class="m-2">
-                <b-form-input v-on:keyup.enter="filterByName" v-model="name_filter" required/>
+                <b-form-input v-model="name_filter" required v-on:keyup.enter="filterByName"/>
                 <b-input-group-append>
                   <b-button variant="outline-success" @click="filterByName()"
                   >Search
@@ -128,7 +128,7 @@
                     v-if="!track.Premium || premium"
                     class="text-center p-2"
                 >
-                  <b-button target="_blank" :href="track.DownloadLink" variant="primary"
+                  <b-button :href="track.DownloadLink" target="_blank" variant="primary"
                   >Download
                   </b-button
                   >
@@ -201,7 +201,7 @@ export default {
     tracks() {
       return this.$store.getters['tracks/tracks']
     },
-    nations(){
+    nations() {
       return this.$store.getters['tracks/nations']
     }
   },

@@ -1,19 +1,19 @@
 <template>
   <b-container fluid>
     <b-row>
-      <b-col sm="1" md="2" xl="3"></b-col>
-      <b-col cols="12" sm="10" md="8" xl="6">
+      <b-col md="2" sm="1" xl="3"></b-col>
+      <b-col cols="12" md="8" sm="10" xl="6">
         <b-jumbotron
             class="py-3 py-sm-4 py-lg-5 mb-2 text-left"
             header="AC Mod Cars"
             lead="A collection of quality mods"
         ></b-jumbotron>
       </b-col>
-      <b-col sm="1" md="2" xl="3"></b-col>
+      <b-col md="2" sm="1" xl="3"></b-col>
     </b-row>
     <b-row>
-      <b-col sm="1" md="2" xl="3"></b-col>
-      <b-col sm="10" md="8" xl="6">
+      <b-col md="2" sm="1" xl="3"></b-col>
+      <b-col md="8" sm="10" xl="6">
         <b-row>
           <b-col cols="12">
             <b-nav class="px-0" sticky toggleable>
@@ -71,94 +71,96 @@
           </b-col>
         </b-row>
       </b-col>
-      <b-col sm="1" md="2" xl="3"></b-col>
+      <b-col md="2" sm="1" xl="3"></b-col>
     </b-row>
     <b-row>
-      <b-col sm="1" md="2" xl="3"></b-col>
-      <b-col sm="10" md="8" xl="6"><b-row>
-        <b-col cols="12" v-if="loadingCars">
-          <b-spinner label="Loading..."></b-spinner>
-        </b-col >
-        <b-col cols="12" v-if="!loadingCars">
-          <b-pagination
-              v-model="currentPage"
-              :per-page="perPage"
-              :total-rows="rows"
-              align="center"
-              aria-controls="car-card-list"
-          ></b-pagination>
-          <div id="car-card-list" class="text-left">
-            <b-card
-                v-for="car in carsForList"
-                :key="car.ModelName"
-                class="overflow-hidden mb-2"
-                no-body
-            >
-              <b-row no-gutters>
-                <b-col class="d-flex align-items-center">
-                  <b-card-img
-                      :src="car.Image"
-                      alt="Fluid image "
-                      class="rounded-4 m-1"
-                  >>
-                  </b-card-img
-                  >
-                </b-col>
-                <b-col class="mh-100" md="8">
-                  <b-card-body class="p-3 h-100">
-                    <b-card-title class="mb-2">
-                      <b-link to="#"
-                      >{{ car.Brand.Name }} {{ car.ModelName }}
-                      </b-link
-                      >
-                    </b-card-title>
-                    <b-card-sub-title class="mb-3 mt-1">
-                      <b-badge
-                          v-for="category in car.Categories"
-                          :key="category.Name"
-                          class="mr-1"
-                      >{{ category.Name }}
-                      </b-badge
-                      >
-                      <b-badge v-if="car.Premium" variant="warning"
-                      >Premium
-                      </b-badge
-                      >
-                    </b-card-sub-title>
-                    <b-card-text class="ml-2 mb-1">
-                      <b>Year: </b>{{ car.Year }}<br/>
-                      <b>Author: </b
-                      >
-                      <b-link :href="car.Author.Link">{{
-                          car.Author.Name
-                        }}
-                      </b-link>
-                      <br/>
-                      <b>{{ car.Transmission }}</b
-                      >, <b>{{ car.Drivetrain }}</b
-                    >, <b>BHP:</b> {{ car.BHP }}, <b>Nm: </b
-                    >{{ car.Torque }}, <b>Kg:</b> {{ car.Weight }},
-                      <b>Top Speed:</b> {{ car.TopSpeed }}km/h,
-                    </b-card-text>
-                  </b-card-body>
-                </b-col>
-              </b-row>
-              <b-card-footer v-if="premium || !car.Premium" class="p-1 text-center">
-                <b-button target="_blank" :href="car.DownloadLink" variant="primary">Download</b-button>
-              </b-card-footer>
-            </b-card>
-          </div>
-          <b-pagination
-              v-model="currentPage"
-              :per-page="perPage"
-              :total-rows="rows"
-              align="center"
-              aria-controls="car-card-list"
-              @change="toTop()"
-          ></b-pagination>
-        </b-col>
-      </b-row></b-col>
-      <b-col sm="1" md="2" xl="3"></b-col>
+      <b-col md="2" sm="1" xl="3"></b-col>
+      <b-col md="8" sm="10" xl="6">
+        <b-row>
+          <b-col v-if="loadingCars" cols="12">
+            <b-spinner label="Loading..."></b-spinner>
+          </b-col>
+          <b-col v-if="!loadingCars" cols="12">
+            <b-pagination
+                v-model="currentPage"
+                :per-page="perPage"
+                :total-rows="rows"
+                align="center"
+                aria-controls="car-card-list"
+            ></b-pagination>
+            <div id="car-card-list" class="text-left">
+              <b-card
+                  v-for="car in carsForList"
+                  :key="car.ModelName"
+                  class="overflow-hidden mb-2"
+                  no-body
+              >
+                <b-row no-gutters>
+                  <b-col class="d-flex align-items-center">
+                    <b-card-img
+                        :src="car.Image"
+                        alt="Fluid image "
+                        class="rounded-4 m-1"
+                    >>
+                    </b-card-img
+                    >
+                  </b-col>
+                  <b-col class="mh-100" md="8">
+                    <b-card-body class="p-3 h-100">
+                      <b-card-title class="mb-2">
+                        <b-link to="#"
+                        >{{ car.Brand.Name }} {{ car.ModelName }}
+                        </b-link
+                        >
+                      </b-card-title>
+                      <b-card-sub-title class="mb-3 mt-1">
+                        <b-badge
+                            v-for="category in car.Categories"
+                            :key="category.Name"
+                            class="mr-1"
+                        >{{ category.Name }}
+                        </b-badge
+                        >
+                        <b-badge v-if="car.Premium" variant="warning"
+                        >Premium
+                        </b-badge
+                        >
+                      </b-card-sub-title>
+                      <b-card-text class="ml-2 mb-1">
+                        <b>Year: </b>{{ car.Year }}<br/>
+                        <b>Author: </b
+                        >
+                        <b-link :href="car.Author.Link">{{
+                            car.Author.Name
+                          }}
+                        </b-link>
+                        <br/>
+                        <b>{{ car.Transmission }}</b
+                        >, <b>{{ car.Drivetrain }}</b
+                      >, <b>BHP:</b> {{ car.BHP }}, <b>Nm: </b
+                      >{{ car.Torque }}, <b>Kg:</b> {{ car.Weight }},
+                        <b>Top Speed:</b> {{ car.TopSpeed }}km/h,
+                      </b-card-text>
+                    </b-card-body>
+                  </b-col>
+                </b-row>
+                <b-card-footer v-if="premium || !car.Premium" class="p-1 text-center">
+                  <b-button :href="car.DownloadLink" target="_blank" variant="primary">Download</b-button>
+                </b-card-footer>
+              </b-card>
+            </div>
+            <b-pagination
+                v-model="currentPage"
+                :per-page="perPage"
+                :total-rows="rows"
+                align="center"
+                aria-controls="car-card-list"
+                @change="toTop()"
+            ></b-pagination>
+          </b-col>
+        </b-row>
+      </b-col>
+      <b-col md="2" sm="1" xl="3"></b-col>
     </b-row>
   </b-container>
 </template>
@@ -170,7 +172,7 @@ export default {
   name: "car-list",
   data() {
     return {
-      selector:  cars => cars,
+      selector: cars => cars,
       currentPage: 1,
       model_filter: "",
       perPage: 25,
@@ -195,9 +197,9 @@ export default {
       return this.$store.getters["cars/cars"]
     },
     nations() {
-      return this.$store.getters['cars/brands'].reduce((r, a) =>{
-          r[a.Nation] = [...r[a.Nation] || [], a.Name]
-          return r
+      return this.$store.getters['cars/brands'].reduce((r, a) => {
+        r[a.Nation] = [...r[a.Nation] || [], a.Name]
+        return r
       }, {})
     },
     categories() {

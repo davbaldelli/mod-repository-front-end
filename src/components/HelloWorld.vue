@@ -16,8 +16,9 @@
         <a href="https://paypal.me/teamItaliaracing?locale.x=it_IT" target="_blank">qui</a>
       </h5>
       <h5>
-        Se invece siete in ricerca di una comunità dove poter girare in compagnia vi invitiamo sul nostro gruppo <a target="_blank"
-          href="https://discord.gg/5HTA8xZgTA">discord</a>
+        Se invece siete in ricerca di una comunità dove poter girare in compagnia vi invitiamo sul nostro gruppo <a
+          href="https://discord.gg/5HTA8xZgTA"
+          target="_blank">discord</a>
       </h5>
     </div>
   </div>

@@ -7,7 +7,6 @@ export const userService = {
 };
 
 
-
 function login(username, password) {
     return axios.post(`${API_URL}/login`, {username, password}, {validateStatus: status => status === 202})
         .then(response => {

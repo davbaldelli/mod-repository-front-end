@@ -5,7 +5,7 @@ export const tracksFilters = {
     filterByName
 }
 
-function filterByNation(nation){
+function filterByNation(nation) {
     return tracks => {
         let fTracks = []
         tracks.forEach(track => {
@@ -17,7 +17,7 @@ function filterByNation(nation){
     }
 }
 
-function filterByLayoutCategory(category){
+function filterByLayoutCategory(category) {
     return tracks => {
         let fTracks = []
         tracks.forEach(track => {
@@ -32,7 +32,7 @@ function filterByLayoutCategory(category){
     }
 }
 
-function filterByTag(tag){
+function filterByTag(tag) {
     return tracks => {
         let fTracks = []
         tracks.forEach(track => {
@@ -47,7 +47,7 @@ function filterByTag(tag){
     }
 }
 
-function filterByName(name){
+function filterByName(name) {
     return tracks => {
         let fTracks = []
         tracks.forEach(track => {
