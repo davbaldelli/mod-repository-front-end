@@ -33,7 +33,7 @@
               <b-icon v-else icon="chevron-bar-down"></b-icon>
             </template>
           </b-navbar-toggle>
-          <b-collapse id="navbar-toggle-collapse" is-nav>
+          <b-collapse id="navbar-toggle-collapse" class="navbar-collapse">
             <b-nav>
               <vue-bootstrap-typeahead
                   class="my-2 mr-2"
@@ -226,12 +226,11 @@ export default {
     }
   },
   mounted() {
-    this.getAllTracks();
-    this.$store.dispatch('tracks/getAllNations')
+    this.initiate()
   },
   created() {
-    this.$parent.$on('loggedIn', this.getAllTracks)
-    this.$parent.$on('loggedOut', this.getAllTracks)
+    this.$parent.$on('loggedIn', this.initiate)
+    this.$parent.$on('loggedOut', this.initiate)
   },
   methods: {
     nationSelected(nation) {
@@ -255,6 +254,10 @@ export default {
     getAllTracks() {
       this.$store.dispatch('tracks/getAllTracks')
     },
+    initiate() {
+      this.getAllTracks();
+      this.$store.dispatch('tracks/getAllNations')
+    }
   },
 };
 </script>

@@ -33,7 +33,7 @@
               <b-icon v-else icon="chevron-bar-down"></b-icon>
             </template>
           </b-navbar-toggle>
-          <b-collapse id="navbar-toggle-collapse" is-nav>
+          <b-collapse id="navbar-toggle-collapse" class="navbar-collapse">
             <b-nav>
               <div v-for="(brands, nation) in nations" :key="nation" class="my-2 mr-2">
                 <b-dropdown
@@ -206,13 +206,11 @@ export default {
     }
   },
   created() {
-    this.$parent.$on('loggedIn', this.getAllCars)
-    this.$parent.$on('loggedOut', this.getAllCars)
+    this.$parent.$on('loggedIn', this.initiate)
+    this.$parent.$on('loggedOut', this.initiate)
   },
   mounted() {
-    this.getAllCars();
-    this.$store.dispatch('cars/getCarTypes')
-    this.$store.dispatch('cars/getCarBrands')
+    this.initiate()
   },
   methods: {
     toTop() {
@@ -236,6 +234,11 @@ export default {
     getAllCars() {
       this.$store.dispatch('cars/getAll')
     },
+    initiate(){
+      this.getAllCars();
+      this.$store.dispatch('cars/getCarTypes')
+      this.$store.dispatch('cars/getCarBrands')
+    }
   },
 };
 </script>
