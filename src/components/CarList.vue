@@ -37,14 +37,14 @@
               </b-navbar-toggle>
               <b-collapse id="navbar-toggle-collapse" is-nav>
                 <b-nav>
-                  <div v-for="nation in nations" :key="nation.Nation" class="my-2 mr-2">
+                  <div v-for="(brands, nation) in nations" :key="nation" class="my-2 mr-2">
                     <b-dropdown
-                        :text="nation.Nation"
+                        :text="nation"
                         split
-                        @click="nationSelected(nation.Nation)"
+                        @click="nationSelected(nation)"
                     >
                       <b-dropdown-item
-                          v-for="brand in nation.Brands"
+                          v-for="brand in brands"
                           :key="brand"
                           @click="brandSelected(brand)"
                       >{{ brand }}
@@ -107,7 +107,7 @@
                 <b-col class="mh-100" md="8">
                   <b-card-body class="p-3 h-100">
                     <b-card-title class="mb-2">
-                      <b-link :to="'/car/' + car.ModelName"
+                      <b-link to="#"
                       >{{ car.Brand.Name }} {{ car.ModelName }}
                       </b-link
                       >
@@ -195,7 +195,10 @@ export default {
       return this.$store.getters["cars/cars"]
     },
     nations() {
-      return this.$store.getters['cars/brands']
+      return this.$store.getters['cars/brands'].reduce((r, a) =>{
+          r[a.Nation] = [...r[a.Nation] || [], a.Name]
+          return r
+      }, {})
     },
     categories() {
       return this.$store.getters['cars/types']
@@ -211,7 +214,7 @@ export default {
   mounted() {
     this.getAllCars();
     this.$store.dispatch('cars/getCarTypes')
-    this.$store.dispatch('cars/getCarBrandsGroupedByNation')
+    this.$store.dispatch('cars/getCarBrands')
   },
   methods: {
     toTop() {

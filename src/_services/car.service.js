@@ -4,9 +4,11 @@ import {API_URL} from "@/_services/config";
 
 export const carService = {
     getAll,
-    findByModel,
     getCarTypes,
-    getCarBrandsGroupedByNation,
+    getCarNations,
+    getCarBrands,
+    getCarAuthors,
+    addCar
 }
 
 
@@ -18,13 +20,6 @@ function getAll() {
         .catch((error) => Promise.reject(error.response ? error.response : error));
 }
 
-function findByModel(model) {
-    return axios
-        .get(`${API_URL}/car/find/model/${model}`, {headers: authHeader()})
-        .then(response => response.data)
-        .catch((error) => Promise.reject(error.response ? error.response : error));
-}
-
 function getCarTypes() {
     return axios
         .get(`${API_URL}/car/type/all`, {headers: authHeader()})
@@ -32,9 +27,34 @@ function getCarTypes() {
         .catch((error) => Promise.reject(error.response ? error.response : error));
 }
 
-function getCarBrandsGroupedByNation() {
+function getCarBrands() {
     return axios
-        .get(`${API_URL}/brand/all/grouped/nation`, {headers: authHeader()})
+        .get(`${API_URL}/brand/all/`, {headers: authHeader()})
         .then(response => response.data)
         .catch((error) => Promise.reject(error.response ? error.response : error));
+}
+
+function getCarAuthors(){
+    return axios
+        .get(`${API_URL}/author/all`, {headers: authHeader()})
+        .then(response => response.data)
+        .catch((error) => Promise.reject(error.response ? error.response : error));
+}
+
+function getCarNations(){
+    return axios
+        .get(`${API_URL}/nation/brand/all`, {headers: authHeader()})
+        .then(response => response.data)
+        .catch((error) => Promise.reject(error.response ? error.response : error));
+}
+
+function addCar(car) {
+    return axios
+        .post(`${API_URL}/car/new`, car, { headers : authHeader()})
+        .then(res => res.data)
+        .catch(error => {
+            console.log(error);
+            return Promise.reject(error)
+        })
+
 }

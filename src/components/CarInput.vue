@@ -232,7 +232,7 @@
                 v-if="existingNation && !existingBrand"
                 id="input-3"
                 v-model="form.Brand.Nation.Name"
-                :options="nationOptions"
+                :options="nationsOpts"
                 class="mb-3"
             />
           </b-form-group>
@@ -258,7 +258,7 @@
                 v-if="existingAuthor"
                 id="input-author"
                 v-model="form.Author.Name"
-                :options="authorsOptions"
+                :options="authorsOpts"
                 class="mb-3"
             />
             <b-form-input
@@ -362,27 +362,36 @@ export default {
         {value: "RWD", text: "RWD"},
         {value: "FWD", text: "FWD"},
       ],
-      brandsOpts: [],
-      nationOptions: [],
-      authorsOptions: [],
-      brands: [],
-      nations: [],
-      authors: [],
       existingBrand: true,
       existingNation: true,
       existingAuthor: true,
     };
   },
+  computed:{
+    brands() {
+      return this.$store.getters["cars/brands"]
+    },
+    brandsOpts(){
+      return this.brands.map(b => { return {value : b.Name, text : b.Name}})
+    },
+    authors(){
+      return this.$store.getters["cars/authors"]
+    },
+    authorsOpts() {
+      return this.authors.map(a => { return {value: a.Name, text: a.Name}})
+    },
+    nations(){
+      return this.$store.getters['cars/nations']
+    },
+    nationsOpts(){
+      return this.nations.map(n => { return {value: n.Name, text: n.Name}})
+    }
+  },
   methods: {
     onSubmit() {
-      this.axios
-          .post(this.$serverPath + "car/new", this.form)
-          .then((res) =>
-              alert(
-                  JSON.stringify("Macchina Inserita Correttamente : " + res.status)
-              )
-          )
-          .catch((err) => alert(JSON.stringify(err.data)));
+      this.$store.dispatch('cars/addCar', this.form)
+      .then((res) => alert(`Macchina inserita correttamente: ${this.$store.getters["alert/alert"].message}`))
+      .catch(() => alert(`Errore nell'inserimento dell'auto : ${this.$store.getters["alert/alert"].message}`))
     },
     addNewCategory() {
       this.form.Categories.push({Name: ""});
@@ -390,51 +399,18 @@ export default {
     removeCategory() {
       this.form.Categories.pop();
     },
-    addBrandOpts(brandName) {
-      this.brandsOpts.push(
-          JSON.parse(
-              '{"value" : "' + brandName + '", "text" : "' + brandName + '"}'
-          )
-      );
-    },
-    addNationOpt(nationName) {
-      this.nationOptions.push(
-          JSON.parse(
-              '{"value" : "' + nationName + '", "text" : "' + nationName + '"}'
-          )
-      );
-    },
-    addAuthorOpt(authorName) {
-      this.authorsOptions.push(
-          JSON.parse(
-              '{"value" : "' + authorName + '", "text" : "' + authorName + '"}'
-          )
-      );
-    },
     onBrandChange() {
-      this.nationOptions = [];
-      let nation = "";
       this.brands.forEach((brand) => {
         if (brand.Name === this.form.Brand.Name) {
-          nation = brand.Nation;
+          this.form.Brand.Nation.Name = brand.Nation;
         }
       });
-      this.form.Brand.Nation.Name = nation;
     },
   },
   mounted() {
-    this.axios.get(this.$serverPath + "brand/all").then((res) => {
-      this.brands = res.data;
-      res.data.forEach((val) => this.addBrandOpts(val.Name));
-    });
-    this.axios.get(this.$serverPath + "nation/brand/all").then((res) => {
-      this.nations = res.data;
-      res.data.forEach((res) => this.addNationOpt(res.Name));
-    });
-    this.axios.get(this.$serverPath + "author/all").then((res) => {
-      this.authors = res.data;
-      res.data.forEach((res) => this.addAuthorOpt(res.Name));
-    });
+    this.$store.dispatch('cars/getCarBrands')
+    this.$store.dispatch('cars/getBrandNations')
+    this.$store.dispatch('cars/getCarAuthors')
   },
 };
 </script>
