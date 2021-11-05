@@ -17,7 +17,20 @@
           <b-col cols="12" class="text-left p-3">
               <b-card no-body header-tag="header" class="my-card">
                 <template class="pl-2" #header>
-                  <h1 class="mb-0">{{car.Brand.Name+" "+car.ModelName}}</h1>
+                  <div>
+                    <h1 class="mb-0">{{car.Brand.Name+" "+car.ModelName}}</h1><b/>
+                    <b-badge
+                        v-for="category in car.Categories"
+                        :key="category.Name"
+                        class="ml-1"
+                    >{{ category.Name }}
+                    </b-badge
+                    >
+                    <b-badge class="ml-1" v-if="car.Premium" variant="warning"
+                    >Premium
+                    </b-badge
+                    >
+                  </div>
                 </template>
                 <b-list-group flush>
                   <b-list-group-item>
