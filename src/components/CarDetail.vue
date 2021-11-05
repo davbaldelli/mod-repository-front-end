@@ -1,62 +1,71 @@
 <template>
-  <div class="container">
-    <b-row id="title" class="mb-3">
-      <b-col>
-        <h1 class="mt-4 mb-1">{{ car.Brand.Name }} {{ car.ModelName }}</h1>
-        <b-badge v-for="cat in car.Categories" :key="cat.Name" class="mr-1">{{
-            cat.Name
-          }}
-        </b-badge>
-        <b-badge v-if="car.Premium" variant="warning">Premium</b-badge>
+  <b-container fluid>
+    <b-row class="my-1">
+      <b-col cols="0" md="3" sm="2" xl="4"></b-col>
+      <b-col cols="12" md="6" sm="8" xl="4">
+        <b-row>
+          <b-col cols="12">
+            <b-img :src="this.car.Image" rounded fluid-grow alt="car image"></b-img>
+          </b-col>
+        </b-row>
+        <b-row>
+          <b-col cols="12" class="text-left p-3">
+              <b-card no-body header-tag="header" class="my-card">
+                <template class="pl-2" #header>
+                  <h1 class="mb-0">{{car.Brand.Name+" "+car.ModelName}}</h1>
+                </template>
+                <b-list-group flush>
+                  <b-list-group-item>
+                    <strong>Model Name</strong> : {{this.car.ModelName}}
+                  </b-list-group-item>
+                  <b-list-group-item>
+                    <strong>Brand</strong> : {{this.car.Brand.Name}}
+                  </b-list-group-item>
+                  <b-list-group-item>
+                    <strong>Nation</strong> : {{this.car.Brand.Nation.Name}}
+                  </b-list-group-item>
+                  <b-list-group-item>
+                    <strong>Year</strong> : {{this.car.Year}}
+                  </b-list-group-item>
+                  <b-list-group-item>
+                    <strong>Transmission</strong> : {{this.car.Transmission}}
+                  </b-list-group-item>
+                  <b-list-group-item>
+                    <strong>Drivetrain</strong> : {{this.car.Drivetrain}}
+                  </b-list-group-item>
+                  <b-list-group-item>
+                    <strong>Power</strong> : {{this.car.BHP}} BHP
+                  </b-list-group-item>
+                  <b-list-group-item>
+                    <strong>Torque</strong> : {{this.car.Torque}} N/m
+                  </b-list-group-item>
+                  <b-list-group-item>
+                    <strong>Weight</strong> : {{this.car.Weight}} Kg
+                  </b-list-group-item>
+                  <b-list-group-item>
+                    <strong>Max Speed</strong> : {{this.car.TopSpeed}} Km/h
+                  </b-list-group-item>
+                  <b-list-group-item>
+                    <strong>Author</strong> : <b-link target="_blank" :href="this.car.Author.Link">{{this.car.Author.Name}}</b-link>
+                  </b-list-group-item>
+                </b-list-group>
+              </b-card>
+          </b-col>
+        </b-row>
+        <b-row>
+          <b-col cols="12" class="p-3">
+            <b-button :href="this.car.DownloadLink" target="_blank" variant="primary" block>Download</b-button>
+          </b-col>
+        </b-row>
       </b-col>
+      <b-col cols="0" md="3" sm="2" xl="4"></b-col>
     </b-row>
-    <b-row>
-      <b-col>
-        <b-card
-            class="overflow-hidden mb-2 text-left"
-            no-body
-        >
-          <b-row no-gutters>
-            <b-col class="d-flex align-items-center">
-              <b-card-img
-                  :src="car.Image"
-                  alt="Fluid image "
-                  class="rounded-4 m-1"
-              >>
-              </b-card-img
-              >
-            </b-col>
-            <b-col md="4" style="height: calc(100%)">
-              <b-card-body class="p-3">
-                <b-card-text>
-                  <p>
-                    <b>Transmission: </b>{{ car.Transmission }}<br/>
-                    <b>Drivetrain: </b>{{ car.Drivetrain }}<br/>
-                    <b>BHP: </b>{{ car.BHP }}<br/>
-                    <b>Torque: </b>{{ car.Torque }}Nn<br/>
-                    <b>Weight: </b> {{ car.Weight }}Kg<br/>
-                    <b>Top Speed :</b>{{ car.TopSpeed }}Km/h<br/>
-                    <b>Author: </b>
-                    <b-link :href="car.Author.Link">{{ car.Author.Name }}</b-link>
-                    <br/><br/>
-                    <b-button v-if="premium || !car.Premium" :href="car.DownloadLink" variant="primary">Download
-                    </b-button>
-                  </p>
-                </b-card-text>
-                <b-card-text class="align-bottom">
-                </b-card-text>
-              </b-card-body>
-            </b-col>
-          </b-row>
-        </b-card>
-      </b-col>
-    </b-row>
-  </div>
+  </b-container>
 </template>
 
 <script>
 export default {
-  name: "CarDetail",
+  name: "car_detail_test",
   data() {
     return {
       car: {
@@ -98,9 +107,12 @@ export default {
     await this.$store.dispatch("cars/getAll")
     this.car = this.$store.getters["cars/getCarByModel"](this.$route.params.model)
   },
-};
+}
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+  .my-card /deep/ header {
+    padding-left:0.5rem !important;
+  }
+
 </style>

@@ -4,10 +4,10 @@ import VueRouter from 'vue-router';
 import HelloWorld from "@/components/HelloWorld";
 import TrackInput from "@/components/TrackInput";
 import CarInput from "@/components/CarInput";
-import CarDetail from "@/components/CarDetail";
 import TrackDetail from "@/components/TrackDetail";
 import CarList from "@/components/CarList";
 import TrackList from "@/components/TrackList";
+import CarDetail from "@/components/CarDetail"
 
 Vue.use(Router);
 
