@@ -35,22 +35,22 @@
           </b-navbar-toggle>
           <b-collapse id="navbar-toggle-collapse" class="navbar-collapse">
             <b-nav>
-              <div v-for="(brands, nation) in nations" :key="nation" class="my-2 mr-2">
-                <b-dropdown
-                    :text="nation"
-                    split
-                    @click="nationSelected(nation)"
+              <b-dropdown
+                  v-for="(brands, nation) in nations" :key="nation"
+                  class="my-2 mr-2 dropdown-scrollable"
+                  :text="nation"
+                  split
+                  @click="nationSelected(nation)"
+              >
+                <b-dropdown-item
+                    v-for="brand in brands"
+                    :key="brand"
+                    @click="brandSelected(brand)"
+                >{{ brand }}
+                </b-dropdown-item
                 >
-                  <b-dropdown-item
-                      v-for="brand in brands"
-                      :key="brand"
-                      @click="brandSelected(brand)"
-                  >{{ brand }}
-                  </b-dropdown-item
-                  >
-                </b-dropdown>
-              </div>
-              <b-dropdown class="my-2 mr-2" text="Category" variant="primary">
+              </b-dropdown>
+              <b-dropdown class="my-2 mr-2 dropdown-scrollable" text="Category" variant="primary">
                 <b-dropdown-item
                     v-for="category in categories"
                     :key="category.Name"
@@ -244,5 +244,8 @@ export default {
 </script>
 
 <style scoped>
-
+  .dropdown-scrollable /deep/ .dropdown-menu {
+    max-height: 300px;
+    overflow-y: auto;
+  }
 </style>
