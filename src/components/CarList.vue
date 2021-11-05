@@ -104,7 +104,7 @@
                   <b-col class="mh-100" md="8">
                     <b-card-body class="p-3 h-100">
                       <b-card-title class="mb-2">
-                        <b-link to="#"
+                        <b-link :to="`/car/${car.ModelName}`"
                         >{{ car.Brand.Name }} {{ car.ModelName }}
                         </b-link
                         >

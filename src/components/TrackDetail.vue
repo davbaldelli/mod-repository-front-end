@@ -91,19 +91,17 @@ export default {
           Name: "",
           Link: ""
         }
-      },
-      premium: false
+      }
     }
   },
-  mounted() {
-    this.axios
-        .get(this.$serverPath + "track/name/" + this.$route.params.name)
-        .then((response) => (this.track = response.data))
-        .catch((error) => console.log(error));
-    let user = JSON.parse(localStorage.getItem('user'))
-    if (user != null) {
-      this.premium = user.Username == "premium";
+  computed :{
+    premium() {
+      return this.$store.getters["authentication/isLogged"]
     }
+  },
+  async mounted() {
+    await this.$store.dispatch('tracks/getAllTracks')
+    this.track = this.$store.getters["tracks/getTrackByName"](this.$route.params.name)
   }
 }
 </script>

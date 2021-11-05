@@ -105,7 +105,7 @@
                     <b-card-body class="p-3">
                       <b-card-title
                       >
-                        <b-link href="#">{{
+                        <b-link :href="`/track/${track.Name}`">{{
                             track.Name
                           }}
                         </b-link>

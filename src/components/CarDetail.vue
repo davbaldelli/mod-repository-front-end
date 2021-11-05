@@ -87,18 +87,16 @@ export default {
         ],
         Premium: false,
       },
-      premium: false
     };
   },
-  mounted() {
-    this.axios
-        .get(this.$serverPath + "car/model/" + this.$route.params.model)
-        .then((response) => (this.car = response.data))
-        .catch((error) => console.log(error));
-    let user = JSON.parse(localStorage.getItem('user'))
-    if (user != null) {
-      this.premium = user.Username == "premium";
-    }
+  computed : {
+    premium () {
+      return this.$store.getters["authentication/isLogged"]
+    },
+  },
+  async mounted() {
+    await this.$store.dispatch("cars/getAll")
+    this.car = this.$store.getters["cars/getCarByModel"](this.$route.params.model)
   },
 };
 </script>
