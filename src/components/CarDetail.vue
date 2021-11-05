@@ -1,6 +1,11 @@
 <template>
   <b-container fluid>
-    <b-row class="my-1">
+    <b-row v-if="this.$store.getters['cars/loadingCars']">
+      <b-col class="mh-100 my-5 align-middle">
+        <b-spinner></b-spinner>
+      </b-col>
+    </b-row>
+    <b-row v-else class="my-1">
       <b-col cols="0" md="3" sm="2" xl="4"></b-col>
       <b-col cols="12" md="6" sm="8" xl="4">
         <b-row>
