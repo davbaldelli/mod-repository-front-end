@@ -1,11 +1,19 @@
 <template>
   <b-container fluid>
+    <b-row v-if="this.notFound">
+      <b-col cols="12"  style="height: 500px" class="d-flex align-items-center">
+        <div class="flex-fill text-center">
+          <h1>(404) Page NotFound</h1>
+          <p>To return to the home page click <b-link href="/">here</b-link></p>
+        </div>
+      </b-col>
+    </b-row>
     <b-row v-if="this.$store.getters['cars/loadingCars']">
       <b-col class="mh-100 my-5 align-middle">
         <b-spinner></b-spinner>
       </b-col>
     </b-row>
-    <b-row v-else class="my-1">
+    <b-row v-if="!this.notFound && !this.$store.getters['cars/loadingCars']" class="my-1">
       <b-col cols="0" md="3" sm="2" xl="4"></b-col>
       <b-col cols="12" md="6" sm="8" xl="4">
         <b-row>
@@ -114,6 +122,7 @@ export default {
         ],
         Premium: false,
       },
+      notFound : false
     };
   },
   computed : {
@@ -123,7 +132,12 @@ export default {
   },
   async mounted() {
     await this.$store.dispatch("cars/getAll")
-    this.car = this.$store.getters["cars/getCarByModel"](this.$route.params.model)
+    let car = this.$store.getters["cars/getCarByModel"](this.$route.params.model)
+    if(!car){
+      this.notFound = true
+    } else {
+      this.car = car
+    }
   },
 }
 </script>

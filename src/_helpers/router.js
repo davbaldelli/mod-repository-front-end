@@ -8,6 +8,7 @@ import TrackDetail from "@/components/TrackDetail";
 import CarList from "@/components/CarList";
 import TrackList from "@/components/TrackList";
 import CarDetail from "@/components/CarDetail"
+import NotFound from "@/components/404"
 
 Vue.use(Router);
 
@@ -46,6 +47,9 @@ const routes = [
         path: '/track/:name', component: TrackDetail, props: true, meta: {
             requiresAuth: true,
         }
+    },
+    {
+      path: '*', component: NotFound
     },
 ]
 

@@ -2,6 +2,7 @@
   <div id="app">
     <b-navbar fixed="top" sticky type="dark" variant="dark">
       <b-navbar-nav>
+        <b-nav-item to="/">Home</b-nav-item>
         <b-nav-item to="/cars">Cars</b-nav-item>
         <b-nav-item to="/tracks">Tracks</b-nav-item>
         <b-nav-item v-if="adminLogged" to="/track/new">Add Tracks</b-nav-item>
