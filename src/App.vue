@@ -19,10 +19,10 @@
       <b-modal
           id="modal-login"
           ref="modal"
-          title="Admin Login"
+          title="Login"
           @hidden="resetModal"
           @ok="handleOk"
-          @keydown.native.enter="handleOk"
+          @close="logOut"
       >
         <form ref="form" v-on:keyup.enter.stop.prevent="handleSubmit" @submit.stop.prevent="handleSubmit">
           <b-form-group
@@ -95,8 +95,9 @@ export default {
                 .then(() => this.$store.dispatch('alert/clear'))
             this.$emit('loggedOut')
           } else {
-            this.adminUsername = this.$store.getters['authentication/user'].username
+            console.log(this.$store.getters['authentication/user'])
             this.$bvModal.show("modal-login")
+            this.adminUsername = this.$store.getters['authentication/user'].username
           }
         }
       }, deep: true
@@ -125,20 +126,23 @@ export default {
       // Trigger submit handler
       this.handleSubmit();
     },
-    async handleSubmit() {
+    handleSubmit() {
       // Exit when the form isn't valid
       if (!this.checkFormValidity()) {
         return;
       }
-      await this.$store.dispatch('authentication/login', {
+      this.$store.dispatch('authentication/login', {
         username: this.adminUsername,
         password: this.adminPassword,
-      }).then(() => this.$store.dispatch('alert/clear'))
-      this.$emit("loggedIn");
-
-      this.$nextTick(() => {
-        this.$bvModal.hide("modal-login");
-      });
+      }).then(() => {
+        console.log("ok")
+        this.$store.dispatch('alert/clear')
+        this.$emit("loggedIn");
+        this.$nextTick(() => {
+          this.$bvModal.hide("modal-login");
+        });
+          }
+      ).catch(() => alert("wrong username or password!"))
     },
   },
 };

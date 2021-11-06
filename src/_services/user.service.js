@@ -19,8 +19,7 @@ function login(username, password) {
                 console.log("no token amigo")
             }
             return Promise.resolve(user);
-        }).catch(error => Promise.reject(error.response ? error.response : error)
-        )
+        }).catch(error => Promise.reject(error.response ? error.response : error))
 }
 
 function logout() {

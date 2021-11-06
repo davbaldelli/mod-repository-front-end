@@ -72,7 +72,7 @@
         </b-row>
         <b-row>
           <b-col cols="12" class="p-3">
-            <b-button :href="this.car.DownloadLink" target="_blank" variant="primary" block>Download</b-button>
+            <b-button  :href="this.car.DownloadLink" target="_blank" variant="primary" block>Download</b-button>
           </b-col>
         </b-row>
       </b-col>
