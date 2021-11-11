@@ -14,8 +14,10 @@
     <b-row>
       <b-col md="2" sm="1" xl="3"></b-col>
       <b-col cols="12" md="8" sm="10" xl="6">
-        <h5 class="mb-2">
-          Benvenuti a tutti.<br/>
+        <h3 class="my-2">
+          Benvenuti a tutti.
+        </h3>
+        <h5>
           Questo sito è una raccolta di mod di qualità, un tentativo di riunire nello stesso punto le migliori macchine e
           piste sparse sul web.<br/>
           Le mod qui presenti sono rimaste inalterate, e, ove possibile, sono presenti i riferimenti ai rispettivi autori.<br/>
@@ -32,14 +34,59 @@
       </b-col>
       <b-col md="2" sm="1" xl="3"></b-col>
     </b-row>
+    <b-row>
+      <b-col md="2" sm="1" xl="4"></b-col>
+      <b-col cols="12" md="8" sm="10" xl="4">
+        <h3 class="my-3">Last added cars</h3>
+        <b-card
+            v-for="car in cars"
+            :key="car.ModelName"
+            class="overflow-hidden mb-2"
+            no-body
+        >
+          <b-row no-gutters>
+            <b-col class="d-flex align-items-center">
+              <b-card-img
+                  :src="car.Image"
+                  alt="Fluid image "
+                  class="rounded-4 m-1"
+              >>
+              </b-card-img
+              >
+            </b-col>
+            <b-col class="mh-100 text-left" md="10">
+              <b-card-body class="p-3 h-100">
+                <b-card-text class="ml-2 mb-1">
+                  <b-link :to="`/car/${car.ModelName}`"
+                  >{{ car.Brand.Name }} {{ car.ModelName }}
+                  </b-link
+                  >
+                </b-card-text>
+              </b-card-body>
+            </b-col>
+          </b-row>
+        </b-card>
+      </b-col>
+      <b-col md="2" sm="1" xl="4"></b-col>
+    </b-row>
   </b-container>
 </template>
 
 <script>
+import {carsFilters} from "@/_helpers";
+
 export default {
   name: 'HelloWorld',
   props: {
     msg: String
+  },
+  data () {
+    return {
+      cars: []
+    }
+  },
+  mounted() {
+    this.$store.dispatch('cars/getAll').then(() => this.cars = carsFilters.lastAdded(5)(this.$store.getters["cars/cars"]))
   }
 }
 </script>
