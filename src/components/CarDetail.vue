@@ -63,7 +63,7 @@
                     <strong>Power</strong> : {{this.car.BHP}} BHP
                   </b-list-group-item>
                   <b-list-group-item>
-                    <strong>Torque</strong> : {{this.car.Torque}} N/m
+                    <strong>Torque</strong> : {{this.car.Torque}} Nm
                   </b-list-group-item>
                   <b-list-group-item>
                     <strong>Weight</strong> : {{this.car.Weight}} Kg

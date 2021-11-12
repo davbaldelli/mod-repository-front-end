@@ -37,7 +37,7 @@
     <b-row>
       <b-col md="2" sm="1" xl="4"></b-col>
       <b-col cols="12" md="8" sm="10" xl="4">
-        <h3 class="my-3">Last added cars</h3>
+        <h3 class="my-3">Last added cars: </h3>
         <b-card
             v-for="car in cars"
             :key="car.ModelName"
