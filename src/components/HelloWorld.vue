@@ -13,7 +13,7 @@
     </b-row>
     <b-row>
       <b-col md="2" sm="1" xl="3"></b-col>
-      <b-col cols="12" md="8" sm="10" xl="6" class="p-5">
+      <b-col cols="12" md="8" sm="10" xl="6" class="px-5">
         <h3 class="my-2">
           Benvenuti a tutti.
         </h3>
