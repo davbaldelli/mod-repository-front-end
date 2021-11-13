@@ -1,4 +1,3 @@
-import {cars} from "@/_store/car.module";
 import moment from "moment-timezone/moment-timezone-utils";
 
 export const carsFilters = {
@@ -8,6 +7,7 @@ export const carsFilters = {
     filterByBrand,
     lastUpdated,
     lastAdded,
+    filterByAuthor,
 }
 
 function lastUpdated(n){
@@ -33,54 +33,24 @@ function lastAdded(n){
     }
 }
 
+function filterByAuthor(author) {
+    return cars => cars.filter(car => car.Author.Name === author)
+}
+
 function filterByNation(nation) {
-    return cars => {
-        let fCars = []
-        cars.forEach(car => {
-            if (car.Brand.Nation.Name === nation) {
-                fCars.push(car)
-            }
-        })
-        return fCars
-    }
+    return cars => cars.filter(car => car.Brand.Nation.Name === nation)
 }
 
 function filterByBrand(brand) {
-    return cars => {
-        let fCars = []
-        cars.forEach(car => {
-            if (car.Brand.Name === brand) {
-                fCars.push(car)
-            }
-        })
-        return fCars
-    }
+    return cars => cars.filter(car => car.Brand.Name === brand)
 }
 
 function filterByCategory(category) {
-    return cars => {
-        let fCars = []
-        cars.forEach(car => {
-            if (car.Categories) {
-                if (car.Categories.some(e => e.Name === category)) {
-                    fCars.push(car)
-                }
-            }
-        })
-        return fCars
-    }
+    return cars => cars.filter(car => car.Categories && car.Categories.some(e => e.Name === category))
 }
 
 function filterByName(name) {
-    return cars => {
-        let fCars = []
-        cars.forEach(car => {
-            if (`${car.Brand.Name} ${car.ModelName}`.toLowerCase().includes(name.toLowerCase())) {
-                fCars.push(car)
-            }
-        })
-        return fCars
-    }
+    return cars => cars.filter(car => `${car.Brand.Name} ${car.ModelName}`.toLowerCase().includes(name.toLowerCase()))
 }
 
 

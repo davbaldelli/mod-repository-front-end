@@ -35,8 +35,8 @@
       <b-col md="2" sm="1" xl="3"></b-col>
     </b-row>
     <b-row>
-      <b-col md="2" sm="1" xl="4"></b-col>
-      <b-col cols="12" md="8" sm="10" xl="4">
+      <b-col md="3" sm="1" xl="4"></b-col>
+      <b-col cols="12" md="6" sm="10" xl="4">
         <h3 class="my-3">Last added cars: </h3>
         <b-card
             v-for="car in cars"
@@ -45,7 +45,7 @@
             no-body
         >
           <b-row no-gutters>
-            <b-col class="d-flex align-items-center">
+            <b-col cols="2" class="d-flex align-items-center">
               <b-card-img
                   :src="car.Image"
                   alt="Fluid image "
@@ -54,9 +54,9 @@
               </b-card-img
               >
             </b-col>
-            <b-col class="mh-100 text-left" md="10">
+            <b-col cols="10" class="mh-100 text-left">
               <b-card-body class="p-3 h-100">
-                <b-card-text class="ml-2 mb-1">
+                <b-card-text class="ml-2 h-100 d-flex align-items-center">
                   <b-link :to="`/car/${car.ModelName}`"
                   >{{ car.Brand.Name }} {{ car.ModelName }}
                   </b-link
@@ -67,16 +67,32 @@
           </b-row>
         </b-card>
       </b-col>
-      <b-col md="2" sm="1" xl="4"></b-col>
+      <b-col md="3" sm="1" xl="4"></b-col>
     </b-row>
   </b-container>
 </template>
 
 <script>
 import {carsFilters} from "@/_helpers";
-
 export default {
   name: 'HelloWorld',
+  data () {
+    return {
+      selectedCountry: null,
+      countries: [
+        {name: 'Australia', code: 'AU'},
+        {name: 'Brazil', code: 'BR'},
+        {name: 'China', code: 'CN'},
+        {name: 'Egypt', code: 'EG'},
+        {name: 'France', code: 'FR'},
+        {name: 'Germany', code: 'DE'},
+        {name: 'India', code: 'IN'},
+        {name: 'Japan', code: 'JP'},
+        {name: 'Spain', code: 'ES'},
+        {name: 'United States', code: 'US'}
+      ]
+    }
+  },
   props: {
     msg: String
   },

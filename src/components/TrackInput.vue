@@ -268,7 +268,7 @@ export default {
       return this.nations.map(n => {return {value : n.Name, text : n.Name}})
     },
     authors() {
-      return this.$store.getters["tracks/authors"]
+      return this.$store.getters["authors/authors"]
     },
     authorsOpts() {
       return this.authors.map(a => {return {value : a.Name, text : a.Name}})
@@ -292,7 +292,7 @@ export default {
     },
   },
   mounted() {
-    this.$store.dispatch('tracks/getTracksAuthors')
+    this.$store.dispatch('authors/getAll')
     this.$store.dispatch('tracks/getAllNations')
   },
 };

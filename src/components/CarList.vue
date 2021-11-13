@@ -59,6 +59,15 @@
                 </b-dropdown-item
                 >
               </b-dropdown>
+              <b-dropdown class="my-2 mr-2 dropdown-scrollable" text="Author" variant="primary">
+                <b-dropdown-item
+                    v-for="author in authors"
+                    :key="author.Name"
+                    @click="authorSelected(author.Name)"
+                >{{ author.Name }}
+                </b-dropdown-item
+                >
+              </b-dropdown>
               <b-button class="mr-2 my-2" variant="primary" @click="resetFilter"
               >All
               </b-button
@@ -198,6 +207,9 @@ export default {
         return r
       }, {})
     },
+    authors() {
+      return this.$store.getters['cars/authors']
+    },
     categories() {
       return this.$store.getters['cars/types']
     },
@@ -225,6 +237,9 @@ export default {
     categorySelected(category) {
       this.selector = carsFilters.filterByCategory(category)
     },
+    authorSelected(author){
+      this.selector = carsFilters.filterByAuthor(author)
+    },
     filterByName() {
       this.selector = carsFilters.filterByName(this.model_filter)
     },
@@ -238,6 +253,7 @@ export default {
       this.getAllCars();
       this.$store.dispatch('cars/getCarTypes')
       this.$store.dispatch('cars/getCarBrands')
+      this.$store.dispatch('cars/getCarAuthors')
     }
   },
 };

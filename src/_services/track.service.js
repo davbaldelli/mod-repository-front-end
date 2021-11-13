@@ -30,7 +30,7 @@ function getTracksNations() {
 }
 
 function getTracksAuthors() {
-    return axios.get(`${API_URL}/author/all`, {headers: authHeader()})
+    return axios.get(`${API_URL}/track/author/all`, {headers: authHeader()})
         .then(res => res.data)
         .catch(error => Promise.reject(error.response ? error.response : error))
 }

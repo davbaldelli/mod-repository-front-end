@@ -16,9 +16,12 @@
     "mdi": "^2.2.43",
     "moment-timezone": "^0.5.34",
     "npm": "^7.16.0",
+    "primeicons": "^4.0.0",
+    "primevue": "^2.6.0",
     "vue": "^2.6.12",
     "vue-axios": "^3.2.4",
     "vue-bootstrap-typeahead": "^0.2.6",
+    "vue-country-flag": "^2.2.0",
     "vue-devtools": "^5.1.4",
     "vue-router": "^3.5.1"
   },

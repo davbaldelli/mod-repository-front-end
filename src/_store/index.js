@@ -5,6 +5,7 @@ import {alert} from './alert.module';
 import {authentication} from './authentication.module';
 import {cars} from "@/_store/car.module";
 import {tracks} from "@/_store/track.module";
+import {authors} from "@/_store/author.module";
 
 Vue.use(Vuex);
 
@@ -13,6 +14,7 @@ export const store = new Vuex.Store({
         alert,
         authentication,
         cars,
-        tracks
+        tracks,
+        authors,
     }
 });

@@ -377,7 +377,7 @@ export default {
       })
     },
     authors() {
-      return this.$store.getters["cars/authors"]
+      return this.$store.getters["authors/authors"]
     },
     authorsOpts() {
       return this.authors.map(a => {
@@ -416,7 +416,7 @@ export default {
   mounted() {
     this.$store.dispatch('cars/getCarBrands')
     this.$store.dispatch('cars/getBrandNations')
-    this.$store.dispatch('cars/getCarAuthors')
+    this.$store.dispatch('authors/getAll')
   },
 };
 </script>

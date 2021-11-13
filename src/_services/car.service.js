@@ -41,7 +41,7 @@ function getCarBrands() {
 
 function getCarAuthors() {
     return axios
-        .get(`${API_URL}/author/all`, {headers: authHeader()})
+        .get(`${API_URL}/car/author/all`, {headers: authHeader()})
         .then(response => response.data)
         .catch((error) => Promise.reject(error.response ? error.response : error));
 }
