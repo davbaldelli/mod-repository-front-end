@@ -38,6 +38,7 @@
       <b-col md="3" sm="1" xl="4"></b-col>
       <b-col cols="12" md="6" sm="10" xl="4">
         <h3 class="my-3">Last added cars: </h3>
+        <b-spinner v-if="carsFetching"/>
         <b-card
             v-for="car in cars"
             :key="car.ModelName"
@@ -76,33 +77,28 @@
 import {carsFilters} from "@/_helpers";
 export default {
   name: 'HelloWorld',
-  data () {
-    return {
-      selectedCountry: null,
-      countries: [
-        {name: 'Australia', code: 'AU'},
-        {name: 'Brazil', code: 'BR'},
-        {name: 'China', code: 'CN'},
-        {name: 'Egypt', code: 'EG'},
-        {name: 'France', code: 'FR'},
-        {name: 'Germany', code: 'DE'},
-        {name: 'India', code: 'IN'},
-        {name: 'Japan', code: 'JP'},
-        {name: 'Spain', code: 'ES'},
-        {name: 'United States', code: 'US'}
-      ]
-    }
-  },
   props: {
     msg: String
   },
   computed: {
     cars (){
       return carsFilters.lastAdded(10)(this.$store.getters["cars/cars"])
+    },
+    carsFetching(){
+      return this.$store.getters["cars/loadingCars"]
     }
   },
   mounted() {
-    this.$store.dispatch('cars/getAll')
+    this.initiate()
+  },
+  created() {
+    this.$parent.$on('loggedIn', this.initiate)
+    this.$parent.$on('loggedOut', this.initiate)
+  },
+  methods :{
+    initiate() {
+      this.$store.dispatch('cars/getAll')
+    }
   }
 }
 </script>
