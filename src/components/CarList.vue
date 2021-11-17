@@ -203,7 +203,7 @@ export default {
     },
     nations() {
       return this.$store.getters['cars/brands'].reduce((r, a) => {
-        r[a.Nation] = [...r[a.Nation] || [], a.Name]
+        r[a.Nation] = [...r[a.Nation.Name] || [], a.Name]
         return r
       }, {})
     },
