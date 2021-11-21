@@ -172,7 +172,6 @@
 
 <script>
 import {carsFilters} from "@/_helpers";
-
 export default {
   name: "car-list",
   data() {
@@ -218,6 +217,7 @@ export default {
     }
   },
   created() {
+
     this.$parent.$on('loggedIn', this.initiate)
     this.$parent.$on('loggedOut', this.initiate)
   },

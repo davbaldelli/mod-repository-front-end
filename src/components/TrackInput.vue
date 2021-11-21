@@ -153,14 +153,14 @@
         <b-form-select
             v-if="existingNation"
             id="input-nation"
-            v-model="form.Nation.Name"
+            v-model="form.Nation"
             :options="nationsOpts"
             class="mb-3"
         />
         <b-form-input
             v-if="!existingNation"
             id="input-nation"
-            v-model="form.Nation.Name"
+            v-model="form.Nation"
             placeholder="Enter nation"
             required
         />
@@ -220,6 +220,7 @@ export default {
         Image: "",
         Name: "",
         Location: "",
+        Tags : [],
         Year: 0,
         Nation: {
           Name: "",

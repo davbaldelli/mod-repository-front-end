@@ -231,7 +231,7 @@
             <b-form-select
                 v-if="existingNation && !existingBrand"
                 id="input-3"
-                v-model="form.Brand.Nation.Name"
+                v-model="form.Brand.Nation"
                 :options="nationsOpts"
                 class="mb-3"
             />
@@ -408,7 +408,7 @@ export default {
     onBrandChange() {
       this.brands.forEach((brand) => {
         if (brand.Name === this.form.Brand.Name) {
-          this.form.Brand.Nation.Name = brand.Nation;
+          this.form.Brand.Nation = brand.Nation;
         }
       });
     },
