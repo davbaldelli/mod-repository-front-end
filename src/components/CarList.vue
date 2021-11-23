@@ -95,8 +95,8 @@
             ></b-pagination>
             <div id="car-card-list" class="text-left">
               <b-card
-                  v-for="car in carsForList"
-                  :key="car.ModelName"
+                  v-for="(car,index) in carsForList"
+                  :key="index"
                   class="overflow-hidden mb-2"
                   no-body
               >
