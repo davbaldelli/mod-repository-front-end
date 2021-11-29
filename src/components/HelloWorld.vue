@@ -40,8 +40,8 @@
         <h3 class="my-3">Last added cars: </h3>
         <b-spinner v-if="carsFetching"/>
         <b-card
-            v-for="car in cars"
-            :key="car.ModelName"
+            v-for="(car, index) in cars"
+            :key="index"
             class="overflow-hidden mb-2"
             no-body
         >

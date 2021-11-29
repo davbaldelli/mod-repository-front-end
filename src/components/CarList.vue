@@ -180,6 +180,18 @@ export default {
       currentPage: 1,
       model_filter: "",
       perPage: 25,
+      categories: [
+        {Name: "Endurance"},
+        {Name: "Formula"},
+        {Name: "GT"},
+        {Name: "Prototype"},
+        {Name: "Rally"},
+        {Name: "Stock Car"},
+        {Name: "Street"},
+        {Name: "Tuned"},
+        {Name: "Touring"},
+        {Name: "Vintage"},
+      ]
     };
   },
   computed: {
@@ -208,9 +220,6 @@ export default {
     },
     authors() {
       return this.$store.getters['cars/authors']
-    },
-    categories() {
-      return this.$store.getters['cars/types']
     },
     loadingCars() {
       return this.$store.getters['cars/loadingCars']
